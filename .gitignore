@@ -1,0 +1,33 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.xdv
+*.bbl
+*.blg
+*.maf
+*.mtc*
+*.idx
+*.ilg
+*.ind
+*.lof
+*.lot
+*.lol
+*.run.xml
+*.bcf
+
+# LaTeX build dir
+out/
+
+# Swap/backup files
+.*.swp
+*.swp
+*~
