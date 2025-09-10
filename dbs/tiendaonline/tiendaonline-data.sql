@@ -1,3 +1,4 @@
+USE tienda_online;
 INSERT INTO clientes (nombre, email, fecha_registro, pais) VALUES
 ('Ana Torres', 'ana@example.com', '2023-01-10', 'España'),
 ('Luis Méndez', 'luis@example.com', '2023-02-15', 'México'),
