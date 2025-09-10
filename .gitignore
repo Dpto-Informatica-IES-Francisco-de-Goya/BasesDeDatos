@@ -31,3 +31,6 @@ out/
 .*.swp
 *.swp
 *~
+
+.idea/
+.vscode/
