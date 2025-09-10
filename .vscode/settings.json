@@ -1,0 +1,33 @@
+{
+  "workbench.editorAssociations": [
+    { "viewType": "pdf.preview", "filenamePattern": "*.pdf" }
+  ],
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.view.pdf.ref.viewer": "tab",
+  "latex-workshop.view.pdf.internal.link": true,
+  "latex-workshop.view.pdf.wait": 0,
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.outDir": "./out",
+  "latex-workshop.latex.recipe.default": "lastUsed",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk (pdf)",
+      "tools": ["latexmk"]
+    }
+  ],
+  "latex-workshop.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-outdir=%OUTDIR%",
+        "%DOC%"
+      ]
+    }
+  ],
+  "latex-workshop.view.pdf.invert": 0
+}
+
