@@ -1,3 +1,5 @@
+*.ign 
+
 # LaTeX build artifacts
 *.aux
 *.log
