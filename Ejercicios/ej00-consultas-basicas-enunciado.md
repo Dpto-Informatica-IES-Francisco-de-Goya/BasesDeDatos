@@ -1,6 +1,5 @@
 # Consultas SQL Graduales para tiendaonline-data.sql
 
-Este archivo contiene una serie de consultas SQL de dificultad creciente, junto con sus soluciones, para practicar con la base de datos `tienda_online`.
 
 ## O. Intro
 
@@ -15,8 +14,6 @@ Este archivo contiene una serie de consultas SQL de dificultad creciente, junto 
 ### 1.2. Mostrar todos los productos disponibles
 
 ### 1.3. Mostrar todos los pedidos realizados
-
-El asterisco (*) en SQL se utiliza para seleccionar todas las columnas de una tabla. Por ejemplo, `SELECT * FROM clientes;` devolverá todas las columnas y todas las filas de la tabla `clientes`. Es útil para obtener una visión completa de los datos, aunque en consultas más avanzadas se recomienda especificar solo las columnas necesarias para optimizar el rendimiento y la claridad de los resultados.
 
 
 ## 2. Consultas Básicas seleccionando campos específicos
