@@ -19,13 +19,13 @@
 - Productos con precio > 200.
 - Pedidos con estado = 'pendiente' y total > 500.
 - Pagos cuyo método IN ('tarjeta','paypal').
-- Productos con stock BETWEEN 300 AND 400.
+- Productos con stock entre 300 y 400.
 - Clientes de país IN ('España','México','Argentina').
-- Productos con nombre LIKE '%Silla%'.
+- Productos cuyo nombre contenga Silla.
 - Pedidos con fecha_pedido en abril de 2023.
 - Pagos con fecha_pago IS NULL (simularía no pagados si existieran).
-- Detalles donde cantidad >= 3 o precio_unitario < 50.
-
+- Detalles donde cantidad sea 3 o más pero el precio_unitario menor que 50.
+- 
 ## 3) Ordenación, límite y duplicados (ORDER BY, LIMIT, DISTINCT)
 
 - Top 10 productos más caros.
