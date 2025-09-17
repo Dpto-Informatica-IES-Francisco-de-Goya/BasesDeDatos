@@ -1,11 +1,11 @@
--- Bulk with explicit IDs ------------------------------------------------------
+--- Primero cargar tiendaonline-data.sql y después este archivo.
 USE tienda_online;
 START TRANSACTION;
 
--- 0) Boost stock for initial products to support many orders
+
 UPDATE productos SET stock = stock + 1000 WHERE id_producto BETWEEN 1 AND 5;
 
--- 1) Insert additional clientes with explicit IDs
+
 INSERT INTO clientes (id_cliente, nombre, email, fecha_registro, pais) VALUES
 (6, 'Marta Gil', 'marta.gil6@example.com', '2023-05-11', 'Paraguay'),
 (7, 'Gonzalo Jiménez', 'gonzalo.jimenez7@example.com', '2023-11-15', 'Bolivia'),
@@ -48,7 +48,7 @@ INSERT INTO clientes (id_cliente, nombre, email, fecha_registro, pais) VALUES
 (44, 'Raúl Suárez', 'raul.suarez44@example.com', '2023-08-07', 'Bolivia'),
 (45, 'Hugo Ramírez', 'hugo.ramirez45@example.com', '2024-06-19', 'Argentina');
 
--- 2) Insert additional productos with explicit IDs
+
 INSERT INTO productos (id_producto, nombre, descripcion, precio, stock, categoria) VALUES
 (6, 'Monitor LG 24"', 'Monitor IPS Full HD 24"', 129.99, 340, 'Electrónica'),
 (7, 'Teclado Mecánico', 'Switches rojos, layout ES', 59.90, 370, 'Accesorios'),
@@ -76,7 +76,7 @@ INSERT INTO productos (id_producto, nombre, descripcion, precio, stock, categori
 (29, 'Escritorio en L', '120x140 cm', 189.00, 312, 'Muebles'),
 (30, 'Organizador de cables', 'Pack 10 unidades', 9.99, 800, 'Accesorios');
 
--- 3) Insert pedidos, detalle_pedido, pagos with explicit IDs
+
 INSERT INTO pedidos (id_pedido, id_cliente, fecha_pedido, estado, coste_total) VALUES
 (6, 30, '2025-02-06 16:22:51', 'entregado', 2409.98),
 (7, 37, '2025-07-14 10:22:00', 'pendiente', 697.90),
@@ -806,4 +806,3 @@ INSERT INTO pagos (id_pago, id_pedido, fecha_pago, metodo_pago, total_pagado) VA
 
 
 COMMIT;
--- End -------------------------------------------------------------------------
