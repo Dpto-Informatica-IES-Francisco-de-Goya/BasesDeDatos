@@ -1,4 +1,4 @@
---- Primero cargar tiendaonline-data.sql y después este archivo.
+
 USE tienda_online;
 START TRANSACTION;
 
