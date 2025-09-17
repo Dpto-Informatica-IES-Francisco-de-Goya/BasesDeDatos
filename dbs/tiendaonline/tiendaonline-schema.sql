@@ -28,7 +28,7 @@ CREATE TABLE pedidos (
     id_cliente INT,
     fecha_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
     estado ENUM('pendiente', 'enviado', 'entregado', 'cancelado') DEFAULT 'pendiente',
-    total DECIMAL(10,2),
+    coste_total DECIMAL(10,2),
     FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
 );
 
@@ -49,6 +49,6 @@ CREATE TABLE pagos (
     id_pedido INT,
     fecha_pago DATETIME DEFAULT CURRENT_TIMESTAMP,
     metodo_pago ENUM('tarjeta', 'paypal', 'transferencia'),
-    monto DECIMAL(10,2),
+    total_pagado DECIMAL(10,2),
     FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido)
 );

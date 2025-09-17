@@ -77,7 +77,7 @@ INSERT INTO productos (id_producto, nombre, descripcion, precio, stock, categori
 (30, 'Organizador de cables', 'Pack 10 unidades', 9.99, 800, 'Accesorios');
 
 -- 3) Insert pedidos, detalle_pedido, pagos with explicit IDs
-INSERT INTO pedidos (id_pedido, id_cliente, fecha_pedido, estado, total) VALUES
+INSERT INTO pedidos (id_pedido, id_cliente, fecha_pedido, estado, coste_total) VALUES
 (6, 30, '2025-02-06 16:22:51', 'entregado', 2409.98),
 (7, 37, '2025-07-14 10:22:00', 'pendiente', 697.90),
 (8, 37, '2024-03-09 22:58:56', 'enviado', 983.46),
@@ -128,7 +128,7 @@ INSERT INTO pedidos (id_pedido, id_cliente, fecha_pedido, estado, total) VALUES
 (53, 25, '2024-04-28 02:49:10', 'pendiente', 249.99),
 (54, 27, '2025-06-19 19:08:47', 'entregado', 1636.97),
 (55, 30, '2025-08-25 08:07:24', 'pendiente', 319.60);
-INSERT INTO pedidos (id_pedido, id_cliente, fecha_pedido, estado, total) VALUES
+INSERT INTO pedidos (id_pedido, id_cliente, fecha_pedido, estado, coste_total) VALUES
 (56, 9, '2023-07-05 08:36:02', 'entregado', 260.99),
 (57, 27, '2024-09-19 21:37:37', 'pendiente', 1690.00),
 (58, 32, '2025-05-18 23:57:07', 'enviado', 934.80),
@@ -179,7 +179,7 @@ INSERT INTO pedidos (id_pedido, id_cliente, fecha_pedido, estado, total) VALUES
 (103, 3, '2025-07-16 07:06:39', 'cancelado', 375.00),
 (104, 13, '2023-08-13 06:34:54', 'cancelado', 726.06),
 (105, 44, '2023-07-14 02:03:36', 'entregado', 461.00);
-INSERT INTO pedidos (id_pedido, id_cliente, fecha_pedido, estado, total) VALUES
+INSERT INTO pedidos (id_pedido, id_cliente, fecha_pedido, estado, coste_total) VALUES
 (106, 25, '2025-02-07 12:19:12', 'cancelado', 789.96),
 (107, 29, '2024-08-31 12:22:43', 'pendiente', 707.25),
 (108, 4, '2025-03-20 06:56:54', 'enviado', 747.00),
@@ -679,7 +679,7 @@ INSERT INTO detalle_pedido (id_detalle, id_pedido, id_producto, cantidad, precio
 (NULL, 154, 25, 1, 39.90),
 (NULL, 155, 24, 1, 11.99);
 
-INSERT INTO pagos (id_pago, id_pedido, fecha_pago, metodo_pago, monto) VALUES
+INSERT INTO pagos (id_pago, id_pedido, fecha_pago, metodo_pago, total_pagado) VALUES
 (NULL, 6, '2025-02-06 18:22:51', 'tarjeta', 2409.98),
 (NULL, 8, '2024-03-10 00:58:56', 'transferencia', 983.46),
 (NULL, 9, '2023-10-15 11:21:56', 'paypal', 348.97),
