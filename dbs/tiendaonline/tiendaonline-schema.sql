@@ -49,6 +49,6 @@ CREATE TABLE pagos (
     id_pedido INT,
     fecha_pago DATETIME DEFAULT CURRENT_TIMESTAMP,
     metodo_pago ENUM('tarjeta', 'paypal', 'transferencia'),
-    monto DECIMAL(10,2),
+    total DECIMAL(10,2),
     FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido)
 );
