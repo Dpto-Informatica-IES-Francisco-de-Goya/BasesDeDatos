@@ -103,8 +103,20 @@ mysql> select categoria,id_producto,nombre,precio,stock from productos;
 
 - Clientes registrados en 2024.
 - Productos con precio > 200.
+```sql
+mysql> select * from productos where precio >= 200;
+```
+
 - Pedidos con estado = 'pendiente' y total > 500.
+```sql
+mysql> select * from pedidos where estado = 'pendiente' and coste_total > 500;
+
+```
+
 - Pagos cuyo método IN ('tarjeta','paypal').
+```sql
+
+```
 - Productos con stock entre 300 y 400.
 - Clientes de país IN ('España','México','Argentina').
 - Productos cuyo nombre contenga Silla.
