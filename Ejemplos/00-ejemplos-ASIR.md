@@ -12,10 +12,33 @@ $ mysql -u admin -p
 
 Cargamos los archivos de mysql solo una vez
 ```sql
-source tiendaonline-schema.sql;
-source tiendaonline-data-parte1.sql;
-source tiendaonline-data-parte2.sql;
+mysql> source tiendaonline-schema.sql;
+mysql> source tiendaonline-data-parte1.sql;
+mysql> source tiendaonline-data-parte2.sql;
 ```
+
+
+# Consultar información
+
+Para consultar las bases de datos que ya existen.
+```sql
+mysql> show databases;
+```
+
+Para indicar con qué base de datos vamos a trabajar.
+```sql
+mysql> use [bbdd];
+```
+
+
+```sql
+mysql> show tables;
+```
+
+```sql
+mysql> source tiendaonline-data-parte2.sql;
+```
+
 
 ¡Ya estamos listos para empezar con las consultas!
 
@@ -23,13 +46,55 @@ source tiendaonline-data-parte2.sql;
 
 ## 1) Selección básica de datos y renombrado de columnas
 
-- Listado simple de nombres y correos de todos los clientes.
+- Listado simple de nombres y correos de todos los clientes:
+```sql
+mysql> select nombre,email from clientes;
+```
+
 - Catálogo: nombre y precio de todos los productos.
+```sql
+mysql> select nombre,precio from productos;
+```
+
 - Pedidos con su fecha y estado.
+Truqui!! Para ver las columnas que tiene una tabla puedo hacer:
+```sql
+mysql> select * from pedidos limit 1;
+```
+`limit 1` va a sacar solo 1 registro. Así, fácilmente, puedo ver todas las columnas que hay.
+
+
+```sql
+mysql> select fecha_pedido,estado from pedidos;
+```
+
 - Pagos: método y monto registrados.
+
+```sql
+mysql> select metodo_pago,total_pagado from pagos;
+```
+
 - Detalle de líneas: producto y cantidad por cada detalle_pedido.
+```sql
+mysql> select id_producto,cantidad from detalle_pedido;
+```
+
 - Clientes con fecha de registro (orden natural de inserción).
+
+```sql
+mysql> select id_cliente,nombre,email,fecha_registro from clientes;
+```
+
+**¡OJO 1!** El ordenado por defecto es el orden natural de inserción.
+
+**¡Ojo 2!** Damos id_cliente,nombre,email porque ante la duda, mejor sacar información de más.
+
 - Productos con su categoría asociada (solo columnas principales).
+```sql
+mysql> select categoria,id_producto,nombre,precio,stock from productos;
+```
+**¡OJO!** Puedes elegir en qué orden salen las columnas de la tabla resultante.
+
 - IDs de pedidos y su total.
 - IDs de pagos con su fecha de pago.
 - Relación básica: id_pedido e id_producto de detalle_pedido.
