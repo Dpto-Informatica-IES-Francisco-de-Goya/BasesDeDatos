@@ -192,17 +192,57 @@ select * from pagos where fecha_pago is null;
 select * from detalle_pedido where cantidad >=3 and precio_unitario < 50;
 ```
 
+- Productos que no sean de electrónica
+```sql
+select * from productos where categoria not like "Electrónica";
+select * from productos where categoria != "Electrónica";
 
+```
 
 ## 3) Ordenación, límite y duplicados (ORDER BY, LIMIT, DISTINCT)
 
 - Top 10 productos más caros.
+```sql
+select * from productos order by precio desc limit 10';
+
+```
+
 - Últimos 20 pedidos por fecha_pedido DESC.
+```sql
+select * from pedidos order by fecha_pedido desc limit 20;
+```
+
 - Clientes más recientes por fecha_registro.
+```sql
+select *  from clientes order by fecha_registro desc;
+```
 - Primeros 5 productos con menor stock.
+```sql
+select * from productos order by stock asc limit 5;
+```
+
 - DISTINCT de categorías de productos disponibles.
+```sql
+select distinct categoria from productos;
+
+```
 - Países distintos de los clientes registrados.
+```sql
+select distinct pais from clientes;
+```
 - Pagos ordenados por monto DESC (mayor a menor).
+```sql
+select * from pagos order by total_pagado desc;
+```
 - Pedidos ordenados por total ASC.
+```sql
+select * from pedidos order by coste_total asc;
+```
 - Primeros 10 clientes por orden alfabético del nombre.
+```sql
+select * from clientes order by nombre asc limit 10;
+```
 - Top 5 productos más baratos en la categoría “Accesorios”.
+```sql
+select * from productos where categoria='Accesorios' order by precio asc limit 5;
+```
