@@ -169,7 +169,10 @@ mysql> select * from pagos where fecha_pago is NULL;
 
 
 - Detalles donde cantidad sea 3 o más pero el precio_unitario menor que 50.
-- 
+```sql
+mysql> select * from detalle_pedido WHERE cantidad >= 3 and precio_unitario < 50;
+```
+
 ## 3) Ordenación, límite y duplicados (ORDER BY, LIMIT, DISTINCT)
 
 - Top 10 productos más caros.
