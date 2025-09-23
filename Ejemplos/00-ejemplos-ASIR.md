@@ -35,9 +35,6 @@ mysql> use [bbdd];
 mysql> show tables;
 ```
 
-```sql
-mysql> source tiendaonline-data-parte2.sql;
-```
 
 
 ¡Ya estamos listos para empezar con las consultas!
@@ -96,12 +93,25 @@ mysql> select categoria,id_producto,nombre,precio,stock from productos;
 **¡OJO!** Puedes elegir en qué orden salen las columnas de la tabla resultante.
 
 - IDs de pedidos y su total.
+```sql
+select id_pedido,coste_total from pedidos;
+```
+
 - IDs de pagos con su fecha de pago.
+```sql
+select id_pago,fecha_pago from pagos;
+```
+
 - Relación básica: id_pedido e id_producto de detalle_pedido.
 
 ## 2) Filtros con WHERE (comparadores, lógicos, BETWEEN, IN, LIKE, NULL)
 
 - Clientes registrados en 2024.
+```sql
+select * from clientes where year(fecha_registro) = 2024;
+select * from clientes where fecha_registro > '2023-12-31' and fecha_registro < '2025-01-01';
+```
+
 - Productos con precio > 200.
 ```sql
 mysql> select * from productos where precio >= 200;
@@ -110,18 +120,54 @@ mysql> select * from productos where precio >= 200;
 - Pedidos con estado = 'pendiente' y total > 500.
 ```sql
 mysql> select * from pedidos where estado = 'pendiente' and coste_total > 500;
-
 ```
 
 - Pagos cuyo método IN ('tarjeta','paypal').
 ```sql
+select * from pagos where metodo_pago  IN ('tarjeta','paypal');
+select * from pagos where metodo_pago = 'tarjeta' or metodo_pago = 'paypal';
 
 ```
 - Productos con stock entre 300 y 400.
+```sql
+select * from productos where stock between 300 and 400;
+select * from productos where stock >= 300 and stock <= 400;
+```
+
 - Clientes de país IN ('España','México','Argentina').
+```sql
+select * from clientes where    pais     IN ('Espana','Mexico','argentina');
+```
+
 - Productos cuyo nombre contenga Silla.
+```sql
+select * from productos where nombre like '%silla%';
+```
+*OJO: muchos más ejemplos del %*
+
+
 - Pedidos con fecha_pedido en abril de 2023.
+```sql
+select * from pedidos where year(fecha_pedido) = 2023 and month(fecha_pedido) = 4;
+select * from pedidos where fecha_pedido like '2023-04%';
+```
+
 - Pagos con fecha_pago IS NULL (simularía no pagados si existieran).
+
+```sql
+ysql> select * from pagos where fecha_pago = NULL;
+Empty set (0,01 sec)
+
+mysql> select * from pagos where fecha_pago is NULL;
++---------+-----------+------------+-------------+--------------+
+| id_pago | id_pedido | fecha_pago | metodo_pago | total_pagado |
++---------+-----------+------------+-------------+--------------+
+|       3 |         3 | NULL       | tarjeta     |         0.00 |
++---------+-----------+------------+-------------+--------------+
+1 row in set (0,00 sec)
+```
+
+
 - Detalles donde cantidad sea 3 o más pero el precio_unitario menor que 50.
 - 
 ## 3) Ordenación, límite y duplicados (ORDER BY, LIMIT, DISTINCT)
