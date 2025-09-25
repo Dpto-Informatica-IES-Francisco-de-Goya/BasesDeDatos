@@ -176,12 +176,72 @@ mysql> select * from detalle_pedido WHERE cantidad >= 3 and precio_unitario < 50
 ## 3) Ordenación, límite y duplicados (ORDER BY, LIMIT, DISTINCT)
 
 - Top 10 productos más caros.
+```sql
+select * from productos order by precio desc limit 10;
+```
 - Últimos 20 pedidos por fecha_pedido DESC.
+```sql
+select * from pedidos order by fecha_pedido desc limit 20;
+```
+
 - Clientes más recientes por fecha_registro.
+```sql
+select * from clientes order by fecha_registro desc limit 15;
+```
+*15 a ojo*
+
+
+Si queremos filtrar los clientes del último año, combinamos el order con el where.
+```sql
+select * from clientes where year(fecha_registro)=2025 order by fecha_registro desc;
+
+```
+
 - Primeros 5 productos con menor stock.
+```sql
+select * from productos order by stock asc limit 5;
+```
+```sql
+select * from productos order by stock asc,nombre asc limit 5;
+```
+
 - DISTINCT de categorías de productos disponibles.
+```sql
+select distinct categoria from productos;
+```
+
 - Países distintos de los clientes registrados.
+```sql
+select distinct pais from clientes;
+```
+**Todo lo que ponga en el order tiene que aparecer en el select. Si no, da error**
+
+¿Qué pasa si pongo un distinct para 2 columnas? Elimina las **filas** duplicadas. En este caso, no elimina nada.
+
+```sql
+select distinct pais,fecha_registro from clientes order by fecha_registro;
+
+```
 - Pagos ordenados por monto DESC (mayor a menor).
+```sql
+select * from pagos order by total_pagado desc;
+```
+
 - Pedidos ordenados por total ASC.
+```sql
+select * from pedidos order by coste_total asc;
+```
 - Primeros 10 clientes por orden alfabético del nombre.
+```sql
+select * from clientes order by nombre asc limit 10;
+```
+
 - Top 5 productos más baratos en la categoría “Accesorios”.
+```sql
+select * 
+from productos 
+where categoria = 'Accesorios' 
+order by precio asc 
+limit 5;
+```
+
