@@ -1,13 +1,51 @@
+
+
 # CLIENTES
+
 ## 1) Número total de clientes
+```sql
+select count(*) from clientes;
+```
 ## 2) Número de clientes por país
+```sql
+select pais,count(nombre) from clientes group by pais;
+```
 ## 3) Número de clientes registrados por año
+```sql
+select year(fecha_registro) AS year,
+        count(fecha_registro) as num_clientes 
+from clientes 
+group by year(fecha_registro);
+```
+
 ## 4) Número de clientes registrados por mes (todas las fechas)
+```sql
+select month(fecha_registro),
+    count(id_cliente) 
+from clientes 
+group by month(fecha_registro) 
+order by month(fecha_registro) asc;
+```
+*Ojo: también funciona esta otra consulta que no es SQL Standard por el **orden de ejecución de las palabras reservadas de SQL***
+```sql
+select month(fecha_registro) as mes,
+    count(id_cliente) 
+from clientes 
+group by mes
+order by mes;
+```
+
 ## 5) Fecha de primer y último cliente registrado
+```sql
+select min(fecha_registro),max(fecha_registro) from clientes;
+```
+
 ## 6) Número de países distintos con clientes
 ## 7) Conteo de clientes con email y sin email
 ## 8) Distribución de clientes por primera letra del nombre
+
 # PRODUCTOS
+
 ## 9) Número total de productos
 ## 10) Número de productos por categoría
 ## 11) Precio promedio de productos
@@ -16,7 +54,9 @@
 ## 14) Stock total por categoría
 ## 15) Valor de inventario total (stock * precio)
 ## 16) Valor de inventario por categoría
+
 # PEDIDOS
+
 ## 18) Número total de pedidos
 ## 19) Número de pedidos por estado
 ## 20) Total facturado (suma de la columna total)
@@ -27,7 +67,10 @@
 ## 25) Número de pedidos por mes de todos los años
 ## 26) Total facturado por estado
 ## 27) Promedio del total por estado
+
 # DETALLE_PEDIDO
+
+
 ## 29) Número de líneas de detalle registradas
 ## 30) Total de unidades vendidas (suma de cantidad)
 ## 31) Precio promedio de las líneas de detalle
