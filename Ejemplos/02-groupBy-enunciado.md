@@ -1,3 +1,4 @@
+
 # CLIENTES
 ## 1) Número total de clientes
 ## 2) Número de clientes por país
@@ -35,3 +36,4 @@
 ## 33) Número de líneas por producto
 ## 34) Unidades totales por producto
 ## 35) Ingreso total por producto (cantidad * precio_unitario)
+

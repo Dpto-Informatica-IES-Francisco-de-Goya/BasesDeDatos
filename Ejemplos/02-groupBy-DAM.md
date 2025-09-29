@@ -1,4 +1,7 @@
+
 # CLIENTES
+
+
 
 ## 1) Número total de clientes
 select count(*) from clientes;
@@ -23,6 +26,7 @@ select substring(nombre,1,1) as Letra,        count(id_cliente) as Numero_client
 # PRODUCTOS
 
 ## 9) Número total de productos
+select count(*) as total_productos from productos;
 ## 10) Número de productos por categoría
 ## 11) Precio promedio de productos
 ## 12) Precio mínimo y máximo de productos
@@ -31,7 +35,11 @@ select substring(nombre,1,1) as Letra,        count(id_cliente) as Numero_client
 ## 15) Valor de inventario total (stock * precio)
 ## 16) Valor de inventario por categoría
 
+
+
 # PEDIDOS
+
+
 
 ## 18) Número total de pedidos
 ## 19) Número de pedidos por estado
