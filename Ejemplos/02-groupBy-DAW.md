@@ -184,3 +184,36 @@ order by year(fecha_registro),month(fecha_registro);
 
 ```
 
+
+
+# Otros ejemplos
+
+## 1) ¿Cuántos clientes se han registrado por año y mes?
+```sql
+
+```
+
+## 2) ¿Cuántos clientes españoles se han registrado por año y mes?
+```sql
+
+```
+
+## 3) Ordena las consultas anteriores
+```sql
+
+```
+
+
+## 4) Precio promedio agrupando por categoría e inicial del nombre con más de 3 unidades de stock
+```sql
+```
+
+
+## 5) ¿Cuántos clientes cuyo nombre empieza por 'A' se han registrado cada año?
+
+
+## 6) ¿Cuántos productos se han pedido en cada pedido?
+
+
+## 7) Obtén el listado de los pedidos que han solicitado más de 10 productos
+

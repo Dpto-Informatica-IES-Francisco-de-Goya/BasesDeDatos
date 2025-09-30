@@ -37,3 +37,13 @@
 ## 34) Unidades totales por producto
 ## 35) Ingreso total por producto (cantidad * precio_unitario)
 
+# Otros ejemplos
+
+## 1) ¿Cuántos clientes se han registrado por año y mes?
+## 2) ¿Cuántos clientes españoles se han registrado por año y mes?
+## 3) Ordenas las consultas anteriores
+## 4) Precio promedio agrupando por categoría e inicial del nombre con más de 3 unidades de stock
+## 5) ¿Cuántos clientes cuyo nombre empieza por 'A' se han registrado cada año?
+## 6) ¿Cuántos productos se han pedido en cada pedido?
+## 7) Obtén el listado de los pedidos que han solicitado más de 10 productos
+
