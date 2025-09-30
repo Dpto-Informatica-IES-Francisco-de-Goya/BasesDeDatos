@@ -8,16 +8,35 @@ select count(nombre) as num_clientes from clientes;
 
 ## 2) Número de clientes por país
 ```sql
+select pais,count(*) as num_clientes from clientes group by pais;
 
 ```
 ## 3) Número de clientes registrados por año
 ```sql
-
+select year(fecha_registro) as año, count(*) as num_clientes 
+from clientes 
+group by year(fecha_registro);
 ```
 ## 4) Número de clientes registrados por mes (todas las fechas)
 ```sql
-
+select month(fecha_registro) as mes, count(*) as num_clientes 
+from clientes 
+group by month(fecha_registro);
 ```
+
+## BONUS TRACK
+## BT) Número de clientes registrados por año y mes
+```sql
+select year(fecha_registro) as año,
+       month(fecha_registro) as mes, 
+       count(*) as num_clientes 
+from clientes 
+group by year(fecha_registro), 
+        month(fecha_registro)
+order by year(fecha_registro) asc, 
+        month(fecha_registro) asc;
+```
+
 ## 5) Fecha de primer y último cliente registrado
 ```sql
 
@@ -32,7 +51,7 @@ select count(nombre) as num_clientes from clientes;
 ```
 ## 8) Distribución de clientes por primera letra del nombre
 ```sql
-
+select substring(nombre,1,1) as Primera_letra,       count(*) as num_clientes from clientes group by substring(nombre,1,1) order by substring(nombre,1,1) asc;
 ```
 
 # PRODUCTOS
@@ -44,7 +63,9 @@ select count(nombre) as num_clientes from clientes;
 ## 14) Stock total por categoría
 ## 15) Valor de inventario total (stock * precio)
 ## 16) Valor de inventario por categoría
-# PEDIDOS
+
+# PEDIDOS (para practicar)
+
 ## 18) Número total de pedidos
 ## 19) Número de pedidos por estado
 ## 20) Total facturado (suma de la columna total)
@@ -55,6 +76,7 @@ select count(nombre) as num_clientes from clientes;
 ## 25) Número de pedidos por mes de todos los años
 ## 26) Total facturado por estado
 ## 27) Promedio del total por estado
+
 # DETALLE_PEDIDO
 ## 29) Número de líneas de detalle registradas
 ## 30) Total de unidades vendidas (suma de cantidad)
