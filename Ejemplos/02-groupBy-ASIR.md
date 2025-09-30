@@ -1,3 +1,38 @@
+# PREVIO
+
+## ¿Cómo se piensa?
+
+1) Tabla - From
+2) ¿Filtro? Where
+3) Agrupo por ...
+4) Todo lo del group by, al select
+5) Agrego (count,min,max,sum,avg...)
+6) ¿Tengo que ordenar? Normalmente sí, interesa ordenar por la columna por la que se agrupa.
+
+## Número de productos distintos por categoria
+
+```sql
+select categoria,count(nombre) from productos group by categoria;
+```
+
+Puedes agregar todo lo que te interese.
+```sql
+select categoria,
+        min(precio),
+        max(precio),
+        count(precio),
+        sum(precio),
+        round(avg(precio),2) 
+from productos 
+group by categoria;
+```
+Stock total por categoría
+```sql
+select categoria,sum(stock) 
+from productos
+group by categoria;
+```
+
 
 # CLIENTES
 ## 1) Número total de clientes
