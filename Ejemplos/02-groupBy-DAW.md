@@ -144,12 +144,18 @@ order by year(fecha_registro),month(fecha_registro);
 ```
 ## 26) Total facturado por estado
 ```sql
-
+select estado,sum(coste_total) AS total_facturado 
+from pedidos
+group by estado;
 ```
 ## 27) Promedio del total por estado
 ```sql
-
+select estado,avg(coste_total) AS total_facturado 
+from pedidos
+group by estado;
 ```
+
+**Observa** cómo la consulta 26 y la 27 tienen *la misma agrupación* pero *distinta agregación*.
 
 # DETALLE_PEDIDO
 
@@ -190,22 +196,52 @@ order by year(fecha_registro),month(fecha_registro);
 
 ## 1) ¿Cuántos clientes se han registrado por año y mes?
 ```sql
-
+select year(fecha_registro) as año,
+        month(fecha_registro) as mes,
+        count(nombre) as num_clientes
+from clientes
+group by year(fecha_registro),
+        month(fecha_registro);
 ```
 
 ## 2) ¿Cuántos clientes españoles se han registrado por año y mes?
 ```sql
-
+select year(fecha_registro) as año,
+        month(fecha_registro) as mes,
+        count(nombre) as num_clientes
+from clientes
+where pais = 'España'
+group by year(fecha_registro),
+        month(fecha_registro);
 ```
 
-## 3) Ordena las consultas anteriores
+## 3) Ordenas las consultas anteriores
 ```sql
-
+select year(fecha_registro) as año,
+        month(fecha_registro) as mes,
+        count(nombre) as num_clientes
+from clientes
+where pais = 'España'
+group by year(fecha_registro),
+        month(fecha_registro)
+order by year(fecha_registro) asc,
+        month(fecha_registro) asc;
 ```
 
 
 ## 4) Precio promedio agrupando por categoría e inicial del nombre con más de 3 unidades de stock
+*Sin corregir en clase pero muchos lo han sacado*
 ```sql
+SELECT categoria,
+    left(nombre,1) AS inicial_nombre,
+    avg(precio) AS precio_medio,
+    count(*) AS cuantos
+FROM productos
+WHERE stock > 3
+GROUP BY categoria, 
+        left(nombre,1)
+ORDER BY categoria,
+    left(nombre,1);
 ```
 
 
