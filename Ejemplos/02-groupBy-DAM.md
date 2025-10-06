@@ -165,12 +165,21 @@ ORDER BY categoria,
 
 
 ## 5) ¿Cuántos clientes cuyo nombre empieza por 'A' se han registrado cada año?
+ SELECT year(fecha_registro) as año, count(*) AS num_clientes
+ FROM clientes
+ WHERE nombre like 'A%'
+ GROUP BY year(fecha_registro );
 
 
-## 6) ¿Cuántos productos se han pedido en cada pedido?
+## 6a) ¿Cuántos productos se han pedido en total en cada pedido?
+select id_pedido,count(id_producto) from detalle_pedido group by id_pedido;
+## 6b) ¿Cuántos productos distintos se han pedido en total en cada pedido?
+select id_pedido,sum(id_producto) from detalle_pedido group by id_pedido;
 
-
-## 7) Obtén el listado de los pedidos que han solicitado más de 10 productos
+## 7a) Obtén el listado de los pedidos que han solicitado más de 10 productos en total
+select id_pedido,sum(cantidad) from detalle_pedido group by id_pedido having sum(cantidad) > 10;
+## 7b) Obtén el listado de los pedidos que han solicitado más de 10 productos distintos
+select id_pedido,count(id_producto) from detalle_pedido group by id_pedido having count(id_producto) > 10;
 
 
 
