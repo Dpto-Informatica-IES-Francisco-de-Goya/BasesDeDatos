@@ -10,7 +10,7 @@
 
 # Tabla: Pedidos
 
-**| id_pedido | id_cliente | fecha_pedido        | estado    | coste_total |**
+| id_pedido | id_cliente | fecha_pedido        | estado    | coste_total |
 |-----------|------------|---------------------|-----------|-------------|
 |         1 |          1 | 2023-04-01 10:00:00 | entregado |     1070.00 |
 |         2 |          2 | 2023-04-03 15:30:00 | enviado   |      320.00 |
@@ -22,7 +22,7 @@
 
 # Tabla: Detalle Pedido
 
-**| id_detalle | id_pedido | id_producto | cantidad | precio_unitario |**
+| id_detalle | id_pedido | id_producto | cantidad | precio_unitario |
 |------------|-----------|-------------|----------|-----------------|
 |          1 |         1 |           1 |        1 |          750.00 |
 |          2 |         1 |           2 |        1 |          320.00 |
@@ -33,7 +33,7 @@
 
 # Tabla: Productos
 
-**| id_producto | nombre                | descripcion                          | precio | stock | categoria    |**
+| id_producto | nombre                | descripcion                          | precio | stock | categoria    |
 |-------------|-----------------------|--------------------------------------|--------|-------|--------------|
 |           1 | Laptop Dell Inspiron  | Laptop 15" Intel i5                  | 750.00 |    12 | Electrónica  |
 |           2 | Smartphone Xiaomi     | Redmi Note 11 Pro                    | 320.00 |    30 | Electrónica  |
@@ -45,7 +45,7 @@
 
 # Tabla: Pagos
 
-**| id_detalle | id_pedido | id_producto | cantidad | precio_unitario |**
+| id_detalle | id_pedido | id_producto | cantidad | precio_unitario |
 |------------|-----------|-------------|----------|-----------------|
 |          1 |         1 |           1 |        1 |          750.00 |
 |          2 |         1 |           2 |        1 |          320.00 |
