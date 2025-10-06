@@ -1,0 +1,221 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+\geometry{margin=2.5cm}
+\setstretch{1.25}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  urlcolor=blue!50!black
+}
+
+\begin{document}
+
+\title{Introducción a los Diagramas Entidad--Relación (ER) con la base de datos \textit{Sakila}}
+\author{Departamento de Informática}
+\date{}
+\maketitle
+
+\section*{1. Objetivo del documento}
+Este texto introduce los conceptos fundamentales del modelado Entidad--Relación (ER) usando como caso real la base de datos \textbf{Sakila} (videoclub). 
+
+
+\section*{Introducción a la base de datos \textit{Sakila}}
+
+La base de datos \textbf{Sakila} es un modelo de ejemplo desarrollado por \textbf{MySQL} con fines educativos. 
+Su propósito es mostrar cómo se estructura y gestiona un sistema de información realista mediante un modelo entidad–relación completo. 
+El dominio elegido es el de un \textbf{videoclub internacional} que ofrece servicios de \textbf{alquiler de películas} en varias tiendas distribuidas por diferentes países.
+
+El objetivo de Sakila no es servir como una base de datos de producción, sino como una herramienta de aprendizaje y demostración. 
+Permite estudiar cómo se definen las \textbf{entidades}, las \textbf{relaciones}, las \textbf{claves primarias y foráneas}, y cómo se representan los distintos tipos de cardinalidad (1:1, 1:N, N:M). 
+También resulta idónea para practicar consultas SQL, la normalización, el diseño físico y la integridad referencial.
+
+\subsection*{1. Contexto del modelo}
+
+Sakila reproduce de forma simplificada la operativa de un videoclub: 
+los clientes alquilan películas, los empleados gestionan los pagos y las devoluciones, 
+y cada tienda mantiene su propio inventario. 
+Las películas están descritas con información detallada —título, año, idioma, duración, clasificación, actores y categorías— 
+y se distribuyen entre distintas tiendas ubicadas en diversas ciudades y países.
+
+El modelo está completamente normalizado e incluye los principales elementos que intervienen en el negocio:
+\begin{itemize}
+  \item \textbf{Clientes} y sus datos de contacto.
+  \item \textbf{Empleados} y \textbf{tiendas} físicas.
+  \item \textbf{Películas}, \textbf{idiomas}, \textbf{categorías} y \textbf{actores}.
+  \item \textbf{Inventario}, \textbf{alquileres} y \textbf{pagos}.
+\end{itemize}
+
+\subsection*{2. Objetivo pedagógico}
+
+Esta base de datos es ideal para introducir el \textbf{modelo Entidad–Relación (ER)} 
+porque contiene todos los casos que un diseñador debe dominar:
+\begin{itemize}
+  \item Entidades fuertes y débiles.
+  \item Relaciones de los tres tipos posibles: 1:1, 1:N y N:M.
+  \item Claves primarias simples y compuestas.
+  \item Tablas intermedias con atributos propios.
+\end{itemize}
+
+Gracias a esta riqueza estructural, Sakila permite observar cómo un modelo conceptual se traduce al modelo relacional 
+y cómo las relaciones se implementan mediante claves foráneas.
+
+\subsection*{3. Estructura general}
+
+La base de datos contiene aproximadamente dieciséis tablas, organizadas en tres bloques principales:
+
+\begin{enumerate}
+  \item \textbf{Bloque de Catálogo:} contiene la información relacionada con las películas y su clasificación.  
+  Incluye tablas como:  
+  \texttt{film}, \texttt{actor}, \texttt{category}, \texttt{language}, \texttt{film\_actor}, \texttt{film\_category}.
+
+  \item \textbf{Bloque de Operaciones del videoclub:} representa la actividad diaria del negocio, es decir, los alquileres, los pagos y la gestión de clientes y empleados.  
+  Incluye tablas como:  
+  \texttt{inventory}, \texttt{rental}, \texttt{payment}, \texttt{store}, \texttt{staff}, \texttt{customer}.
+
+  \item \textbf{Bloque de Ubicación geográfica:} almacena la información sobre direcciones, ciudades y países, que se utiliza para vincular tiendas, clientes y empleados con sus ubicaciones.  
+  Incluye tablas como:  
+  \texttt{address}, \texttt{city}, \texttt{country}.
+\end{enumerate}
+
+
+Cada bloque está conectado con los demás mediante \textbf{claves foráneas}, 
+formando una red de relaciones que permite representar la totalidad de la información necesaria 
+para la gestión de un videoclub.
+
+\section*{2. Conceptos básicos}
+\subsection*{2.1 Entidad}
+Una \textbf{entidad} es un tipo de objeto del mundo real sobre el que queremos guardar información. En Sakila, ejemplos de entidades son:
+\texttt{film} (película), \texttt{actor}, \texttt{customer} (cliente), \texttt{store} (tienda), \texttt{rental} (alquiler), \texttt{payment} (pago), \texttt{address} (dirección), \texttt{city}, \texttt{country}, \texttt{language}.
+
+\subsection*{2.2 Atributo}
+Un \textbf{atributo} es un dato que describe a la entidad. Por ejemplo, en \texttt{film}: \texttt{title} (título), \texttt{length} (duración), \texttt{release\_year} (año), \texttt{rating}; en \texttt{actor}: \texttt{first\_name}, \texttt{last\_name}.
+
+\subsection*{2.3 Clave primaria (PK)}
+La \textbf{clave primaria} identifica \emph{de manera única} cada fila de una tabla. No puede repetirse ni ser nula.
+Ejemplos: \texttt{film(film\_id)}, \texttt{actor(actor\_id)}, \texttt{customer(customer\_id)}.
+
+\subsection*{2.4 Clave foránea (FK)}
+Una \textbf{clave foránea} es un atributo en una tabla que referencia la clave primaria de otra tabla, estableciendo una relación entre ambas. Ejemplos:
+\begin{itemize}
+  \item \texttt{rental.customer\_id} $\rightarrow$ \texttt{customer(customer\_id)}.
+  \item \texttt{inventory.film\_id} $\rightarrow$ \texttt{film(film\_id)}.
+\end{itemize}
+
+\section*{3. Entidades fuertes y débiles}
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Fuertes} (existen por sí mismas): \texttt{film}, \texttt{actor}, \texttt{category}, \texttt{customer}, \texttt{staff}, \texttt{store}, \texttt{rental}, \texttt{payment}, \texttt{address}, \texttt{city}, \texttt{country}, \texttt{language}.
+  \item \textbf{Débiles / puente} (dependen de otras): \texttt{film\_actor}, \texttt{film\_category}. En Sakila, \texttt{inventory} depende lógicamente de \texttt{film} y \texttt{store} (es una copia física de una película en una tienda), aunque tenga PK propia.
+\end{itemize}
+
+\section*{4. Tipos de relaciones (cardinalidades)}
+\subsection*{4.1 Relación 1:N (uno a muchos)}
+Un registro de A se asocia con muchos de B, pero cada B con exactamente uno de A.
+Ejemplos:
+\begin{itemize}
+  \item \texttt{country (1)} $\rightarrow$ \texttt{city (N)}.
+  \item \texttt{city (1)} $\rightarrow$ \texttt{address (N)}.
+  \item \texttt{store (1)} $\rightarrow$ \texttt{staff (N)}.
+  \item \texttt{customer (1)} $\rightarrow$ \texttt{rental (N)}.
+  \item \texttt{rental (1)} $\rightarrow$ \texttt{payment (N)}.
+  \item \texttt{film (1)} $\rightarrow$ \texttt{inventory (N)}.
+\end{itemize}
+
+\subsection*{4.2 Relación 1:1 (uno a uno)}
+Cada registro de A se asocia con \emph{exactamente uno} de B, y viceversa. En Sakila, el ejemplo didáctico es:
+\begin{itemize}
+  \item \texttt{store} $\leftrightarrow$ \texttt{staff} (manager): cada tienda tiene un único gerente (referenciado por \texttt{store.manager\_staff\_id}); para imponer realmente 1:1 se requiere una \textbf{restricción UNIQUE} sobre \texttt{store.manager\_staff\_id} (y coherencia con \texttt{staff.store\_id}).
+\end{itemize}
+\textit{Nota:} Muchos escenarios 1:1 se modelan en la práctica como 1:N con una restricción \texttt{UNIQUE} en la FK del lado N.
+
+\subsection*{4.3 Relación N:M (muchos a muchos)}
+Si una película puede tener \emph{muchos} actores y un actor puede participar en \emph{muchas} películas, no se puede guardar correctamente con una sola FK.
+%
+Piénsalo por un momento y convéncete de ello.
+
+\textbf{Necesidad de tabla intermedia:}
+\begin{enumerate}[label=\alph*)]
+  \item Sin tabla intermedia, sólo podríamos registrar ``un actor por película'' (FK en \texttt{film}) o ``una película por actor'' (FK en \texttt{actor}), lo cual es incorrecto.
+  \item La tabla intermedia (\texttt{film\_actor}) contiene \textbf{dos FKs}, una a cada entidad principal, y convierte la N:M en \textbf{dos relaciones 1:N} (\texttt{film} $\rightarrow$ \texttt{film\_actor} y \texttt{actor} $\rightarrow$ \texttt{film\_actor}).
+  \item Para \textbf{evitar duplicados} (el mismo actor repetido para la misma película), la PK suele ser \textbf{compuesta} por ambas FKs:
+  \[
+    \texttt{PRIMARY KEY (film\_id, actor\_id)}
+  \]
+\end{enumerate}
+
+\paragraph{Atributos en tablas intermedias (muy importante).}
+Las tablas intermedias \emph{no sólo} guardan las FKs. \textbf{Pueden y suelen tener atributos propios}, por ejemplo, la tabla \texttt{film\_actor} representa la tabla intermedia entre \texttt{film} y \texttt{actor} y tiene estos atributos:
+
+\begin{itemize}
+  \item \texttt{film\_actor.rol} \,(\emph{principal, secundario, cameo}), 
+  \item \texttt{film\_actor.orden\_facturacion} \,(posición en los créditos),
+  \item \texttt{film\_actor.fecha\_contrato} \,(cuándo se incorporó),
+  \item \texttt{film\_actor.cache} \,(importe pactado),
+  \item \texttt{last\_update} \,(técnico; Sakila lo incluye a menudo).
+\end{itemize}
+En Sakila, \texttt{film\_actor} y \texttt{film\_category} ya incluyen un atributo técnico \texttt{last\_update}. En un sistema real añadiríamos los campos de negocio que correspondan a la relación.
+
+\paragraph{Resumen de N:M en Sakila.}
+\begin{itemize}
+  \item \texttt{film} $\leftrightarrow$ \texttt{actor} \,$\Rightarrow$\, \texttt{film\_actor(film\_id, actor\_id, last\_update, \dots)}
+  \item \texttt{film} $\leftrightarrow$ \texttt{category} \,$\Rightarrow$\, \texttt{film\_category(film\_id, category\_id, last\_update, \dots)}
+\end{itemize}
+
+\section*{5. Patrón de mapeo ER $\rightarrow$ relacional}
+\begin{enumerate}
+  \item \textbf{Relación 1:N} $\rightarrow$ FK en la tabla del lado N que hace referencia a la PK en la tabla del 1.
+  \item \textbf{Relación 1:1} $\rightarrow$ FK con \texttt{UNIQUE} en el lado que almacena la referencia (para “forzar” 1:1).
+  \item \textbf{Relación N:M} $\rightarrow$ \textbf{tabla intermedia} con FKs a ambas tablas y \textbf{PK compuesta} (o PK artificial + \texttt{UNIQUE(fk1,fk2)}).
+  \item Añadir \textbf{atributos de la relación} (si existen) a la \textbf{tabla intermedia}.
+%  \item Definir \textbf{acciones} de integridad (\texttt{ON DELETE/UPDATE}) de forma coherente.
+%  \item \textbf{Entidad fuerte} $\rightarrow$ \textbf{tabla} con PK (normalmente un identificador numérico).
+\end{enumerate}
+
+\section*{6. Sakila: mini–mapa de algunas relaciones}
+\begin{verbatim}
+country (1) -> city (N) -> address (N) -> customer (N)
+                               \
+                                -> staff (N)
+store (1) -> customer (N)
+store (1) -> inventory (N) -> rental (N) -> payment (N)
+film (1) -> inventory (N)
+film (N) -> film_actor <- (N) actor
+film (N) -> film_category <- (N) category
+\end{verbatim}
+
+\section*{7. Tarea práctica (para entregar)}
+\textbf{Actividad: Genera el ER en MySQL Workbench a partir del caso Sakila} y documenta tus decisiones.
+
+\subsection*{7.1 Pasos en MySQL Workbench}
+\begin{enumerate}
+  \item Abre MySQL Workbench.
+	\item "Database" -> "Reverse Engineer" 
+	\item Selecciona solamente las tablas.
+  \end{enumerate}
+
+\subsection*{7.2 Entregables}
+\begin{itemize}
+  \item Diagrama EER (captura en PDF o PNG) donde se vean claramente las tablas y las relaciones.
+  \item Documento breve (1--2 páginas) respondiendo:
+    \begin{enumerate}
+      \item ¿Cuáles son las \textbf{claves primarias} de cada tabla?
+      \item ¿Qué \textbf{claves foráneas} existen y qué relación representan (1:1, 1:N, N:M)?
+      \item En las N:M, ¿qué \textbf{atributos adicionales} tienen las \textbf{tablas intermedias} y por qué?
+      \item ¿Cómo se garantiza que no haya \textbf{duplicados} en la tabla intermedia?
+      \item ¿Recuerdas la base de datos tienda\_online? ¿Qué relaciones N:M y 1:N tenía?
+    \end{enumerate}
+\end{itemize}
+
+\bigskip
+\noindent\textbf{Recordatorio clave sobre N:M:} la tabla intermedia es el \emph{lugar correcto} para poner los datos que describen la \emph{relación} (no a los extremos). Ejemplo: en \texttt{film\_actor}, el \textit{rol} o el \textit{orden de facturación} describen ``la participación de ese actor en esa película'', no al actor ni a la película por separado.
+
+\end{document}
