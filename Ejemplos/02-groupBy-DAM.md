@@ -164,5 +164,13 @@ ORDER BY categoria,
 ```
 
 
+## 5) ¿Cuántos clientes cuyo nombre empieza por 'A' se han registrado cada año?
+
+
+## 6) ¿Cuántos productos se han pedido en cada pedido?
+
+
+## 7) Obtén el listado de los pedidos que han solicitado más de 10 productos
+
 
 
