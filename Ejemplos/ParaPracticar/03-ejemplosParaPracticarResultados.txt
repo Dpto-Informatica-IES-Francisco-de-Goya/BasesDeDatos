@@ -1,0 +1,1411 @@
+
+===== CONSULTA 1 =====
+cliente	pedido
+Adriana Navarro	102
+Adriana Ramos	33
+Adriana Ramos	58
+Adriana Ramos	73
+Adriana Ramos	121
+Alba Domínguez	98
+Alba Domínguez	99
+Alba Domínguez	128
+Alba Domínguez	152
+Alba Martínez	65
+Alba Sánchez	37
+Alba Sánchez	90
+Alicia Vázquez	19
+Alicia Vázquez	49
+Alicia Vázquez	130
+Alicia Vázquez	138
+Ana Torres	1
+Ana Torres	3
+Ana Torres	14
+Ana Torres	16
+Ana Torres	74
+Ana Torres	150
+Andrés García	34
+Andrés García	63
+Andrés García	111
+Andrés García	124
+Carla Gómez	4
+Carla Gómez	38
+Carla Gómez	103
+Daniel Moreno	84
+Daniel Moreno	136
+David Ruiz	5
+David Ruiz	18
+David Ruiz	82
+David Ruiz	91
+David Ruiz	101
+David Ruiz	108
+David Ruiz	127
+Elena Jiménez	32
+Elena Jiménez	135
+Elena Jiménez	155
+Elena López	11
+Elena López	141
+Gonzalo Jiménez	22
+Gonzalo Jiménez	43
+Gonzalo Jiménez	78
+Gonzalo Jiménez	147
+Hugo Gil	117
+Hugo Gil	146
+Hugo Ramírez	51
+Hugo Ramírez	77
+Hugo Ramírez	132
+Hugo Ramírez	148
+Hugo Ramírez	149
+Hugo Sánchez	12
+Hugo Sánchez	104
+Hugo Sánchez	142
+Hugo Sánchez	145
+Javier Romero	9
+Javier Romero	114
+Javier Romero	131
+Javier Romero	140
+José Fernández	6
+José Fernández	21
+José Fernández	55
+José Fernández	59
+José Fernández	86
+José Fernández	123
+José Fernández	151
+Juan Álvarez	50
+Juan Álvarez	134
+Laura Álvarez	10
+Laura Álvarez	94
+Laura Álvarez	107
+Laura Ortega	68
+Laura Ortega	92
+Laura Ortega	129
+Laura Ortega	133
+Laura Ruiz	54
+Laura Ruiz	57
+Laura Ruiz	60
+Laura Ruiz	81
+Laura Ruiz	115
+Lucía Domínguez	110
+Lucía Suárez	28
+Lucía Suárez	44
+Lucía Suárez	56
+Lucía Suárez	71
+Lucía Suárez	93
+Lucía Suárez	153
+Luis Méndez	2
+Luis Méndez	61
+Luis Méndez	137
+María Alonso	36
+María Alonso	72
+María Alonso	116
+María García	48
+María García	88
+María García	96
+María García	126
+María García	154
+Marta Alonso	52
+Marta Alonso	87
+Marta Alonso	95
+Marta Castro	66
+Marta Castro	70
+Marta Castro	76
+Marta Gil	24
+Marta Gil	75
+Marta Gil	89
+Marta Gil	109
+Miguel Sánchez	46
+Miguel Sánchez	97
+Nicolás Álvarez	30
+Nicolás Álvarez	122
+Nicolás Álvarez	143
+Nicolás González	27
+Nicolás González	40
+Nicolás González	100
+Nicolás Serrano	13
+Nicolás Serrano	80
+Nicolás Serrano	118
+Nicolás Serrano	120
+Noelia Torres	42
+Noelia Torres	64
+Noelia Torres	83
+Noelia Torres	144
+Pablo Gutiérrez	26
+Pablo Gutiérrez	31
+Pablo Gutiérrez	125
+Paula Ramírez	7
+Paula Ramírez	8
+Paula Ramírez	15
+Raúl Suárez	20
+Raúl Suárez	35
+Raúl Suárez	39
+Raúl Suárez	105
+Sofía Alonso	67
+Sofía Alonso	79
+Sofía Paredes	29
+Sofía Paredes	47
+Sofía Paredes	69
+Sofía Paredes	113
+Sofía Paredes	139
+Sofía Romero	23
+Sofía Romero	45
+Sofía Sánchez	17
+Sofía Sánchez	25
+Sofía Sánchez	41
+Sofía Sánchez	53
+Sofía Sánchez	106
+Valeria García	62
+Valeria García	85
+Valeria García	112
+Valeria García	119
+
+===== CONSULTA 2 =====
+producto	pedido
+Altavoces 2.0	8
+Altavoces 2.0	16
+Altavoces 2.0	20
+Altavoces 2.0	36
+Altavoces 2.0	45
+Altavoces 2.0	46
+Altavoces 2.0	56
+Altavoces 2.0	59
+Altavoces 2.0	61
+Altavoces 2.0	69
+Altavoces 2.0	70
+Altavoces 2.0	72
+Altavoces 2.0	75
+Altavoces 2.0	104
+Altavoces 2.0	107
+Altavoces 2.0	112
+Altavoces 2.0	127
+Altavoces 2.0	134
+Altavoces 2.0	136
+Altavoces 2.0	138
+Altavoces 2.0	142
+Altavoces 2.0	152
+Auriculares Bluetooth	3
+Auriculares Bluetooth	13
+Auriculares Bluetooth	15
+Auriculares Bluetooth	30
+Auriculares Bluetooth	35
+Auriculares Bluetooth	40
+Auriculares Bluetooth	58
+Auriculares Bluetooth	65
+Auriculares Bluetooth	79
+Auriculares Bluetooth	80
+Auriculares Bluetooth	91
+Auriculares Bluetooth	102
+Auriculares Bluetooth	109
+Auriculares Bluetooth	116
+Auriculares Bluetooth	121
+Auriculares Bluetooth	129
+Auriculares Bluetooth	132
+Auriculares Bluetooth	141
+Auriculares Bluetooth	151
+Auriculares Bluetooth	153
+Cable HDMI 2.1	10
+Cable HDMI 2.1	26
+Cable HDMI 2.1	39
+Cable HDMI 2.1	45
+Cable HDMI 2.1	52
+Cable HDMI 2.1	53
+Cable HDMI 2.1	59
+Cable HDMI 2.1	68
+Cable HDMI 2.1	78
+Cable HDMI 2.1	87
+Cable HDMI 2.1	93
+Cable HDMI 2.1	110
+Cable HDMI 2.1	124
+Cable HDMI 2.1	155
+Cámara Web 1080p	7
+Cámara Web 1080p	23
+Cámara Web 1080p	28
+Cámara Web 1080p	37
+Cámara Web 1080p	83
+Cámara Web 1080p	88
+Cámara Web 1080p	89
+Cámara Web 1080p	91
+Cámara Web 1080p	100
+Cámara Web 1080p	104
+Cámara Web 1080p	124
+Cámara Web 1080p	132
+Cámara Web 1080p	139
+Cámara Web 1080p	142
+Disco SSD 1TB	6
+Disco SSD 1TB	12
+Disco SSD 1TB	32
+Disco SSD 1TB	33
+Disco SSD 1TB	35
+Disco SSD 1TB	36
+Disco SSD 1TB	39
+Disco SSD 1TB	61
+Disco SSD 1TB	65
+Disco SSD 1TB	68
+Disco SSD 1TB	78
+Disco SSD 1TB	90
+Disco SSD 1TB	91
+Disco SSD 1TB	111
+Disco SSD 1TB	114
+Disco SSD 1TB	117
+Disco SSD 1TB	151
+Escritorio	5
+Escritorio	9
+Escritorio	13
+Escritorio	31
+Escritorio	34
+Escritorio	37
+Escritorio	41
+Escritorio	50
+Escritorio	70
+Escritorio	77
+Escritorio	92
+Escritorio	111
+Escritorio	118
+Escritorio	125
+Escritorio	133
+Escritorio	134
+Escritorio	153
+Escritorio en L	8
+Escritorio en L	12
+Escritorio en L	16
+Escritorio en L	29
+Escritorio en L	42
+Escritorio en L	71
+Escritorio en L	73
+Escritorio en L	93
+Escritorio en L	102
+Escritorio en L	132
+Escritorio en L	144
+Escritorio en L	151
+Fuente 650W 80+ Bronze	24
+Fuente 650W 80+ Bronze	32
+Fuente 650W 80+ Bronze	43
+Fuente 650W 80+ Bronze	56
+Fuente 650W 80+ Bronze	103
+Fuente 650W 80+ Bronze	117
+Fuente 650W 80+ Bronze	139
+Hub USB-C 6 en 1	16
+Hub USB-C 6 en 1	33
+Hub USB-C 6 en 1	41
+Hub USB-C 6 en 1	68
+Hub USB-C 6 en 1	71
+Hub USB-C 6 en 1	85
+Hub USB-C 6 en 1	86
+Hub USB-C 6 en 1	87
+Hub USB-C 6 en 1	90
+Hub USB-C 6 en 1	107
+Hub USB-C 6 en 1	115
+Hub USB-C 6 en 1	129
+Hub USB-C 6 en 1	134
+Hub USB-C 6 en 1	141
+Hub USB-C 6 en 1	148
+Hub USB-C 6 en 1	154
+Impresora HP DeskJet	10
+Impresora HP DeskJet	22
+Impresora HP DeskJet	37
+Impresora HP DeskJet	45
+Impresora HP DeskJet	51
+Impresora HP DeskJet	54
+Impresora HP DeskJet	57
+Impresora HP DeskJet	58
+Impresora HP DeskJet	67
+Impresora HP DeskJet	73
+Impresora HP DeskJet	81
+Impresora HP DeskJet	94
+Impresora HP DeskJet	98
+Impresora HP DeskJet	99
+Impresora HP DeskJet	123
+Impresora HP DeskJet	132
+Impresora HP DeskJet	140
+Impresora HP DeskJet	141
+Impresora HP DeskJet	143
+Lámpara LED escritorio	17
+Lámpara LED escritorio	32
+Lámpara LED escritorio	41
+Lámpara LED escritorio	74
+Lámpara LED escritorio	84
+Lámpara LED escritorio	105
+Lámpara LED escritorio	120
+Lámpara LED escritorio	132
+Lámpara LED escritorio	142
+Lámpara LED escritorio	147
+Laptop Dell Inspiron	1
+Laptop Dell Inspiron	6
+Laptop Dell Inspiron	11
+Laptop Dell Inspiron	17
+Laptop Dell Inspiron	25
+Laptop Dell Inspiron	26
+Laptop Dell Inspiron	27
+Laptop Dell Inspiron	28
+Laptop Dell Inspiron	32
+Laptop Dell Inspiron	48
+Laptop Dell Inspiron	64
+Laptop Dell Inspiron	83
+Laptop Dell Inspiron	84
+Laptop Dell Inspiron	89
+Laptop Dell Inspiron	106
+Laptop Dell Inspiron	122
+Laptop Dell Inspiron	126
+Laptop Dell Inspiron	130
+Laptop Dell Inspiron	140
+Laptop Dell Inspiron	151
+Laptop Dell Inspiron	153
+Memoria RAM 16GB	14
+Memoria RAM 16GB	26
+Memoria RAM 16GB	30
+Memoria RAM 16GB	31
+Memoria RAM 16GB	36
+Memoria RAM 16GB	38
+Memoria RAM 16GB	40
+Memoria RAM 16GB	42
+Memoria RAM 16GB	49
+Memoria RAM 16GB	50
+Memoria RAM 16GB	65
+Memoria RAM 16GB	77
+Memoria RAM 16GB	83
+Memoria RAM 16GB	127
+Micrófono USB	20
+Micrófono USB	57
+Micrófono USB	58
+Micrófono USB	72
+Micrófono USB	81
+Micrófono USB	89
+Micrófono USB	92
+Micrófono USB	101
+Micrófono USB	127
+Micrófono USB	137
+Micrófono USB	141
+Micrófono USB	143
+Micrófono USB	150
+Micrófono USB	153
+Mochila para portátil	7
+Mochila para portátil	30
+Mochila para portátil	37
+Mochila para portátil	59
+Mochila para portátil	60
+Mochila para portátil	63
+Mochila para portátil	71
+Mochila para portátil	77
+Mochila para portátil	91
+Mochila para portátil	93
+Mochila para portátil	95
+Mochila para portátil	111
+Mochila para portátil	114
+Mochila para portátil	125
+Mochila para portátil	127
+Mochila para portátil	130
+Mochila para portátil	131
+Mochila para portátil	133
+Mochila para portátil	144
+Mochila para portátil	146
+Mochila para portátil	147
+Mochila para portátil	153
+Monitor LG 24"	29
+Monitor LG 24"	47
+Monitor LG 24"	52
+Monitor LG 24"	64
+Monitor LG 24"	68
+Monitor LG 24"	93
+Monitor LG 24"	94
+Monitor LG 24"	96
+Monitor LG 24"	110
+NAS 2 Bahías	23
+NAS 2 Bahías	39
+NAS 2 Bahías	48
+NAS 2 Bahías	62
+NAS 2 Bahías	78
+NAS 2 Bahías	86
+NAS 2 Bahías	108
+NAS 2 Bahías	112
+NAS 2 Bahías	113
+NAS 2 Bahías	116
+NAS 2 Bahías	133
+NAS 2 Bahías	142
+NAS 2 Bahías	147
+Organizador de cables	23
+Organizador de cables	29
+Organizador de cables	31
+Organizador de cables	42
+Organizador de cables	54
+Organizador de cables	71
+Organizador de cables	80
+Organizador de cables	106
+Organizador de cables	107
+Organizador de cables	120
+Organizador de cables	122
+Organizador de cables	125
+Organizador de cables	133
+Organizador de cables	143
+Placa Base MSI	7
+Placa Base MSI	19
+Placa Base MSI	33
+Placa Base MSI	38
+Placa Base MSI	50
+Placa Base MSI	53
+Placa Base MSI	54
+Placa Base MSI	62
+Placa Base MSI	65
+Placa Base MSI	69
+Placa Base MSI	70
+Placa Base MSI	80
+Placa Base MSI	96
+Placa Base MSI	99
+Placa Base MSI	128
+Placa Base MSI	131
+Placa Base MSI	146
+Ratón Inalámbrico	8
+Ratón Inalámbrico	19
+Ratón Inalámbrico	22
+Ratón Inalámbrico	24
+Ratón Inalámbrico	33
+Ratón Inalámbrico	46
+Ratón Inalámbrico	50
+Ratón Inalámbrico	52
+Ratón Inalámbrico	68
+Ratón Inalámbrico	92
+Ratón Inalámbrico	131
+Ratón Inalámbrico	136
+Ratón Inalámbrico	139
+Ratón Inalámbrico	140
+Regleta 6 tomas	10
+Regleta 6 tomas	17
+Regleta 6 tomas	28
+Regleta 6 tomas	51
+Regleta 6 tomas	82
+Regleta 6 tomas	87
+Regleta 6 tomas	104
+Regleta 6 tomas	137
+Regleta 6 tomas	144
+Regleta 6 tomas	151
+Router Wi-Fi 6	14
+Router Wi-Fi 6	16
+Router Wi-Fi 6	21
+Router Wi-Fi 6	45
+Router Wi-Fi 6	55
+Router Wi-Fi 6	58
+Router Wi-Fi 6	81
+Router Wi-Fi 6	83
+Router Wi-Fi 6	88
+Router Wi-Fi 6	92
+Router Wi-Fi 6	96
+Router Wi-Fi 6	104
+Router Wi-Fi 6	107
+Router Wi-Fi 6	128
+Router Wi-Fi 6	136
+Router Wi-Fi 6	142
+Silla de Oficina	25
+Silla de Oficina	29
+Silla de Oficina	30
+Silla de Oficina	44
+Silla de Oficina	47
+Silla de Oficina	52
+Silla de Oficina	57
+Silla de Oficina	66
+Silla de Oficina	77
+Silla de Oficina	86
+Silla de Oficina	97
+Silla de Oficina	109
+Silla de Oficina	115
+Silla Gamer	4
+Silla Gamer	18
+Silla Gamer	39
+Silla Gamer	42
+Silla Gamer	44
+Silla Gamer	46
+Silla Gamer	51
+Silla Gamer	64
+Silla Gamer	73
+Silla Gamer	77
+Silla Gamer	90
+Silla Gamer	97
+Silla Gamer	105
+Silla Gamer	120
+Silla Gamer	134
+Silla Gamer	145
+Silla Gamer Pro	14
+Silla Gamer Pro	15
+Silla Gamer Pro	23
+Silla Gamer Pro	32
+Silla Gamer Pro	50
+Silla Gamer Pro	82
+Silla Gamer Pro	91
+Silla Gamer Pro	94
+Silla Gamer Pro	97
+Silla Gamer Pro	128
+Silla Gamer Pro	133
+Silla Gamer Pro	136
+Silla Gamer Pro	145
+Silla Gamer Pro	149
+Smartphone Xiaomi	1
+Smartphone Xiaomi	2
+Smartphone Xiaomi	14
+Smartphone Xiaomi	15
+Smartphone Xiaomi	19
+Smartphone Xiaomi	54
+Smartphone Xiaomi	76
+Smartphone Xiaomi	96
+Smartphone Xiaomi	112
+Smartphone Xiaomi	128
+Smartphone Xiaomi	140
+Smartphone Xiaomi	152
+Smartwatch Amazfit	7
+Smartwatch Amazfit	8
+Smartwatch Amazfit	14
+Smartwatch Amazfit	16
+Smartwatch Amazfit	17
+Smartwatch Amazfit	36
+Smartwatch Amazfit	40
+Smartwatch Amazfit	58
+Smartwatch Amazfit	62
+Smartwatch Amazfit	67
+Smartwatch Amazfit	76
+Smartwatch Amazfit	89
+Smartwatch Amazfit	93
+Smartwatch Amazfit	100
+Smartwatch Amazfit	103
+Smartwatch Amazfit	105
+Smartwatch Amazfit	107
+Smartwatch Amazfit	123
+Smartwatch Amazfit	130
+Smartwatch Amazfit	131
+Smartwatch Amazfit	140
+Smartwatch Amazfit	144
+Smartwatch Amazfit	148
+Tablet Samsung	8
+Tablet Samsung	10
+Tablet Samsung	24
+Tablet Samsung	28
+Tablet Samsung	36
+Tablet Samsung	74
+Tablet Samsung	92
+Tablet Samsung	102
+Tablet Samsung	104
+Tablet Samsung	117
+Tablet Samsung	119
+Tablet Samsung	120
+Tablet Samsung	128
+Tablet Samsung	129
+Tablet Samsung	137
+Tarjeta Gráfica RTX 3060	17
+Tarjeta Gráfica RTX 3060	19
+Tarjeta Gráfica RTX 3060	46
+Tarjeta Gráfica RTX 3060	48
+Tarjeta Gráfica RTX 3060	57
+Tarjeta Gráfica RTX 3060	67
+Tarjeta Gráfica RTX 3060	73
+Tarjeta Gráfica RTX 3060	94
+Tarjeta Gráfica RTX 3060	111
+Tarjeta Gráfica RTX 3060	117
+Tarjeta Gráfica RTX 3060	130
+Tarjeta Gráfica RTX 3060	135
+Tarjeta Gráfica RTX 3060	145
+Teclado Mecánico	12
+Teclado Mecánico	28
+Teclado Mecánico	37
+Teclado Mecánico	42
+Teclado Mecánico	45
+Teclado Mecánico	59
+Teclado Mecánico	65
+Teclado Mecánico	86
+Teclado Mecánico	99
+Teclado Mecánico	113
+Teclado Mecánico	149
+Teclado Mecánico	152
+
+===== CONSULTA 3 =====
+cliente	pedido	coste_total
+Lucía Suárez	28	4289.70
+Sofía Sánchez	17	3790.50
+Marta Gil	89	3422.00
+Noelia Torres	83	3243.87
+María García	48	3047.00
+Elena Jiménez	32	2957.97
+Alba Domínguez	128	2783.70
+Lucía Suárez	153	2701.80
+José Fernández	151	2593.98
+José Fernández	6	2409.98
+Pablo Gutiérrez	26	2408.95
+Laura Álvarez	94	2262.96
+María García	96	2236.86
+Hugo Sánchez	145	2234.00
+Alicia Vázquez	130	2129.70
+Laura Ortega	133	2004.59
+Alicia Vázquez	19	1954.00
+Noelia Torres	64	1809.99
+Laura Ortega	92	1753.90
+Nicolás Serrano	120	1743.98
+Adriana Navarro	102	1722.00
+Adriana Ramos	73	1713.00
+Laura Ruiz	57	1690.00
+Laura Ruiz	54	1636.97
+Juan Álvarez	50	1631.96
+Hugo Gil	117	1601.97
+Javier Romero	140	1584.00
+Daniel Moreno	84	1544.00
+Nicolás Álvarez	122	1509.99
+Nicolás González	27	1500.00
+Hugo Ramírez	77	1415.69
+Alba Domínguez	152	1389.88
+Miguel Sánchez	97	1336.00
+Noelia Torres	42	1257.87
+Hugo Sánchez	142	1240.58
+David Ruiz	91	1218.59
+Miguel Sánchez	46	1205.98
+Ana Torres	14	1196.76
+Elena Jiménez	135	1196.00
+Hugo Sánchez	12	1175.67
+Sofía Sánchez	25	1137.00
+Valeria García	62	1132.00
+Hugo Ramírez	149	1095.70
+José Fernández	86	1084.40
+Juan Álvarez	134	1079.88
+Ana Torres	1	1070.00
+Sofía Alonso	67	1065.00
+Hugo Ramírez	132	1045.00
+María Alonso	36	1024.92
+Valeria García	112	988.96
+Paula Ramírez	8	983.46
+Marta Castro	70	970.97
+Marta Alonso	52	970.44
+Adriana Ramos	58	934.80
+Noelia Torres	144	928.40
+Ana Torres	16	926.16
+Adriana Ramos	33	914.08
+Javier Romero	131	892.10
+Paula Ramírez	15	878.00
+Lucía Suárez	44	876.00
+Sofía Paredes	113	866.80
+Gonzalo Jiménez	78	862.96
+María Alonso	116	847.00
+Alba Sánchez	37	810.60
+Laura Ortega	68	799.55
+Marta Castro	76	798.00
+Sofía Sánchez	106	789.96
+Pablo Gutiérrez	125	789.58
+Pablo Gutiérrez	31	784.95
+Lucía Suárez	93	774.66
+Alba Sánchez	90	759.76
+Alba Martínez	65	752.56
+Elena López	11	750.00
+María García	126	750.00
+David Ruiz	108	747.00
+Hugo Sánchez	104	726.06
+Laura Álvarez	107	707.25
+Raúl Suárez	39	700.98
+Laura Álvarez	10	698.97
+Paula Ramírez	7	697.90
+Lucía Suárez	71	682.26
+Marta Gil	24	675.00
+Daniel Moreno	136	647.66
+Sofía Romero	45	631.33
+Javier Romero	9	630.00
+Nicolás Serrano	118	630.00
+Alba Domínguez	99	625.70
+Andrés García	111	623.89
+Sofía Sánchez	41	605.70
+Sofía Romero	23	565.97
+Elena López	141	500.60
+Nicolás Serrano	13	495.00
+Laura Ruiz	81	493.90
+Sofía Paredes	29	487.95
+Marta Gil	109	487.00
+Nicolás González	40	480.98
+Gonzalo Jiménez	22	474.50
+Raúl Suárez	105	461.00
+Nicolás Álvarez	143	443.97
+Gonzalo Jiménez	147	441.70
+María García	88	435.60
+Lucía Domínguez	110	425.94
+Andrés García	34	420.00
+Luis Méndez	137	415.00
+Nicolás Serrano	80	411.97
+Nicolás Álvarez	30	403.76
+Laura Ortega	129	398.70
+David Ruiz	127	390.86
+Marta Castro	66	387.00
+Carla Gómez	103	375.00
+David Ruiz	18	360.00
+José Fernández	59	347.44
+Luis Méndez	2	320.00
+José Fernández	55	319.60
+Ana Torres	74	317.00
+Hugo Ramírez	51	308.00
+Carla Gómez	38	298.96
+Laura Ruiz	115	297.90
+Nicolás González	100	295.00
+Lucía Suárez	56	260.99
+Sofía Paredes	47	258.99
+José Fernández	123	257.00
+Sofía Sánchez	53	249.99
+David Ruiz	82	248.50
+Sofía Paredes	139	244.50
+Valeria García	119	229.00
+Marta Alonso	87	227.06
+Hugo Gil	146	223.70
+David Ruiz	5	210.00
+Raúl Suárez	35	209.98
+Ana Torres	150	196.00
+Sofía Paredes	69	193.97
+Carla Gómez	4	180.00
+Alba Domínguez	98	178.00
+Valeria García	85	159.60
+Hugo Ramírez	148	158.80
+Javier Romero	114	149.79
+Raúl Suárez	20	147.98
+Andrés García	63	139.60
+Luis Méndez	61	129.97
+María Alonso	72	123.97
+Laura Ruiz	60	104.70
+Marta Alonso	95	104.70
+Marta Gil	75	99.96
+Alicia Vázquez	49	89.98
+José Fernández	21	79.90
+Adriana Ramos	121	75.00
+Alicia Vázquez	138	74.97
+Andrés García	124	69.99
+Gonzalo Jiménez	43	59.00
+David Ruiz	101	49.00
+María García	154	39.90
+Ana Torres	3	25.00
+Sofía Alonso	79	25.00
+Elena Jiménez	155	11.99
+
+===== CONSULTA 4 =====
+pedido	cliente	fecha_pedido
+76	Marta Castro	2024-01-16 23:04:06
+120	Nicolás Serrano	2024-01-20 23:24:47
+62	Valeria García	2024-02-05 07:21:29
+117	Hugo Gil	2024-02-23 06:50:55
+92	Laura Ortega	2024-02-24 04:47:14
+86	José Fernández	2024-03-01 19:12:50
+119	Valeria García	2024-03-03 10:46:42
+70	Marta Castro	2024-03-08 11:36:16
+26	Pablo Gutiérrez	2024-03-09 12:54:14
+8	Paula Ramírez	2024-03-09 22:58:56
+129	Laura Ortega	2024-03-20 08:40:09
+77	Hugo Ramírez	2024-03-24 13:08:23
+19	Alicia Vázquez	2024-04-01 15:21:06
+53	Sofía Sánchez	2024-04-28 02:49:10
+145	Hugo Sánchez	2024-05-03 22:26:59
+90	Alba Sánchez	2024-05-07 15:34:48
+61	Luis Méndez	2024-05-12 12:22:02
+68	Laura Ortega	2024-05-12 17:45:07
+27	Nicolás González	2024-05-25 16:05:00
+130	Alicia Vázquez	2024-06-10 08:32:30
+25	Sofía Sánchez	2024-06-11 16:22:12
+22	Gonzalo Jiménez	2024-06-16 09:21:24
+141	Elena López	2024-06-20 12:58:36
+83	Noelia Torres	2024-06-23 21:01:43
+88	María García	2024-07-04 09:03:36
+111	Andrés García	2024-07-09 20:08:34
+150	Ana Torres	2024-07-16 08:54:02
+138	Alicia Vázquez	2024-07-18 11:21:34
+37	Alba Sánchez	2024-07-24 17:54:37
+40	Nicolás González	2024-07-31 21:10:14
+100	Nicolás González	2024-08-16 07:38:23
+94	Laura Álvarez	2024-08-20 06:27:14
+78	Gonzalo Jiménez	2024-08-20 07:52:40
+139	Sofía Paredes	2024-08-30 08:53:45
+45	Sofía Romero	2024-08-31 03:45:22
+107	Laura Álvarez	2024-08-31 12:22:43
+85	Valeria García	2024-09-08 09:20:31
+52	Marta Alonso	2024-09-14 18:26:50
+152	Alba Domínguez	2024-09-17 15:21:00
+57	Laura Ruiz	2024-09-19 21:37:37
+28	Lucía Suárez	2024-09-22 11:14:30
+65	Alba Martínez	2024-09-28 06:43:50
+64	Noelia Torres	2024-10-30 02:17:30
+17	Sofía Sánchez	2024-10-31 12:27:44
+71	Lucía Suárez	2024-11-08 04:19:43
+75	Marta Gil	2024-11-08 13:11:45
+128	Alba Domínguez	2024-11-11 08:59:34
+110	Lucía Domínguez	2024-11-14 14:00:29
+87	Marta Alonso	2024-11-20 08:05:39
+149	Hugo Ramírez	2024-11-22 07:43:09
+42	Noelia Torres	2024-11-23 20:06:35
+10	Laura Álvarez	2024-11-24 01:35:05
+66	Marta Castro	2024-11-29 07:12:46
+153	Lucía Suárez	2024-11-29 22:17:40
+74	Ana Torres	2024-12-02 08:42:30
+116	María Alonso	2024-12-15 11:42:22
+97	Miguel Sánchez	2024-12-20 15:45:45
+82	David Ruiz	2024-12-20 16:05:11
+95	Marta Alonso	2024-12-22 17:32:18
+89	Marta Gil	2024-12-23 04:18:39
+98	Alba Domínguez	2025-01-01 08:54:38
+12	Hugo Sánchez	2025-01-06 23:09:18
+148	Hugo Ramírez	2025-01-09 02:25:02
+102	Adriana Navarro	2025-01-15 04:47:50
+23	Sofía Romero	2025-01-17 05:17:51
+30	Nicolás Álvarez	2025-01-31 11:25:48
+72	María Alonso	2025-02-02 00:15:34
+34	Andrés García	2025-02-04 16:16:23
+137	Luis Méndez	2025-02-05 06:48:16
+114	Javier Romero	2025-02-06 07:24:00
+6	José Fernández	2025-02-06 16:22:51
+106	Sofía Sánchez	2025-02-07 12:19:12
+24	Marta Gil	2025-02-14 02:59:59
+136	Daniel Moreno	2025-02-20 10:38:58
+101	David Ruiz	2025-02-25 15:05:06
+124	Andrés García	2025-03-03 14:46:22
+46	Miguel Sánchez	2025-03-04 09:48:02
+59	José Fernández	2025-03-04 23:52:27
+80	Nicolás Serrano	2025-03-07 21:03:31
+91	David Ruiz	2025-03-19 15:55:01
+135	Elena Jiménez	2025-03-19 22:32:32
+63	Andrés García	2025-03-20 02:10:46
+108	David Ruiz	2025-03-20 06:56:54
+49	Alicia Vázquez	2025-03-20 11:20:53
+33	Adriana Ramos	2025-04-01 14:18:12
+20	Raúl Suárez	2025-05-02 21:23:21
+29	Sofía Paredes	2025-05-11 18:49:48
+51	Hugo Ramírez	2025-05-12 20:38:03
+67	Sofía Alonso	2025-05-12 23:48:40
+132	Hugo Ramírez	2025-05-15 09:13:36
+58	Adriana Ramos	2025-05-18 23:57:07
+79	Sofía Alonso	2025-05-22 18:34:54
+144	Noelia Torres	2025-05-24 00:03:02
+118	Nicolás Serrano	2025-05-31 19:28:54
+140	Javier Romero	2025-06-03 23:57:31
+142	Hugo Sánchez	2025-06-09 10:12:15
+126	María García	2025-06-17 13:01:26
+54	Laura Ruiz	2025-06-19 19:08:47
+39	Raúl Suárez	2025-07-01 15:12:28
+134	Juan Álvarez	2025-07-13 03:57:51
+7	Paula Ramírez	2025-07-14 10:22:00
+103	Carla Gómez	2025-07-16 07:06:39
+16	Ana Torres	2025-07-17 02:39:18
+44	Lucía Suárez	2025-07-23 07:42:42
+60	Laura Ruiz	2025-07-25 04:49:19
+15	Paula Ramírez	2025-08-05 07:42:28
+81	Laura Ruiz	2025-08-07 06:41:09
+36	María Alonso	2025-08-14 12:00:30
+146	Hugo Gil	2025-08-21 20:42:36
+123	José Fernández	2025-08-23 17:58:05
+55	José Fernández	2025-08-25 08:07:24
+47	Sofía Paredes	2025-09-08 22:58:53
+
+===== CONSULTA 5 =====
+pedido	cliente	estado	coste_total
+83	Noelia Torres	pendiente	3243.87
+48	María García	pendiente	3047.00
+26	Pablo Gutiérrez	pendiente	2408.95
+94	Laura Álvarez	pendiente	2262.96
+57	Laura Ruiz	pendiente	1690.00
+67	Sofía Alonso	pendiente	1065.00
+132	Hugo Ramírez	pendiente	1045.00
+116	María Alonso	pendiente	847.00
+65	Alba Martínez	pendiente	752.56
+107	Laura Álvarez	pendiente	707.25
+7	Paula Ramírez	pendiente	697.90
+147	Gonzalo Jiménez	pendiente	441.70
+137	Luis Méndez	pendiente	415.00
+55	José Fernández	pendiente	319.60
+53	Sofía Sánchez	pendiente	249.99
+82	David Ruiz	pendiente	248.50
+87	Marta Alonso	pendiente	227.06
+35	Raúl Suárez	pendiente	209.98
+69	Sofía Paredes	pendiente	193.97
+72	María Alonso	pendiente	123.97
+95	Marta Alonso	pendiente	104.70
+3	Ana Torres	pendiente	25.00
+155	Elena Jiménez	pendiente	11.99
+130	Alicia Vázquez	cancelado	2129.70
+27	Nicolás González	cancelado	1500.00
+91	David Ruiz	cancelado	1218.59
+134	Juan Álvarez	cancelado	1079.88
+52	Marta Alonso	cancelado	970.44
+131	Javier Romero	cancelado	892.10
+76	Marta Castro	cancelado	798.00
+106	Sofía Sánchez	cancelado	789.96
+93	Lucía Suárez	cancelado	774.66
+11	Elena López	cancelado	750.00
+104	Hugo Sánchez	cancelado	726.06
+71	Lucía Suárez	cancelado	682.26
+29	Sofía Paredes	cancelado	487.95
+143	Nicolás Álvarez	cancelado	443.97
+103	Carla Gómez	cancelado	375.00
+51	Hugo Ramírez	cancelado	308.00
+115	Laura Ruiz	cancelado	297.90
+4	Carla Gómez	cancelado	180.00
+98	Alba Domínguez	cancelado	178.00
+20	Raúl Suárez	cancelado	147.98
+49	Alicia Vázquez	cancelado	89.98
+101	David Ruiz	cancelado	49.00
+
+===== CONSULTA 6 =====
+pedido	cliente	metodo_pago
+1	Ana Torres	tarjeta
+2	Luis Méndez	paypal
+3	Ana Torres	tarjeta
+5	David Ruiz	transferencia
+6	José Fernández	tarjeta
+8	Paula Ramírez	transferencia
+9	Javier Romero	paypal
+9	Javier Romero	transferencia
+10	Laura Álvarez	tarjeta
+12	Hugo Sánchez	paypal
+13	Nicolás Serrano	tarjeta
+14	Ana Torres	paypal
+16	Ana Torres	tarjeta
+17	Sofía Sánchez	transferencia
+17	Sofía Sánchez	transferencia
+18	David Ruiz	tarjeta
+19	Alicia Vázquez	tarjeta
+21	José Fernández	tarjeta
+22	Gonzalo Jiménez	paypal
+23	Sofía Romero	transferencia
+24	Marta Gil	transferencia
+25	Sofía Sánchez	paypal
+25	Sofía Sánchez	transferencia
+28	Lucía Suárez	transferencia
+30	Nicolás Álvarez	tarjeta
+31	Pablo Gutiérrez	paypal
+32	Elena Jiménez	tarjeta
+33	Adriana Ramos	transferencia
+34	Andrés García	transferencia
+35	Raúl Suárez	transferencia
+36	María Alonso	tarjeta
+37	Alba Sánchez	transferencia
+37	Alba Sánchez	tarjeta
+38	Carla Gómez	tarjeta
+39	Raúl Suárez	paypal
+39	Raúl Suárez	paypal
+40	Nicolás González	transferencia
+40	Nicolás González	tarjeta
+41	Sofía Sánchez	tarjeta
+42	Noelia Torres	transferencia
+43	Gonzalo Jiménez	paypal
+44	Lucía Suárez	tarjeta
+47	Sofía Paredes	tarjeta
+48	María García	tarjeta
+50	Juan Álvarez	tarjeta
+54	Laura Ruiz	tarjeta
+58	Adriana Ramos	tarjeta
+59	José Fernández	paypal
+60	Laura Ruiz	paypal
+61	Luis Méndez	paypal
+61	Luis Méndez	transferencia
+62	Valeria García	tarjeta
+62	Valeria García	transferencia
+63	Andrés García	paypal
+64	Noelia Torres	paypal
+66	Marta Castro	tarjeta
+68	Laura Ortega	transferencia
+70	Marta Castro	paypal
+74	Ana Torres	transferencia
+75	Marta Gil	tarjeta
+77	Hugo Ramírez	paypal
+78	Gonzalo Jiménez	paypal
+78	Gonzalo Jiménez	transferencia
+79	Sofía Alonso	tarjeta
+79	Sofía Alonso	transferencia
+80	Nicolás Serrano	tarjeta
+81	Laura Ruiz	tarjeta
+84	Daniel Moreno	paypal
+85	Valeria García	tarjeta
+86	José Fernández	paypal
+86	José Fernández	tarjeta
+87	Marta Alonso	tarjeta
+88	María García	paypal
+90	Alba Sánchez	paypal
+92	Laura Ortega	tarjeta
+92	Laura Ortega	transferencia
+96	María García	transferencia
+96	María García	paypal
+97	Miguel Sánchez	tarjeta
+97	Miguel Sánchez	transferencia
+99	Alba Domínguez	transferencia
+100	Nicolás González	transferencia
+102	Adriana Navarro	paypal
+104	Hugo Sánchez	tarjeta
+105	Raúl Suárez	transferencia
+108	David Ruiz	paypal
+109	Marta Gil	transferencia
+109	Marta Gil	paypal
+110	Lucía Domínguez	transferencia
+111	Andrés García	paypal
+112	Valeria García	paypal
+113	Sofía Paredes	tarjeta
+117	Hugo Gil	tarjeta
+118	Nicolás Serrano	tarjeta
+119	Valeria García	tarjeta
+120	Nicolás Serrano	paypal
+121	Adriana Ramos	tarjeta
+122	Nicolás Álvarez	tarjeta
+123	José Fernández	transferencia
+124	Andrés García	transferencia
+125	Pablo Gutiérrez	tarjeta
+126	María García	tarjeta
+127	David Ruiz	paypal
+127	David Ruiz	paypal
+128	Alba Domínguez	transferencia
+129	Laura Ortega	tarjeta
+132	Hugo Ramírez	tarjeta
+133	Laura Ortega	paypal
+135	Elena Jiménez	paypal
+136	Daniel Moreno	transferencia
+136	Daniel Moreno	transferencia
+138	Alicia Vázquez	paypal
+139	Sofía Paredes	tarjeta
+140	Javier Romero	paypal
+140	Javier Romero	transferencia
+141	Elena López	transferencia
+142	Hugo Sánchez	transferencia
+144	Noelia Torres	paypal
+145	Hugo Sánchez	tarjeta
+146	Hugo Gil	tarjeta
+148	Hugo Ramírez	paypal
+150	Ana Torres	tarjeta
+150	Ana Torres	tarjeta
+151	José Fernández	transferencia
+152	Alba Domínguez	tarjeta
+153	Lucía Suárez	tarjeta
+154	María García	transferencia
+
+===== CONSULTA 7 =====
+producto	cantidad	precio_unitario
+Cable HDMI 2.1	3	11.99
+Impresora HP DeskJet	4	89.00
+Regleta 6 tomas	4	19.50
+Tablet Samsung	1	229.00
+
+===== CONSULTA 8 =====
+pedido	cliente	fecha_pedido
+1	Ana Torres	2023-04-01 10:00:00
+5	David Ruiz	2023-04-11 13:00:00
+96	María García	2023-05-13 12:18:02
+113	Sofía Paredes	2023-05-19 08:05:29
+31	Pablo Gutiérrez	2023-05-23 13:59:20
+112	Valeria García	2023-05-27 05:25:59
+41	Sofía Sánchez	2023-06-08 13:30:04
+32	Elena Jiménez	2023-07-01 05:52:25
+13	Nicolás Serrano	2023-07-03 04:07:56
+56	Lucía Suárez	2023-07-05 08:36:02
+105	Raúl Suárez	2023-07-14 02:03:36
+84	Daniel Moreno	2023-09-09 05:08:29
+133	Laura Ortega	2023-09-14 21:53:03
+151	José Fernández	2023-10-05 21:07:56
+127	David Ruiz	2023-10-14 09:07:49
+43	Gonzalo Jiménez	2023-10-15 18:58:00
+18	David Ruiz	2023-10-18 22:35:34
+122	Nicolás Álvarez	2023-11-06 02:20:32
+125	Pablo Gutiérrez	2023-11-11 22:35:27
+38	Carla Gómez	2023-12-03 20:06:19
+14	Ana Torres	2023-12-20 04:45:24
+120	Nicolás Serrano	2024-01-20 23:24:47
+62	Valeria García	2024-02-05 07:21:29
+86	José Fernández	2024-03-01 19:12:50
+119	Valeria García	2024-03-03 10:46:42
+129	Laura Ortega	2024-03-20 08:40:09
+19	Alicia Vázquez	2024-04-01 15:21:06
+90	Alba Sánchez	2024-05-07 15:34:48
+68	Laura Ortega	2024-05-12 17:45:07
+141	Elena López	2024-06-20 12:58:36
+88	María García	2024-07-04 09:03:36
+150	Ana Torres	2024-07-16 08:54:02
+138	Alicia Vázquez	2024-07-18 11:21:34
+40	Nicolás González	2024-07-31 21:10:14
+78	Gonzalo Jiménez	2024-08-20 07:52:40
+139	Sofía Paredes	2024-08-30 08:53:45
+85	Valeria García	2024-09-08 09:20:31
+152	Alba Domínguez	2024-09-17 15:21:00
+28	Lucía Suárez	2024-09-22 11:14:30
+75	Marta Gil	2024-11-08 13:11:45
+128	Alba Domínguez	2024-11-11 08:59:34
+110	Lucía Domínguez	2024-11-14 14:00:29
+149	Hugo Ramírez	2024-11-22 07:43:09
+10	Laura Álvarez	2024-11-24 01:35:05
+66	Marta Castro	2024-11-29 07:12:46
+74	Ana Torres	2024-12-02 08:42:30
+97	Miguel Sánchez	2024-12-20 15:45:45
+89	Marta Gil	2024-12-23 04:18:39
+12	Hugo Sánchez	2025-01-06 23:09:18
+148	Hugo Ramírez	2025-01-09 02:25:02
+34	Andrés García	2025-02-04 16:16:23
+114	Javier Romero	2025-02-06 07:24:00
+6	José Fernández	2025-02-06 16:22:51
+24	Marta Gil	2025-02-14 02:59:59
+136	Daniel Moreno	2025-02-20 10:38:58
+124	Andrés García	2025-03-03 14:46:22
+46	Miguel Sánchez	2025-03-04 09:48:02
+59	José Fernández	2025-03-04 23:52:27
+80	Nicolás Serrano	2025-03-07 21:03:31
+79	Sofía Alonso	2025-05-22 18:34:54
+144	Noelia Torres	2025-05-24 00:03:02
+118	Nicolás Serrano	2025-05-31 19:28:54
+140	Javier Romero	2025-06-03 23:57:31
+142	Hugo Sánchez	2025-06-09 10:12:15
+126	María García	2025-06-17 13:01:26
+54	Laura Ruiz	2025-06-19 19:08:47
+39	Raúl Suárez	2025-07-01 15:12:28
+16	Ana Torres	2025-07-17 02:39:18
+44	Lucía Suárez	2025-07-23 07:42:42
+60	Laura Ruiz	2025-07-25 04:49:19
+15	Paula Ramírez	2025-08-05 07:42:28
+47	Sofía Paredes	2025-09-08 22:58:53
+
+===== CONSULTA 9 =====
+pedido	total_pagado
+28	4289.70
+17	3790.50
+32	2957.97
+128	2783.70
+153	2701.80
+151	2593.98
+6	2409.98
+96	2236.86
+145	2234.00
+133	2004.59
+19	1954.00
+64	1809.99
+92	1753.90
+120	1743.98
+102	1722.00
+54	1636.97
+50	1631.96
+117	1601.97
+140	1584.00
+84	1544.00
+122	1509.99
+77	1415.69
+152	1389.88
+97	1336.00
+42	1257.87
+142	1240.58
+14	1196.76
+135	1196.00
+12	1175.67
+25	1137.00
+62	1132.00
+86	1084.40
+1	1070.00
+36	1024.92
+112	988.96
+8	983.46
+70	970.97
+58	934.80
+144	928.40
+16	926.16
+33	914.08
+48	896.33
+44	876.00
+113	866.80
+78	862.96
+37	810.60
+68	799.55
+125	789.58
+31	784.95
+90	759.76
+126	750.00
+108	747.00
+39	700.98
+10	698.97
+24	675.00
+136	647.66
+9	630.00
+118	630.00
+99	625.70
+111	623.89
+41	605.70
+23	565.97
+141	500.60
+13	495.00
+81	493.90
+109	487.00
+40	480.98
+22	474.50
+105	461.00
+88	435.60
+110	425.94
+34	420.00
+80	411.97
+30	403.76
+129	398.70
+127	390.86
+66	387.00
+18	360.00
+59	347.44
+2	320.00
+74	317.00
+132	302.82
+38	298.96
+100	295.00
+47	258.99
+123	257.00
+139	244.50
+119	229.00
+146	223.70
+5	210.00
+150	196.00
+85	159.60
+148	158.80
+63	139.60
+61	129.97
+60	104.70
+75	99.96
+21	79.90
+121	75.00
+138	74.97
+124	69.99
+43	59.00
+87	45.31
+35	42.23
+154	39.90
+104	31.78
+79	25.00
+3	0.00
+
+===== CONSULTA 10 =====
+cliente	total_pedidos
+David Ruiz	7
+José Fernández	7
+Ana Torres	6
+Lucía Suárez	6
+Hugo Ramírez	5
+Laura Ruiz	5
+María García	5
+Sofía Paredes	5
+Sofía Sánchez	5
+Adriana Ramos	4
+Alba Domínguez	4
+Alicia Vázquez	4
+Andrés García	4
+Gonzalo Jiménez	4
+Hugo Sánchez	4
+Javier Romero	4
+Laura Ortega	4
+Marta Gil	4
+Nicolás Serrano	4
+Noelia Torres	4
+Raúl Suárez	4
+Valeria García	4
+Carla Gómez	3
+Elena Jiménez	3
+Laura Álvarez	3
+Luis Méndez	3
+María Alonso	3
+Marta Alonso	3
+Marta Castro	3
+Nicolás Álvarez	3
+Nicolás González	3
+Pablo Gutiérrez	3
+Paula Ramírez	3
+Alba Sánchez	2
+Daniel Moreno	2
+Elena López	2
+Hugo Gil	2
+Juan Álvarez	2
+Miguel Sánchez	2
+Sofía Alonso	2
+Sofía Romero	2
+Adriana Navarro	1
+Alba Martínez	1
+Lucía Domínguez	1
+
+===== CONSULTA 11 =====
+cliente	total_pedidos
+David Ruiz	7
+José Fernández	7
+Ana Torres	6
+Lucía Suárez	6
+Hugo Ramírez	5
+Laura Ruiz	5
+María García	5
+Sofía Paredes	5
+Sofía Sánchez	5
+Adriana Ramos	4
+Alba Domínguez	4
+Alicia Vázquez	4
+Andrés García	4
+Gonzalo Jiménez	4
+Hugo Sánchez	4
+Javier Romero	4
+Laura Ortega	4
+Marta Gil	4
+Nicolás Serrano	4
+Noelia Torres	4
+Raúl Suárez	4
+Valeria García	4
+
+===== CONSULTA 12 =====
+producto	ingresos
+Laptop Dell Inspiron	34500.00
+Tarjeta Gráfica RTX 3060	11362.00
+Smartphone Xiaomi	8960.00
+Escritorio	7560.00
+Silla Gamer Pro	7099.00
+Tablet Samsung	7099.00
+NAS 2 Bahías	6972.00
+Silla Gamer	6660.00
+Escritorio en L	5670.00
+Placa Base MSI	5355.00
+Silla de Oficina	4386.00
+Smartwatch Amazfit	3792.00
+Impresora HP DeskJet	3560.00
+Router Wi-Fi 6	3355.80
+Monitor LG 24"	3119.76
+Disco SSD 1TB	2719.66
+Mochila para portátil	1989.30
+Teclado Mecánico	1976.70
+Hub USB-C 6 en 1	1835.40
+Memoria RAM 16GB	1799.60
+Micrófono USB	1715.00
+Altavoces 2.0	1499.40
+Ratón Inalámbrico	1343.00
+Auriculares Bluetooth	1075.00
+Fuente 650W 80+ Bronze	1003.00
+Cámara Web 1080p	986.00
+Lámpara LED escritorio	704.00
+Regleta 6 tomas	448.50
+Cable HDMI 2.1	371.69
+Organizador de cables	339.66
+
+===== CONSULTA 13 =====
+producto	ingresos
+Laptop Dell Inspiron	34500.00
+Tarjeta Gráfica RTX 3060	11362.00
+
+===== CONSULTA 14 =====
+pedido	cliente	pais	estado
+42	Noelia Torres	España	enviado
+50	Juan Álvarez	España	enviado
+64	Noelia Torres	España	enviado
+1	Ana Torres	España	entregado
+10	Laura Álvarez	España	entregado
+14	Ana Torres	España	entregado
+16	Ana Torres	España	entregado
+62	Valeria García	España	entregado
+74	Ana Torres	España	entregado
+85	Valeria García	España	entregado
+112	Valeria García	España	entregado
+119	Valeria García	España	entregado
+144	Noelia Torres	España	entregado
+150	Ana Torres	España	entregado
+2	Luis Méndez	México	enviado
+61	Luis Méndez	México	enviado
+
+===== CONSULTA 15 =====
+producto	precio_unitario	estado
+Laptop Dell Inspiron	750.00	cancelado
+Smartphone Xiaomi	320.00	cancelado
+Tarjeta Gráfica RTX 3060	299.00	cancelado
+Silla Gamer Pro	229.00	cancelado
+Tablet Samsung	229.00	cancelado
+Escritorio	210.00	cancelado
+
+===== CONSULTA 16 =====
+cliente	fecha_registro	estado
+Adriana Ramos	2024-05-11	enviado
+Alba Sánchez	2024-04-28	enviado
+Andrés García	2024-08-12	enviado
+Elena Jiménez	2024-11-03	pendiente
+Elena Jiménez	2024-11-03	enviado
+Hugo Gil	2024-06-26	enviado
+Hugo Ramírez	2024-06-19	pendiente
+Hugo Ramírez	2024-06-19	enviado
+Javier Romero	2024-03-29	enviado
+Laura Álvarez	2024-03-27	pendiente
+Laura Ortega	2024-04-08	enviado
+Lucía Suárez	2024-07-17	enviado
+Marta Castro	2024-11-14	enviado
+Sofía Sánchez	2024-01-19	pendiente
+Sofía Sánchez	2024-01-19	enviado
