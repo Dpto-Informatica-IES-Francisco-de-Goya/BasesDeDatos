@@ -91,6 +91,9 @@ select substring(nombre,1,1) as Primera_letra,       count(*) as num_clientes fr
 
 # PRODUCTOS
 ## 9) Número total de productos
+```sql
+
+```
 ## 10) Número de productos por categoría
 ## 11) Precio promedio de productos
 ## 12) Precio mínimo y máximo de productos
@@ -115,9 +118,9 @@ select substring(nombre,1,1) as Primera_letra,       count(*) as num_clientes fr
 # DETALLE_PEDIDO
 ## 29) Número de líneas de detalle registradas
 ## 30) Total de unidades vendidas (suma de cantidad)
-## 31) Precio promedio de las líneas de detalle
-## 32) Cantidad promedio por línea
-## 33) Número de líneas por producto
+## 31) Precio promedio de los productos de detalle
+## 32) Cantidad promedio por producto
+## 33) Número de pedidos que han comprado cada producto
 ## 34) Unidades totales por producto
 ## 35) Ingreso total por producto (cantidad * precio_unitario)
 
