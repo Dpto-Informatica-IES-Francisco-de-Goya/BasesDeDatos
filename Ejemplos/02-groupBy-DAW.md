@@ -253,3 +253,112 @@ ORDER BY categoria,
 
 ## 7) Obtén el listado de los pedidos que han solicitado más de 10 productos
 
+
+## 8) Mirando en la tabla detalle_pedido, ¿se ha producido algún cambio de precio que pueda verse en esa tabla?
+
+```sql
+SELECT 
+    nombre, YEAR(fecha_registro)
+FROM
+    clientes;
+```
+
+-- Obtener el número de clientes registrados por año
+
+SELECT 
+    YEAR(fecha_registro) AS año, COUNT(*) AS num_clientes
+FROM
+    clientes
+WHERE
+    nombre LIKE 'A%'
+GROUP BY YEAR(fecha_registro)
+ORDER BY YEAR(fecha_registro);
+
+-- Otra forma de resolverlo:
+select year(fecha_registro) as año,
+		count(*) as num_clientes
+from clientes
+where left(nombre,1) = 'A'
+group by year(fecha_registro)
+order by year(fecha_registro);
+
+
+-- 6a) ¿Cuántos productos distintos se han pedido en cada pedido?
+SELECT id_pedido,count(*) AS num_prod_distintos
+FROM detalle_pedido 
+GROUP BY id_pedido;
+
+-- 6b) ¿Cuántas productos en total (es decir, cuantas unidades) 
+-- se han pedido en cada pedido?
+
+SELECT 
+    id_pedido, SUM(cantidad) AS total_unidades_pedidas
+FROM
+    detalle_pedido
+GROUP BY id_pedido;
+
+
+
+-- 7a) Obtén el listado de los pedidos que han solicitado más de 10 productos distintos
+SELECT id_pedido,count(*) AS num_prod_distintos
+FROM detalle_pedido 
+GROUP BY id_pedido
+HAVING count(*) > 10;
+-- HAVING es lo mismo que WHERE para filtrar las columnas agregadas por el groupby.
+-- No tiene resultados
+
+
+-- 7b) Obtén el listado de los pedidos que han solicitado más de 10 productos en total
+SELECT 
+    id_pedido, SUM(cantidad) AS total_unidades_pedidas
+FROM
+    detalle_pedido
+GROUP BY id_pedido
+HAVING SUM(cantidad) > 10;
+
+
+
+-- 8) Mirando en la tabla detalle_pedido, 
+-- ¿se ha producido algún cambio de precio que pueda verse en esa tabla?
+
+SELECT 
+    COUNT(id_producto), COUNT(DISTINCT id_producto)
+FROM
+    (SELECT DISTINCT
+        id_producto, precio_unitario
+    FROM
+        detalle_pedido
+    ORDER BY id_producto) AS NUEVA_TABLA;
+
+SELECT 
+    id_producto, MAX(precio_unitario), MIN(precio_unitario)
+FROM
+    detalle_pedido
+GROUP BY id_producto
+HAVING
+    MAX(precio_unitario) != MIN(precio_unitario);
+
+SELECT 
+    id_producto, MAX(precio_unitario), MIN(precio_unitario)
+FROM
+    detalle_pedido
+GROUP BY id_producto
+HAVING
+    MAX(precio_unitario) != MIN(precio_unitario);
+
+SELECT 
+    id_producto, COUNT(DISTINCT precio_unitario) AS num_precios
+FROM
+    detalle_pedido
+GROUP BY id_producto
+HAVING num_precios > 1;
+
+
+
+
+
+
+
+
+
+
