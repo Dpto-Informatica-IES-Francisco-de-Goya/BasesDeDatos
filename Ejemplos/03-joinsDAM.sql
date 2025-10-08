@@ -66,7 +66,7 @@ WHERE
 
 -- Obtén los nombres de los productos que ha pedido Ana Torres
 SELECT 
-    nombre
+    productos.nombre
 FROM
     clientes
         JOIN
@@ -80,5 +80,99 @@ WHERE
 
 -- PARA CORREGIR EN CLASE EL MIÉRCOLES. ALTAMENTE RECOMENDABLE HACERLOS EN CASA
 -- ¿Cuántos pedidos se han comprado por clientes de Argentina?
+/*
+1) Tablas: pedidos, clientes 
+2) Columnas relacionan: pedidos.id_cliente = clientes.id_cliente
+3) Filtro (where): Argentina
+4) Agrupaciones: nada
+5) filtro post-agregacion (Having)
+6) ¿Ordenar? No
+7) Qué campos muestro
+*/
+SELECT count(*) AS num_pedidos_argentina
+FROM pedidos JOIN clientes ON clientes.id_cliente = pedidos.id_cliente
+WHERE clientes.pais = 'Argentina';
+
 -- ¿Cuántos productos se han comprado por clientes de Argentina?
--- ¿Cuántos productos se han comprado por pais de origen del cliente?
+/*
+1) Tablas: clientes, pedidos, detalle_pedido
+2) Columnas relacionan: 
+	clientes con pedidos por id_cliente
+	pedidos con detalle_pedido por id_pedido
+3) Filtro (where): Argentina
+4) Agrupaciones: nada
+5) filtro post-agregacion (Having)
+6) ¿Ordenar? No
+7) Qué campos muestro
+*/
+SELECT 
+    COUNT(id_producto) AS num_prod_distintos,
+    SUM(cantidad) AS num_prod_totales
+FROM
+    clientes
+        JOIN
+    pedidos ON clientes.id_cliente = pedidos.id_cliente
+        JOIN
+    detalle_pedido ON pedidos.id_pedido = detalle_pedido.id_pedido
+WHERE
+    clientes.pais = 'Argentina';
+
+-- 3) ¿Cuántos productos se han comprado por pais de origen del cliente?
+/*
+1) Tablas: clientes,pedidos,detalle_pedido
+2) Columnas relacionan: 
+	clientes con pedidos por id_cliente
+	pedidos con detalle_pedido por id_pedido
+3) Filtro (where): ninguno
+4) Agrupaciones: clientes.pais
+	Agregación: count()
+5) filtro post-agregacion (Having): 
+6) ¿Ordenar? 
+7) Qué campos muestro
+*/
+
+SELECT 
+	clientes.pais,
+    COUNT(id_producto) AS num_prod_distintos,
+    SUM(cantidad) AS num_prod_totales
+FROM
+    clientes
+        JOIN
+    pedidos ON clientes.id_cliente = pedidos.id_cliente
+        JOIN
+    detalle_pedido ON pedidos.id_pedido = detalle_pedido.id_pedido
+GROUP BY clientes.pais;
+
+
+
+-- 4) ¿Cuántos productos se han comprado por pais de origen del cliente y por categoría del producto?
+/*
+1) Tablas: clientes,pedidos,detalle_pedido,productos
+2) Columnas relacionan: 
+	clientes con pedidos por id_cliente
+	pedidos con detalle_pedido por id_pedido
+    detalle_pedido con productos con id_producto
+3) Filtro (where): ninguno
+4) Agrupaciones: clientes.pais, productos.categoria
+	Agregación: count(),sum()
+5) filtro post-agregacion (Having): 
+6) ¿Ordenar? 
+7) Qué campos muestro
+*/
+SELECT 
+	clientes.pais,
+    productos.categoria,
+    COUNT(detalle_pedido.id_producto) AS num_prod_distintos,
+    SUM(cantidad) AS num_prod_totales
+FROM
+    clientes
+        JOIN
+    pedidos ON clientes.id_cliente = pedidos.id_cliente
+        JOIN
+    detalle_pedido ON pedidos.id_pedido = detalle_pedido.id_pedido
+		JOIN 
+	productos ON detalle_pedido.id_producto = productos.id_producto
+GROUP BY clientes.pais,productos.categoria
+ORDER BY clientes.pais,productos.categoria; -- Este orden no es necesariamente el mejor. Puedes ordenar de otra forma, pero tienes que ordenar de alguna.
+
+
