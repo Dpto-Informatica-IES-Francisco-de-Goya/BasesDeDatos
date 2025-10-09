@@ -127,28 +127,72 @@ WHERE clientes.nombre = 'Ana Torres';
 -- PARTE 2 (deberes para el jueves las 2 primeras)
 -- ¿Cuántos pedidos se han comprado por clientes de Argentina?
 /*
-1) Tablas necesarias. 
-2) Columnas que relacionan (ON)
+1) Tablas necesarias: clientes, pedidos
+2) Columnas que relacionan (ON): id_cliente
 3) Filtros (where)
-4) ¿Agrupaciones? Si las hay, agregaciones.
+4) ¿Agrupaciones? Si las hay, agregaciones. COUNT pero sin group by
 5) Filtro post-agregado (HAVING)
 6) ¿Ordenación?*/
 
+SELECT COUNT(*)
+FROM 
+	clientes
+		JOIN
+	pedidos ON clientes.id_cliente = pedidos.id_cliente
+WHERE pais = 'Argentina';
+	
 -- ¿Cuántos productos se han comprado por clientes de Argentina?
 /*
-1) Tablas necesarias. 
-2) Columnas que relacionan (ON)
-3) Filtros (where)
-4) ¿Agrupaciones? Si las hay, agregaciones.
+1) Tablas necesarias: pedidos, clientes, detalle_pedido
+2) Columnas que relacionan (ON) id_cliente relaciona pedidos con clientes. id_pedido relaciona pedidos con detalle_pedido
+3) Filtros (where): pais Argentina
+4) ¿Agrupaciones? Si las hay, agregaciones. COUNT como antes
 5) Filtro post-agregado (HAVING)
 6) ¿Ordenación?*/
-
+SELECT *
+FROM 
+	clientes
+		JOIN
+	pedidos ON clientes.id_cliente = pedidos.id_cliente
+		JOIN
+	detalle_pedido ON pedidos.id_pedido = detalle_pedido.id_pedido
+WHERE pais = 'Argentina';
+	
 -- Para hacer en directo el jueves.
 -- ¿Cuántos productos se han comprado por pais de origen del cliente?
 /*
-1) Tablas necesarias. 
-2) Columnas que relacionan (ON)
-3) Filtros (where)
-4) ¿Agrupaciones? Si las hay, agregaciones.
+1) Tablas necesarias: pedidos, clientes, detalle_pedido
+2) Columnas que relacionan (ON) id_cliente relaciona pedidos con clientes. id_pedido relaciona pedidos con detalle_pedido
+3) Filtros (where): NO APLICA
+4) ¿Agrupaciones? Si las hay, agregaciones. Agrupo por pais y cuento como función de agregación
 5) Filtro post-agregado (HAVING)
 6) ¿Ordenación?*/
+
+SELECT clientes.pais, count(*) AS num_productos
+FROM 
+	clientes
+		JOIN
+	pedidos ON clientes.id_cliente = pedidos.id_cliente
+		JOIN
+	detalle_pedido ON pedidos.id_pedido = detalle_pedido.id_pedido
+GROUP BY clientes.pais;
+
+
+-- Cuáles son los paises en los que se han comprado más de 40 productos
+/*
+1) Tablas necesarias: pedidos, clientes, detalle_pedido
+2) Columnas que relacionan (ON) id_cliente relaciona pedidos con clientes. id_pedido relaciona pedidos con detalle_pedido
+3) Filtros (where): NO APLICA
+4) ¿Agrupaciones? Si las hay, agregaciones. Agrupo por pais y cuento como función de agregación
+5) Filtro post-agregado (HAVING)
+6) ¿Ordenación?*/
+
+SELECT clientes.pais, count(*) AS num_productos
+FROM 
+	clientes
+		JOIN
+	pedidos ON clientes.id_cliente = pedidos.id_cliente
+		JOIN
+	detalle_pedido ON pedidos.id_pedido = detalle_pedido.id_pedido
+GROUP BY clientes.pais
+HAVING count(*) > 40;
