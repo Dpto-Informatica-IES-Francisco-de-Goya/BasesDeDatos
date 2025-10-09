@@ -24,7 +24,7 @@ WHERE p.fecha_pedido >= '2024-01-01 00:00:00'
 --      - cliente      (c.nombre)
 --      - estado       (p.estado)
 --      - coste_total  (p.coste_total)
---    Orden: estado ASC (cancelado < pendiente por orden alfabético), y dentro de cada estado coste_total DESC.
+--    Orden: estado ASC (ojo: no es orden alfabético. Ordena con otro criterio por el tipo de dato. Te lo contaré en clase), y dentro de cada estado coste_total DESC.
 -- 6) Listar pagos con su pedido y cliente, mostrando el método de pago.
 --    Columnas y alias:
 --      - pedido       (p.id_pedido)
