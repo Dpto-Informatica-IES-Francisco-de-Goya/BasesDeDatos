@@ -24,13 +24,12 @@ WHERE p.fecha_pedido >= '2024-01-01 00:00:00'
 --      - cliente      (c.nombre)
 --      - estado       (p.estado)
 --      - coste_total  (p.coste_total)
---    Orden: estado ASC (cancelado < pendiente por orden alfabético), y dentro de cada estado coste_total DESC.
+--    Orden: estado ASC (ojo: no es orden alfabético. Ordena con otro criterio por el tipo de dato. Te lo contaré en clase), y dentro de cada estado coste_total DESC.
 -- 6) Listar pagos con su pedido y cliente, mostrando el método de pago.
 --    Columnas y alias:
 --      - pedido       (p.id_pedido)
 --      - cliente      (c.nombre)
 --      - metodo_pago  (pa.metodo_pago)
---    Importante: solo pedidos con al menos un pago (INNER JOIN).
 --    Orden: pedido ASC.
 -- 7) Listar las líneas del pedido con id 10, incluyendo nombre del producto, cantidad y precio unitario.
 --    Columnas y alias:
@@ -62,7 +61,7 @@ WHERE p.fecha_pedido >= '2024-01-01 00:00:00'
 --       - total_pedidos  (COUNT(p.id_pedido))
 --     Agrupación: por c.id_cliente y c.nombre.
 --     Orden: total_pedidos DESC; en empate, cliente ASC.
--- 12) Calcular los ingresos totales por cada producto (cantidad * precio_unitario) considerando SOLO líneas existentes.
+-- 12) Calcular los ingresos totales por cada producto (cantidad * precio_unitario)
 --     Columnas y alias:
 --       - producto  (pr.nombre)
 --       - ingresos  (SUM(dp.cantidad * dp.precio_unitario))
