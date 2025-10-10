@@ -44,7 +44,7 @@ GROUP BY id_producto;
 
 ## 33) Número de pedidos que han comprado cada producto
 SELECT id_producto,count(id_pedido) as num_pedidos
-FROM detalle_pedido
+FROM detalle_pedido	
 GROUP BY id_producto;
 
 ## 33b) Número de pedidos que han comprado cada producto, cuando se hayan comprado más de 20.

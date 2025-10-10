@@ -17,7 +17,6 @@
 --      - cliente       (c.nombre)
 --      - fecha_pedido  (p.fecha_pedido)
 --    Orden: fecha_pedido ASC; en empate, pedido ASC.
-WHERE p.fecha_pedido >= '2024-01-01 00:00:00'
 -- 5) Listar pedidos cuyo estado sea 'cancelado' o 'pendiente', con cliente y coste_total.
 --    Columnas y alias:
 --      - pedido       (p.id_pedido)
