@@ -159,9 +159,20 @@ FROM productos
 
 
 
-## 7) Obtén el listado de los pedidos que han solicitado más de 10 productos en total (no tienen JOIN)
+## 7) Obtén el listado de los pedidos que han 
+-- solicitado más de 10 productos en total (no tienen JOIN)
 
--- Después de esta consulta, ponte con BasesDeDatos/Ejemplos/ParaPracticar/03-ejemplos...Enunciados.txt
+SELECT id_pedido, sum(cantidad) as num_productos
+FROM detalle_pedido
+GROUP BY id_pedido
+HAVING sum(cantidad) > 10;
+/* CONCLUSIONES:
+
+*/
+
+-- Después de esta consulta, ponte con 
+-- BasesDeDatos/Ejemplos/ParaPracticar/03-ejemplos...Enunciados.txt
+
 
 
 
