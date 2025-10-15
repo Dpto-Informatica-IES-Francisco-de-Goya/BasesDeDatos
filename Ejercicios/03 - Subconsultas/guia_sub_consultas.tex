@@ -1,33 +1,54 @@
 \documentclass[12pt,a4paper]{article}
 
+\usepackage{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{babel}
-\usepackage{lmodern}
-\usepackage{microtype}
-
-% --- Márgenes y tablas ---
-\usepackage{geometry}
-\geometry{margin=2.5cm}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
 \usepackage{booktabs}
-
-% --- Colores y listados ---
 \usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{multirow}
 \usepackage{listings}
-\usepackage{listingsutf8}
+\usepackage{tcolorbox}
+\usepackage{float}
+\usepackage{lmodern} % fuente segura para pdfLaTeX
 
+% Colores
+\definecolor{primary}{RGB}{15,118,110}
+\definecolor{secondary}{RGB}{37,99,235}
+\definecolor{muted}{RGB}{107,114,128}
+\definecolor{bgcode}{RGB}{248,250,252}
+\definecolor{frame}{RGB}{226,232,240}
 
+% Estilo de secciones
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{secondary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\color{secondary}}{\thesubsubsection}{0.6em}{}
+
+% Listings (SQL)
+\lstdefinelanguage{SQLPlus}[]{SQL}{
+  morekeywords={IF,ELSE,END,DECLARE,BEGIN,EXCEPTION,WHEN,LOOP,ELSIF,THEN,RAISE,RETURN},
+  sensitive=false
+}
 \lstset{
-basicstyle=\ttfamily\small,
-keywordstyle=\color{blue}\bfseries,
-commentstyle=\color{gray}\itshape,
-stringstyle=\color{red},
-language=SQL,
-showstringspaces=false,
-columns=fullflexible,
-frame=single,
-breaklines=true,
-inputencoding = utf8,  % Input encoding
+  language=SQLPlus,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{secondary}\bfseries,
+  commentstyle=\color{muted}\itshape,
+  stringstyle=\color{primary},
+  columns=fullflexible,
+  backgroundcolor=\color{bgcode},
+  frame=single,
+  rulecolor=\color{frame},
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+    inputencoding = utf8,  % Input encoding
     extendedchars = true,  % Extended ASCII
     literate      =        % Support additional characters
       {á}{{\'a}}1  {é}{{\'e}}1  {í}{{\'i}}1 {ó}{{\'o}}1  {ú}{{\'u}}1
@@ -62,6 +83,18 @@ inputencoding = utf8,  % Input encoding
       {ź}{{\'z}}1    {Ż}{{\.Z}}1    {ż}{{\.z}}1    {Ž}{{\v{Z}}}1  {ž}{{\v{z}}}1
 }
 
+% Caja de aviso
+\tcbset{
+  colback=white,
+  colframe=primary,
+  coltitle=white,
+  colbacktitle=primary,
+  fonttitle=\bfseries,
+  arc=2mm,
+  boxrule=0.6pt
+}
+
+
 \title{\textbf{Guía de Subconsultas SQL con el esquema Sakila}}
 \author{}
 \date{} 
@@ -79,27 +112,31 @@ inputencoding = utf8,  % Input encoding
 \tableofcontents
 
 \newpage
-\section*{Introducción} En SQL, una \textbf{subconsulta} es una consulta anidada dentro de otra consulta más grande.
+\section*{Introducción} 
+
+En SQL, una \textbf{subconsulta} es una consulta anidada dentro de otra consulta más grande.
 %
 Las subconsultas permiten usar el resultado de una consulta interna para filtrar, comparar o derivar información en la consulta externa.
 %
 En esta guía utilizaremos la base de datos de ejemplo \textbf{Sakila} (un videoclub con tablas como \texttt{film}, \texttt{actor}, \texttt{customer}, etc.) para ilustrar cómo funcionan las subconsultas.
-%
+
 Nos enfocaremos en un enfoque pedagógico, empezando por subconsultas sencillas en la cláusula \texttt{WHERE}, pasando por subconsultas correlacionadas (que dependen de la fila externa) y subconsultas en la cláusula \texttt{FROM} (tablas derivadas) con agregación.
-%
-Asumimos que el lector ya sabe usar consultas básicas \texttt{SELECT} (incluso con \texttt{JOIN} y agrupamientos simples), pero no ha utilizado vistas, procedimientos almacenados ni expresiones más avanzadas.
-%
+%%
 Añadiremos explicaciones detalladas y comentarios en el código SQL para aclarar cada ejemplo.
-%
-Todos los ejemplos han sido comprobados en el esquema oficial de \texttt{Sakila} y devuelven los resultados esperados. 
 
-\vspace{1ex} % small vertical space
+\textbf{Convención:} Para mayor legibilidad, en los listados usaremos mayúsculas para palabras clave SQL (\texttt{SELECT}, \texttt{WHERE}, etc.), y comentarios precedidos de \texttt{--} para explicar partes clave de las consultas. 
 
-\textbf{Convención:} Para mayor legibilidad, en los listados usaremos mayúsculas para palabras clave SQL (\texttt{SELECT}, \texttt{WHERE}, etc.), y comentarios precedidos de \texttt{--} para explicar partes clave de las consultas. \section{Subconsultas en la cláusula WHERE (no correlacionadas)} Comenzamos con subconsultas \emph{no correlacionadas} en la cláusula \texttt{WHERE}.
+
+\section{Subconsultas en la cláusula WHERE} 
+
+
+Comenzamos con subconsultas \emph{no correlacionadas} en la cláusula \texttt{WHERE}.
 %
 Una subconsulta no correlacionada es aquella que la consulta externa puede ejecutar independientemente, porque no depende de cada fila externa.
 %
 Estas subconsultas se resuelven primero y su resultado (ya sea un valor escalar o un conjunto de filas) se utiliza luego en la cláusula \texttt{WHERE} de la consulta principal. 
+%
+A las consultas que devuelven un único valor, se las denomina \textbf{escalares.}
 
 
 
@@ -132,14 +169,18 @@ La consulta externa entonces selecciona todas las películas (\texttt{film.title
 En otras palabras, estamos traduciendo “English” a su \texttt{id} numérico con una subconsulta para luego obtener las películas en dicho idioma.
 %
 Este tipo de subconsulta es escalar (devuelve un valor único) y podemos usar el operador \texttt{=} para compararlo.
-%
+
+
 Es importante asegurar que la subconsulta escalar realmente devuelva solo una fila.
 %
 Si la subconsulta devolviera más de un valor, la consulta generaría un error (o necesitaríamos usar operadores como \texttt{IN} en lugar de \texttt{=}, que veremos más adelante).
 %
 En nuestro caso, \texttt{name} es único en \texttt{language}, por lo que la subconsulta de arriba devuelve exactamente un valor.
-%
-Otro ejemplo clásico es comparar contra un valor agregado.
+
+
+\paragraph{Otro ejemplo clásico}
+
+Vamos a comparar contra un valor agregado.
 %
 Imaginemos que deseamos listar las películas \textbf{más largas que la duración media de todas las películas}.
 %
@@ -167,7 +208,9 @@ Esta construcción demuestra cómo integrar funciones de agregación en subconsu
 
 
 
-\subsection*{Uso de IN para subconsultas que devuelven conjuntos} Si la subconsulta puede devolver múltiples filas (por ejemplo, una lista de \texttt{id}s), debemos usar un operador de conjunto como \texttt{IN} (o su negación \texttt{NOT IN}) en lugar de un operador de comparación simple.
+\subsection*{Uso de IN para subconsultas que devuelven conjuntos} 
+
+Si la subconsulta puede devolver múltiples filas (por ejemplo, una lista de \texttt{id}s), debemos usar un operador de conjunto como \texttt{IN} (o su negación \texttt{NOT IN}) en lugar de un operador de comparación simple.
 %
 Consideremos el siguiente problema: queremos obtener los nombres de todos los actores que actúan en la película \textit{“ALONE TRIP”}.
 %
@@ -224,8 +267,6 @@ Un detalle importante: si la subconsulta no encuentra ninguna fila, la condició
 Por ejemplo, si buscamos \texttt{actor\_id IN (...)} y la subconsulta interna devolviera cero filas, entonces ningún actor cumpliría la condición.
 %
 En cambio, una subconsulta escalar usada con \texttt{=} que no devuelve filas produciría un valor \texttt{NULL} implícitamente, haciendo que la condición falle para todas las filas (a menos que usemos tratamiento especial de \texttt{NULL}). 
-
-
 
 
 \subsection*{Subconsultas con ANY, ALL y comparaciones avanzadas} SQL proporciona los predicados \texttt{ANY} (o su sinónimo \texttt{SOME}) y \texttt{ALL} para realizar comparaciones respecto a conjuntos de valores devueltos por una subconsulta.
@@ -295,11 +336,15 @@ En resumen, \texttt{ANY} y \texttt{ALL} nos permiten refinar comparaciones con s
 Naturalmente, podemos usar estos predicados con cualquier operador de comparación (por ejemplo, \texttt{= ALL} significaría igual a todos los valores del conjunto, lo que generalmente solo ocurre si el conjunto tiene un único valor o varios repetidos iguales).
 %
 Finalmente, mencionar que \texttt{NOT IN}, \texttt{NOT EXISTS} (que veremos enseguida) y construcciones como \texttt{<> ALL} se utilizan para formular condiciones de exclusión (por ejemplo, \texttt{<> ALL(...)} significa “distinto de todos los valores de…”, es decir, “ninguno de esos valores coincide”). \section{Subconsultas correlacionadas (EXISTS y NOT EXISTS)} Hasta ahora, las subconsultas que utilizamos no dependían de la fila actual de la consulta externa; podían ejecutarse por sí solas.
-%
+
+\paragraph{Subconsultas correlacionadas:}
+
+
 Ahora veremos las \textbf{subconsultas correlacionadas}, que sí dependen de la fila externa.
 %
 En una subconsulta correlacionada, la consulta interna hace referencia a columnas de la consulta externa, formando un vínculo entre ambas.
-%
+
+
 Esto significa que la subconsulta se reevaluará para cada fila candidata de la consulta externa.
 %
 Un indicador típico de subconsulta correlacionada es el uso de \textbf{\texttt{EXISTS}} o \textbf{\texttt{NOT EXISTS}}, aunque también podemos tener correlación utilizando comparaciones normales.
@@ -358,12 +403,15 @@ La subconsulta selecciona simplemente un \texttt{1} (valor constante) porque sol
 \item Si un cliente no tiene ningún alquiler asociado, la subconsulta no encuentra filas y \texttt{EXISTS} resulta falso, filtrando fuera a ese cliente.
 \end{itemize} El resultado de esta consulta será la lista de todos los clientes que han realizado al menos un alquiler.
 %
-En la base \texttt{Sakila}, probablemente esto incluya a casi todos los clientes, ya que es una base de ejemplo activa; pero si existieran clientes sin ninguna renta, éstos quedarían excluidos. (\textit{Si quisiéramos, con \texttt{NOT EXISTS} podríamos obtener precisamente esos clientes sin alquileres, como veremos luego}). \textbf{NOTA:} La condición \texttt{SELECT 1} se utiliza por costumbre, pero podríamos poner cualquier cosa (p.ej., \texttt{SELECT *}).
+En la base \texttt{Sakila}, probablemente esto incluya a casi todos los clientes, ya que es una base de ejemplo activa; pero si existieran clientes sin ninguna renta, éstos quedarían excluidos. (\textit{Si quisiéramos, con \texttt{NOT EXISTS} podríamos obtener precisamente esos clientes sin alquileres, como veremos luego}). 
+
+\textbf{NOTA:} La condición \texttt{SELECT 1} se utiliza por costumbre, pero podríamos poner cualquier cosa (p.ej., \texttt{SELECT *}).
 %
 El motor de SQL optimiza la subconsulta de \texttt{EXISTS} para que no importe qué columnas se seleccionan, solo importa si hay al menos una fila que cumpla el \texttt{WHERE} interno.
 %
 En pseudocódigo, \texttt{EXISTS(subconsulta)} es como preguntar “¿existe al menos una fila en el resultado de subconsulta?”.
-%
+
+
 Veamos ahora un ejemplo con \texttt{NOT EXISTS}.
 %
 Supongamos que quisiéramos listar las películas que \textbf{nunca han sido alquiladas}.
@@ -403,14 +451,17 @@ Si encuentra al menos uno, significaría que esa película sí fue alquilada.
 \item Usamos \texttt{NOT EXISTS} para filtrar solo las películas donde \emph{no} exista tal registro combinado en \texttt{inventory-rental}.
 %
 Es decir, la subconsulta interna no devolvió filas para ese \texttt{f.film\_id} (ninguna copia de esa película tuvo alquileres).
-\end{itemize} El resultado será la lista de títulos de las películas nunca rentadas.
+\end{itemize}
+
+
+ El resultado será la lista de títulos de las películas nunca rentadas.
 %
 En la práctica, es posible que esta lista esté vacía o muy reducida en la base Sakila si se asumió que todas las películas fueron alquiladas al menos una vez.
 %
 Pero en problemas reales (o si Sakila estuviera actualizada con nuevos filmes sin alquilar) esta consulta identifica las películas “inmovibles”.
 %
 Aunque hubiéramos podido resolver esto con un \texttt{LEFT JOIN} y buscando \texttt{NULL} en la parte de \texttt{rental}, la solución con \texttt{NOT EXISTS} es declarativa y clara: “dame las películas para las que \textbf{no existe} ningún alquiler correspondiente”.
-%
+
 Otro uso típico de subconsultas correlacionadas con \texttt{NOT EXISTS} es para preguntas del tipo “para cada X, que cumpla una condición con \textbf{todos} los Y relacionados”.
 %
 Por ejemplo, “actores que han participado en \textit{todas} las categorías de películas” se resolvería comprobando que no existe ninguna categoría en la que el actor no tenga al menos una película.
@@ -436,7 +487,8 @@ WHERE NOT EXISTS (
 Lo importante a notar es la doble negación: “no existe una categoría tal que no exista una película de ese actor en dicha categoría”, que equivale a “el actor tiene al menos una película en cada categoría”.
 %
 Este tipo de patrón doble \texttt{NOT EXISTS} permite expresar condiciones “para todos”, aunque son consultas más avanzadas.
-%
+
+
 Mencionamos este ejemplo para dar una idea del poder de las subconsultas correlacionadas; si bien no es necesario que el estudiante lo entienda a la perfección de inmediato, muestra hasta dónde se puede llegar con estas técnicas. 
 
 \subsection{Algunos ejemplos más}
@@ -445,21 +497,21 @@ Mencionamos este ejemplo para dar una idea del poder de las subconsultas correla
 \textbf{Camino de tablas:} \texttt{category} $\rightarrow$ \texttt{film\_category} $\rightarrow$ \texttt{film}.
 
 \textbf{Paso 1:} obtener \texttt{category\_id} de ``Children''.
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT category_id 
 FROM category 
 WHERE name = 'Children';
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Paso 2:} con ese \texttt{category\_id}, obtener \texttt{film\_id} en \texttt{film\_category}.
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT film_id 
 FROM film_category 
 WHERE category_id = 3;  -- ejemplo: Children = 3
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Paso 3:} filtrar \texttt{film} con \texttt{IN} (lista de \texttt{film\_id}).
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT title 
 FROM film
 WHERE film_id IN (
@@ -471,7 +523,7 @@ WHERE film_id IN (
         WHERE name = 'Children'
     )
 );
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Resultado esperado:} una lista de 60 títulos (no se reproducen aquí los 60 por brevedad).
 
@@ -480,31 +532,31 @@ WHERE film_id IN (
 A veces, la condición de filtrado requiere verificar la existencia o ausencia de filas relacionadas para cada fila de la consulta externa. En tales casos, se usan subconsultas correlacionadas con \texttt{EXISTS} o \texttt{NOT EXISTS}. 
 
 \paragraph{Ejemplo 2: Películas nunca alquiladas (camino y pasos).}
-\textbf{Camino de tablas:} \texttt{film} $\rightarrow$ (anti-camino) \texttt{inventory} $\rightarrow$ \texttt{rental}.
+\textbf{Camino de tablas:} \texttt{film} $\rightarrow$ (anti-join) \texttt{inventory} $\rightarrow$ \texttt{rental}.
 
 \textbf{Paso 1:} consulta exterior.
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT f.film_id, f.title
 FROM film AS f;
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Paso 2:} subconsulta sin correlación (estructura mínima).
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT 1
 FROM inventory AS i
 JOIN rental AS r ON i.inventory_id = r.inventory_id;
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Paso 3:} correlacionar con la fila exterior (\texttt{i.film\_id = f.film\_id}).
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT 1
 FROM inventory AS i
 JOIN rental AS r ON i.inventory_id = r.inventory_id
 WHERE i.film_id = f.film_id;
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Paso 4:} usar \texttt{NOT EXISTS}.
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT f.film_id, f.title
 FROM film AS f
 WHERE NOT EXISTS (
@@ -514,7 +566,7 @@ WHERE NOT EXISTS (
     WHERE i.film_id = f.film_id
 )
 ORDER BY f.title;
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Resultado esperado:} pocas o ninguna fila (en Sakila casi todas las películas han sido alquiladas).
 
@@ -522,30 +574,30 @@ ORDER BY f.title;
 \textbf{Camino de tablas:} \texttt{actor} $\rightarrow$ \texttt{film\_actor} $\rightarrow$ \texttt{film}.
 
 \textbf{Paso 1:} exterior.
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT a.actor_id, a.first_name, a.last_name
 FROM actor AS a;
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Paso 2:} subconsulta sin correlación (estructura mínima).
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT 1
 FROM film_actor AS fa
 JOIN film AS f ON f.film_id = fa.film_id
 WHERE f.length > 120;
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Paso 3:} correlacionar con la fila exterior.
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT 1
 FROM film_actor AS fa
 JOIN film AS f ON f.film_id = fa.film_id
 WHERE fa.actor_id = a.actor_id
   AND f.length > 120;
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Paso 4:} usar \texttt{EXISTS}.
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT a.actor_id, a.first_name, a.last_name
 FROM actor AS a
 WHERE EXISTS (
@@ -556,7 +608,7 @@ WHERE EXISTS (
     AND f.length > 120
 )
 ORDER BY a.last_name, a.first_name;
-\end{verbatim}
+\end{lstlisting}
 
 
 \subsection*{Subconsultas en la lista SELECT (campos calculados por fila)} Otra forma de subconsulta correlacionada es colocarla en la lista \texttt{SELECT}, es decir, como parte de las columnas calculadas en la salida.
@@ -598,10 +650,12 @@ ACE GOLDFINGER & 7 \\
 ADAPTATION HOLES & 12 \\
 \multicolumn{2}{c}{\dots}
 \end{tabular}
-\end{center} Este enfoque de subconsulta escalar en el \texttt{SELECT} es equivalente a hacer un \texttt{JOIN} con \texttt{rental} e \texttt{inventory} seguido de un \texttt{GROUP BY film}, pero a veces la subconsulta resulta más sencilla de entender por filas: “para esta película, calcula este dato agregado”.
+\end{center} 
+
+Este enfoque de subconsulta escalar en el \texttt{SELECT} es equivalente a hacer un \texttt{JOIN} con \texttt{rental} e \texttt{inventory} seguido de un \texttt{GROUP BY film}, pero a veces la subconsulta resulta más sencilla de entender por filas: “para esta película, calcula este dato agregado”.
 %
 Hay que tener presente que este tipo de subconsulta puede ser menos eficiente que un \texttt{JOIN} agregando, especialmente si la tabla externa tiene muchas filas, porque la subconsulta se evalúa repetidamente.
-%
+
 En nuestro ejemplo, la base \texttt{film} tiene 1000 filas, así que la subconsulta contará alquileres 1000 veces (una por película).
 %
 Sin embargo, para nuestros propósitos pedagógicos es más importante la claridad que la optimización.
@@ -625,11 +679,12 @@ FROM customer AS c;
 Esta consulta correlacionada suma los pagos (\texttt{payment.amount}) de cada cliente \texttt{c} y los muestra junto al nombre.
 %
 Nuevamente, esto se podría hacer con un \texttt{JOIN} y \texttt{GROUP BY}, pero la subconsulta ofrece una alternativa útil cuando queremos calcular columnas agregadas particulares por fila.
-%
+
 En resumen, las subconsultas correlacionadas pueden emplearse en la cláusula \texttt{WHERE} (usando \texttt{EXISTS}, \texttt{NOT EXISTS}, \texttt{IN}, etc.
 %
 con referencias a la fila externa) o en la lista \texttt{SELECT} como subconsultas escalares para crear columnas calculadas.
-%
+
+
 Son una herramienta potente para expresar condiciones complejas de forma declarativa. \section{Subconsultas en la cláusula FROM (tablas derivadas)} Las subconsultas también pueden usarse dentro de la cláusula \texttt{FROM}, lo que nos permite crear “tablas derivadas” o vistas temporales sobre las cuales realizar la consulta externa.
 %
 Esto es útil cuando queremos estructurar la consulta en pasos: primero obtener un resultado intermedio con su propia \texttt{SELECT}, y luego consultarlo o combinarlo con otras tablas.
@@ -637,7 +692,8 @@ Esto es útil cuando queremos estructurar la consulta en pasos: primero obtener 
 Al poner una subconsulta en el \texttt{FROM}, es obligatorio asignarle un alias, igual que si fuera una tabla (porque la consulta externa debe referirse a ese resultado).
 %
 Además, podemos renombrar las columnas de la subconsulta para usarlas cómodamente fuera.
-%
+
+\paragraph{Otro ejemplo:}
 Veamos un caso práctico: supongamos que queremos encontrar las categorías de películas que tienen \textbf{más películas que el número promedio de películas por categoría}.
 %
 Dicho de otro modo, queremos averiguar qué categorías están “por encima del promedio” en cuanto a cantidad de películas.
@@ -739,9 +795,10 @@ Games & 64  \\
 \end{center} 
 
 (asumiendo que la media esté alrededor de 62.5, estas categorías podrían salir por encima; el resultado exacto puede variar ligeramente según la distribución).
-%
+
 Nota: Esta solución es perfectamente válida, pero nos ha obligado a repetir la subconsulta de conteo dos veces (una para usar los conteos en sí, otra para calcular la media).
-%
+
+
 En SQL a veces existen formas alternativas.
 %
 Por ejemplo, podríamos haber calculado el total de películas (\textit{N}) y el número de categorías (\textit{K}) para computar la media $\frac{N}{K}$ en una sola subconsulta.
@@ -749,7 +806,8 @@ Por ejemplo, podríamos haber calculado el total de películas (\textit{N}) y el
 O incluso usar una \texttt{WITH} (Common Table Expression) para definir la subconsulta de conteo y referenciarla dos veces.
 %
 Sin embargo, dado que nos limitamos a lo que los estudiantes conocen (SQL básico sin CTEs) y queremos mantener la claridad, hemos optado por la solución mostrada.
-%
+
+
 Otra ilustración más sencilla de subconsulta en \texttt{FROM} es usarla para lograr un “paso intermedio”.
 %
 Por ejemplo, podríamos reescribir la consulta de “películas con duración superior a la media” (que resolvimos con subconsulta escalar en \texttt{WHERE}) de la siguiente manera con una tabla derivada: 
@@ -767,7 +825,7 @@ WHERE f.length > stats.avg_length;
 Aquí la subconsulta \texttt{(SELECT AVG(length) FROM film)} produce una relación de una sola fila con una columna \texttt{avg\_length}.
 %
 Al hacer un \texttt{JOIN} sin especificar condición (\texttt{JOIN} implícitamente es un \texttt{CROSS JOIN} cuando no hay \texttt{ON}), esa única fila se “adhiere” a cada película \texttt{f}, permitiéndonos comparar \texttt{f.length} con \texttt{stats.avg\_length} fácilmente.
-%
+
 Esta forma puede parecer redundante para este caso trivial, pero demuestra que las subconsultas en \texttt{FROM} pueden ser útiles para almacenar valores globales (como una media) o resultados agregados que luego usamos en comparaciones con cada fila.
 %
 En general, las subconsultas en \texttt{FROM} (derivadas) son muy útiles para:
@@ -778,7 +836,8 @@ En general, las subconsultas en \texttt{FROM} (derivadas) son muy útiles para:
 \item Descomponer consultas complejas en subpasos comprensibles.
 \item Evitar limitaciones del SQL básico, como la imposibilidad de usar una agregación de una consulta externa directamente en otra agregación.
 \item Reutilizar resultados intermedios (aunque ojo, en nuestra solución tuvimos que repetir la subconsulta; con otras técnicas podríamos evitar repeticiones).
-\end{itemize} Vale la pena mencionar que cualquier subconsulta en \texttt{FROM} podría equivalerse a definir una \textbf{vista} o usar una expresión de tabla común (\texttt{WITH}), pero esas herramientas avanzadas escapan al alcance actual de nuestros supuestos (no estamos creando vistas permanentes, solo consultas en el momento). 
+\end{itemize} 
+Vale la pena mencionar que cualquier subconsulta en \texttt{FROM} podría equivalerse a definir una \textbf{vista} o usar una expresión de tabla común (\texttt{WITH}), pero esas herramientas avanzadas escapan al alcance actual de nuestros supuestos (no estamos creando vistas permanentes, solo consultas en el momento). 
 
 
 \section*{Conclusiones} En esta guía hemos explorado las subconsultas SQL aplicadas a la base de datos Sakila, y las hemos ordenado desde los usos más básicos hasta construcciones más complejas:
@@ -825,12 +884,12 @@ La experiencia y la práctica ayudarán a decidir cuál emplear en cada caso.
 \textbf{Enunciado:} listar \textbf{título} y \textbf{duración} (\texttt{length}) de las películas cuya duración es superior a la media global.
 
 \textbf{Consulta:}
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT title, length
 FROM film
 WHERE length > (SELECT AVG(length) FROM film)
 ORDER BY length DESC, title;
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Resultado esperado (extracto):}
 \begin{center}
@@ -853,7 +912,7 @@ ANTITRUST TOMATOES      & 179 \\
 \textbf{Enunciado:} actores con al menos una película en \texttt{Action} y al menos una en \texttt{Comedy}.
 
 \textbf{Posible solución (EXISTS doble):}
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT a.first_name, a.last_name
 FROM actor AS a
 WHERE EXISTS (
@@ -871,7 +930,7 @@ AND EXISTS (
   WHERE fa.actor_id = a.actor_id AND c.name = 'Comedy'
 )
 ORDER BY a.last_name, a.first_name;
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Resultado esperado (extracto):}
 \begin{center}
@@ -892,7 +951,7 @@ WALTER  & TORN \\
 \textbf{Enunciado:} \texttt{customer\_id}, \textbf{nombre} y \textbf{apellido} del cliente con mayor número de alquileres.
 
 \textbf{Consulta (una opción):}
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT c.customer_id, c.first_name, c.last_name
 FROM customer AS c
 JOIN (
@@ -908,7 +967,9 @@ WHERE t.rentals = (
     GROUP BY r2.customer_id
   ) AS x
 );
-\end{verbatim}
+\end{lstlisting}
+
+Nota: puede ser que haya formas más concisas de operar esta consulta, pero la resolvemos así para mostrar cómo pueden funcionar las subconsultas.
 
 \textbf{Resultado esperado:}
 \begin{center}
@@ -922,11 +983,11 @@ customer\_id & first\_name & last\_name \\
 \end{center}
 
 \subsection*{Ejercicio 4: Películas de ``Sports'' no alquiladas en 2005}
-\textbf{Camino:} \texttt{film} $\rightarrow$ \texttt{film\_category} $\rightarrow$ \texttt{category} y anti-camino \texttt{inventory} $\rightarrow$ \texttt{rental}. \\
+\textbf{Camino:} \texttt{film} $\rightarrow$ \texttt{film\_category} $\rightarrow$ \texttt{category} y anti-join \texttt{inventory} $\rightarrow$ \texttt{rental}. \\
 \textbf{Enunciado:} títulos de películas de \texttt{Sports} sin alquileres durante 2005.
 
 \textbf{Consulta (NOT EXISTS):}
-\begin{verbatim}
+\begin{lstlisting}[language=SQL]
 SELECT f.title
 FROM film AS f
 JOIN film_category AS fc ON fc.film_id = f.film_id
@@ -940,7 +1001,7 @@ WHERE c.name = 'Sports'
       AND YEAR(r.rental_date) = 2005
   )
 ORDER BY f.title;
-\end{verbatim}
+\end{lstlisting}
 
 \textbf{Resultado esperado:}
 \begin{center}
@@ -1458,7 +1519,7 @@ SELECT (SELECT AVG(f.length) FROM film AS f) AS avg_length_global;
 \end{lstlisting}
 
 % ===================== 10 =====================
-\subsection{Correlacionada (NOT EXISTS) — Idiomas de language sin películas}
+\subsection{Correlacionada (NOT EXISTS) — Idiomas de \texttt{language} sin películas}
 \textbf{Camino:} \texttt{language} $\rightarrow$ (anti) \texttt{film}
 
 \begin{table}[h]
@@ -1558,7 +1619,7 @@ WHERE l.name <> 'English'
 \end{lstlisting}
 
 % ===================== 14 =====================
-\subsection{Escalar — ¿Cuántos idiomas hay en language?}
+\subsection{Escalar — ¿Cuántos idiomas hay en \texttt{language}?}
 \textbf{Camino:} \texttt{language}
 
 \begin{table}[h]
@@ -1578,7 +1639,7 @@ SELECT (SELECT COUNT(*) FROM language) AS langs_in_language;
 \end{lstlisting}
 
 % ===================== 15 =====================
-\subsection{Correlacionada (EXISTS) — Idiomas con al menos una peli}
+\subsection{Correlacionada (EXISTS) — Idiomas con al menos una película}
 \textbf{Camino:} \texttt{language} $\rightarrow$ \texttt{film}
 
 \begin{table}[h]
