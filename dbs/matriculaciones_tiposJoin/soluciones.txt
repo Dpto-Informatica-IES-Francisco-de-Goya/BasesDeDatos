@@ -1,0 +1,68 @@
+CONSULTA 1:
+id_alumno	nombre	id_matricula	id_curso
+1	Ana	1001	101
+1	Ana	1002	102
+3	Cris	1003	101
+4	Dani	1005	105
+
+CONSULTA 2:
+id_matricula	id_alumno	nombre
+1001	1	Ana
+1002	1	Ana
+1003	3	Cris
+1005	4	Dani
+
+CONSULTA 3:
+id_curso	nombre_curso	id_matricula	id_alumno
+101	BBDD	1001	1
+102	Programación	1002	1
+101	BBDD	1003	3
+103	Sistemas	1004	6
+
+
+CONSULTA 4:
+id_matricula	id_curso	nombre_curso
+1001	101	BBDD
+1002	102	Programación
+1003	101	BBDD
+1004	103	Sistemas
+
+
+CONSULTA 5:
+nombre	id_curso
+Ana	101
+Ana	102
+Cris	101
+Dani	105
+
+CONSULTA 6:
+id_matricula	id_alumno	nombre
+1001	1	Ana
+1002	1	Ana
+1003	3	Cris
+1005	4	Dani
+
+CONSULTA 7:
+id_curso	nombre_curso	id_matricula
+101	BBDD	1001
+102	Programación	1002
+101	BBDD	1003
+
+CONSULTA 8:
+id_matricula	id_curso	nombre_curso
+1001	101	BBDD
+1002	102	Programación
+1003	101	BBDD
+1004	103	Sistemas
+
+CONSULTA 9:
+alumno	curso	id_matricula
+Ana	BBDD	1001
+Ana	Programación	1002
+Cris	BBDD	1003
+
+CONSULTA 10:
+id_curso	nombre_curso	alumno
+101	BBDD	Ana
+102	Programación	Ana
+101	BBDD	Cris
