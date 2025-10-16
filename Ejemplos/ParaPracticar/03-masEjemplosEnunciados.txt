@@ -1,0 +1,162 @@
+-- 17) Contar líneas y unidades por pedido.
+--     Columnas y alias:
+--       - pedido    (p.id_pedido)
+--       - lineas    (COUNT(*))
+--       - unidades  (SUM(dp.cantidad))
+--     Agrupación: por p.id_pedido.
+--     Orden: lineas DESC; en empate, pedido ASC.
+
+
+-- 19) Listar clientes sin ningún pedido registrado.
+--     Columnas y alias:
+--       - cliente (c.nombre)
+--     Sin duplicados: DISTINCT.
+--     Orden: cliente ASC.
+
+-- 21) Nº de pedidos distintos pagados por cada método de pago.
+--     Columnas y alias:
+--       - metodo_pago     (pa.metodo_pago)
+--       - pedidos_pagados (COUNT(DISTINCT pa.id_pedido))
+--     Agrupación: por pa.metodo_pago.
+--     Orden: pedidos_pagados DESC; en empate, metodo_pago ASC.
+
+-- 22) Total pagado acumulado por cliente (sobre todos sus pagos).
+--     Columnas y alias:
+--       - cliente       (c.nombre)
+--       - total_pagado  (SUM(pa.total_pagado))
+--     Agrupación: por c.id_cliente y c.nombre.
+--     Orden: total_pagado DESC; en empate, cliente ASC.
+
+-- 23) Clientes con ticket medio (AVG del coste_total de sus pedidos) ≥ 500 €.
+--     Columnas y alias:
+--       - cliente       (c.nombre)
+--       - ticket_medio  (AVG(p.coste_total))
+--       - pedidos       (COUNT(p.id_pedido))
+--     Agrupación: por c.id_cliente y c.nombre.
+--     Filtro HAVING: AVG(p.coste_total) >= 500.
+--     Orden: ticket_medio DESC; en empate, cliente ASC.
+
+-- 24) Productos con ≥ 100 unidades vendidas (suma de cantidades).
+--     Columnas y alias:
+--       - producto     (pr.nombre)
+--       - uds_vendidas (SUM(dp.cantidad))
+--     Agrupación: por pr.id_producto y pr.nombre.
+--     Filtro HAVING: SUM(dp.cantidad) >= 100.
+--     Orden: uds_vendidas DESC; en empate, producto ASC.
+
+-- 25) Precio unitario medio de venta por producto (en líneas vendidas).
+--     Columnas y alias:
+--       - producto     (pr.nombre)
+--       - precio_medio (AVG(dp.precio_unitario))
+--     Agrupación: por pr.id_producto y pr.nombre.
+--     Orden: precio_medio DESC; en empate, producto ASC.
+
+-- 26) Pedidos realizados en marzo de 2024 (incluyendo extremos), con cliente y fecha.
+--     Columnas y alias:
+--       - pedido        (p.id_pedido)
+--       - cliente       (c.nombre)
+--       - fecha_pedido  (p.fecha_pedido)
+--     Orden: fecha_pedido ASC; en empate, pedido ASC.
+
+-- 27) Importe total y nº de pedidos por estado.
+--     Columnas y alias:
+--       - estado      (p.estado)
+--       - pedidos     (COUNT(*))
+--       - total_coste (SUM(p.coste_total))
+--     Agrupación: por p.estado.
+--     Orden: total_coste DESC; en empate, estado ASC.
+
+
+-- 30) Pedidos con variedad de productos (DISTINCT id_producto) ≥ 5.
+--     Columnas y alias:
+--       - pedido              (p.id_pedido)
+--       - cliente             (c.nombre)
+--       - productos_distintos (COUNT(DISTINCT dp.id_producto))
+--     Agrupación: por p.id_pedido, c.nombre.
+--     Filtro HAVING: COUNT(DISTINCT dp.id_producto) >= 5.
+--     Orden: productos_distintos DESC; en empate, pedido ASC.
+
+-- 31) Precio unitario medio vendido por producto EN pedidos 'entregado'.
+--     Columnas y alias:
+--       - producto     (pr.nombre)
+--       - precio_medio (AVG(dp.precio_unitario))
+--     Filtro WHERE: p.estado = 'entregado'.
+--     Agrupación: por pr.id_producto y pr.nombre.
+--     Orden: precio_medio DESC; en empate, producto ASC.
+
+-- 32) Clientes de 'España' con pagos por 'tarjeta': nº de pedidos y total pagado.
+--     Columnas y alias:
+--       - cliente        (c.nombre)
+--       - pedidos_pagados (COUNT(DISTINCT p.id_pedido))
+--       - total_pagado   (SUM(pa.total_pagado))
+--     Filtro WHERE: c.pais = 'España' AND pa.metodo_pago = 'tarjeta'.
+--     Agrupación: por c.id_cliente y c.nombre.
+--     Orden: total_pagado DESC; en empate, cliente ASC.
+
+-- 33) Importe de líneas vs. coste_total por pedido.
+--     Columnas y alias:
+--       - pedido         (p.id_pedido)
+--       - importe_lineas (SUM(dp.cantidad * dp.precio_unitario))
+--       - coste_total    (p.coste_total)
+--     Agrupación: por p.id_pedido, p.coste_total.
+--     Orden: importe_lineas DESC; en empate, pedido ASC.
+
+-- 34) Líneas con precio_unitario > 1000 € en pedidos (marcar productos "premium").
+--     Columnas y alias (sin duplicados):
+--       - producto        (pr.nombre)
+--       - precio_unitario (dp.precio_unitario)
+--     Selección DISTINCT para evitar repeticiones.
+--     Filtro WHERE: dp.precio_unitario > 1000.
+--     Orden: precio_unitario DESC; en empate, producto ASC.
+
+
+-- 36) Pedidos por país y estado (desglose cruzado).
+--     Columnas y alias:
+--       - pais    (c.pais)
+--       - estado  (p.estado)
+--       - pedidos (COUNT(*))
+--     Agrupación: por c.pais, p.estado.
+--     Orden: pais ASC, luego estado ASC.
+
+-- 37) Ingresos por producto en pedidos de clientes de 'España' ≥ 20.000 €.
+--     Columnas y alias:
+--       - producto (pr.nombre)
+--       - ingresos (SUM(dp.cantidad * dp.precio_unitario))
+--     Filtro WHERE: c.pais = 'España'.
+--     Agrupación: por pr.id_producto y pr.nombre.
+--     Filtro HAVING: SUM(dp.cantidad * dp.precio_unitario) >= 20000.
+--     Orden: ingresos DESC; en empate, producto ASC.
+
+-- 38) Clientes con pedidos en 2024: nº de pedidos y suma de costes.
+--     Columnas y alias:
+--       - cliente      (c.nombre)
+--       - pedidos_2024 (COUNT(p.id_pedido))
+--       - total_2024   (SUM(p.coste_total))
+--     Filtro WHERE: p.fecha_pedido BETWEEN '2024-01-01' AND '2024-12-31'.
+--     Agrupación: por c.id_cliente y c.nombre.
+--     Orden: total_2024 DESC; en empate, cliente ASC.
+
+-- 39) Nº de pagos por pedido con su fecha.
+--     Columnas y alias:
+--       - pedido        (p.id_pedido)
+--       - fecha_pedido  (p.fecha_pedido)
+--       - pagos         (COUNT(pa.total_pagado))
+--     Agrupación: por p.id_pedido, p.fecha_pedido.
+--     Orden: pagos DESC; en empate, pedido ASC.
+
+-- 40) Clientes con ingresos totales (sumando pagos) ≥ 50.000 €.
+--     Columnas y alias:
+--       - cliente       (c.nombre)
+--       - total_pagado  (SUM(pa.total_pagado))
+--     Agrupación: por c.id_cliente y c.nombre.
+--     Filtro HAVING: SUM(pa.total_pagado) >= 50000.
+--     Orden: total_pagado DESC; en empate, cliente ASC.
+
+-- 41) Líneas con precio_unitario fuera del rango [50, 500], mostrando pedido y producto.
+--     Columnas y alias:
+--       - pedido         (p.id_pedido)
+--       - producto       (pr.nombre)
+--       - precio_unitario (dp.precio_unitario)
+--     Filtro WHERE: dp.precio_unitario < 50 OR dp.precio_unitario > 500.
+--     Orden: precio_unitario DESC; en empate, producto ASC.
+
