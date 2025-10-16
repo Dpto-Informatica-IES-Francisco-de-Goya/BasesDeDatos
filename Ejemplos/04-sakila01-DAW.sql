@@ -85,17 +85,20 @@ ORDER BY num_paises DESC;
 
 
 -- Esto solo funciona cuando el nombre de la columna compartida es EXACTAMENTE igual.
-SELECT country AS Pais, count(customer_id) AS num_paises
-FROM 
-	customer
-		JOIN 
-	address USING(address_id)
-		JOIN
-	city USING(city_id)
-		JOIN
-	country USING(country_id)
+SELECT 
+    country AS Pais, COUNT(customer_id) AS num_paises
+FROM
+    customer
+        JOIN
+    address USING (address_id)
+        JOIN
+    city USING (city_id)
+        JOIN
+    country USING (country_id)
 GROUP BY country.country_id
 ORDER BY num_paises DESC;
+
+
 -- 4) Tres películas con mayores ingresos por alquiler. 
 /* Pistas:
 - Los ingresos están en payment.amount
@@ -105,6 +108,105 @@ ORDER BY num_paises DESC;
 
 -- 5) Ingreso promedio por alquiler en cada tienda
 
+-- Cotilleando posibles caminos, vemos que store y staff tienen 2 relaciones. Manager y store_id.
+-- ¡Qué interesante! Vamos a comparar a ver qué sale.
+
+SELECT *
+	-- store.store_id AS tienda,
+	-- AVG(payment.amount) AS ingresio_promedio_por_alquiler
+FROM 
+	store
+		JOIN
+	staff USING(store_id);
+
+SELECT 
+	*
+FROM 
+	store
+		JOIN
+	staff ON store.manager_staff_id = staff.staff_id;
+
+-- Uy, ha salido lo mismo de los 2 joins ¿Por qué? Vamos a ver staff qué tiene
+select * from staff;
+-- Aaaanda... es que staff solo tiene 2 trabajadores. Vaya base de datos de pacotilla... 
+-- Aún saliendo el mismo resultado, hay una conexión que tiene más sentido para esta consulta 5:
+-- store_id porque ...
+-- Por otro lado, hacer el join utilizando manager_staff_id permitiría resolver consultas como
+-- "Obtén la cantidad de ingresos de alquileres de cada jefe de tienda". Ahí sí hay que utilizar manager.
+-- Ojo ojito: que no solo será necesario encontrar las tablas necesarias para el join, sino también
+-- saber qué columnas son las que hay que utilizar.
+
+/* -- 5) Ingreso promedio por alquiler en cada tienda
+
+OPCIONES:
+NO 1) STORE -> CUSTOMER -> PAYMENT (Solución de Michael)
+NO 2) STORE -> CUSTOMER -> RENTAL -> PAYMENT (Solución de Nicole)
+NO 3) STORE -> STAFF USING(STORE_ID) -> PAYMENT (Solución de Leandro)
+4) PAYMENT -> RENTAL -> INVENTORY -> STORE (Solución de Víctor)*/
+    
+-- STORE -> CUSTOMER -> PAYMENT (Solución de Michael)
+SELECT 
+    store.store_id AS tienda,
+    AVG(payment.amount) AS ingreso_promedio_por_alquiler,
+    count(payment.amount) AS num_pagos
+FROM
+    store
+        JOIN
+    customer ON store.store_id = customer.store_id
+        JOIN
+    payment ON customer.customer_id = payment.customer_id
+GROUP BY store.store_id;
+
+-- STORE -> CUSTOMER -> RENTAL -> PAYMENT (Solución de Nicole)
+SELECT 
+    store.store_id AS tienda,
+    AVG(payment.amount) AS ingreso_promedio_por_alquiler,
+    count(payment.amount) AS num_pagos
+FROM
+    store
+        JOIN
+    customer ON store.store_id = customer.store_id
+        JOIN
+    rental ON customer.customer_id = rental.customer_id
+        JOIN
+    payment ON rental.rental_id = payment.rental_id
+GROUP BY store.store_id;
+
+-- STORE -> STAFF USING(STORE_ID) -> PAYMENT
+SELECT 
+    store.store_id AS tienda,
+    AVG(payment.amount) AS ingreso_promedio_por_alquiler,
+    count(payment.amount) AS num_pagos
+FROM
+    store
+        JOIN
+    staff USING(store_id)
+        JOIN
+    payment USING(staff_id)
+GROUP BY store.store_id;
+
+-- PAYMENT -> RENTAL -> INVENTORY -> STORE
+
+SELECT 
+    s.store_id,
+    AVG(p.amount) AS avg_revenue_per_rental,
+    COUNT(p.amount) AS num_pagos
+FROM
+    payment p
+        JOIN
+    rental r ON p.rental_id = r.rental_id
+        JOIN
+    inventory i ON r.inventory_id = i.inventory_id
+        JOIN
+    store s ON i.store_id = s.store_id
+GROUP BY s.store_id;
+
+/*
+CONCLUSIONES:
+- 
+-
+- Sakila que parece muy compleja, en realidad, es normalita. 
+*/
 
 -- 6) Ventas totales por categoría ordenadas
 -- 7) Actores con al menos diez películas de categorías distintas
