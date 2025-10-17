@@ -120,7 +120,7 @@ Las subconsultas permiten usar el resultado de una consulta interna para filtrar
 %
 En esta guía utilizaremos la base de datos de ejemplo \textbf{Sakila} (un videoclub con tablas como \texttt{film}, \texttt{actor}, \texttt{customer}, etc.) para ilustrar cómo funcionan las subconsultas.
 
-Nos enfocaremos en un enfoque pedagógico, empezando por subconsultas sencillas en la cláusula \texttt{WHERE}, pasando por subconsultas correlacionadas (que dependen de la fila externa) y subconsultas en la cláusula \texttt{FROM} (tablas derivadas) con agregación.
+Empezamos por subconsultas sencillas en la cláusula \texttt{WHERE}, pasando por subconsultas correlacionadas (que dependen de la fila externa) y subconsultas en la cláusula \texttt{FROM} (tablas derivadas) con agregación.
 %%
 Añadiremos explicaciones detalladas y comentarios en el código SQL para aclarar cada ejemplo.
 
@@ -132,7 +132,7 @@ Añadiremos explicaciones detalladas y comentarios en el código SQL para aclara
 
 Comenzamos con subconsultas \emph{no correlacionadas} en la cláusula \texttt{WHERE}.
 %
-Una subconsulta no correlacionada es aquella que la consulta externa puede ejecutar independientemente, porque no depende de cada fila externa.
+Una subconsulta no correlacionada es aquella que la consulta interna puede ejecutar independientemente, porque no depende de cada fila externa.
 %
 Estas subconsultas se resuelven primero y su resultado (ya sea un valor escalar o un conjunto de filas) se utiliza luego en la cláusula \texttt{WHERE} de la consulta principal. 
 %
@@ -273,7 +273,7 @@ En cambio, una subconsulta escalar usada con \texttt{=} que no devuelve filas pr
 %
 Estos predicados se usan junto con operadores de comparación (\texttt{=, >, <, >=, <=, <>}) cuando la subconsulta retorna varias filas.
 %
-Por ejemplo, supongamos que queremos listar las películas cuya duración es \textbf{mayor que la de cualquier película} de la categoría \texttt{Sports}.
+Por ejemplo, supongamos que queremos listar las películas cuya duración es \textbf{mayor que la de alguna película} de la categoría \texttt{Sports}.
 %
 En otras palabras, buscamos películas que tengan más minutos que al menos una película de la categoría deportes (lo cual prácticamente incluiría a casi todas las películas excepto quizá las más cortas, ya que “> ANY” significa “> al mínimo”, y es una condición relativamente fácil de cumplir).
 %
@@ -689,7 +689,7 @@ Son una herramienta potente para expresar condiciones complejas de forma declara
 %
 Esto es útil cuando queremos estructurar la consulta en pasos: primero obtener un resultado intermedio con su propia \texttt{SELECT}, y luego consultarlo o combinarlo con otras tablas.
 %
-Al poner una subconsulta en el \texttt{FROM}, es obligatorio asignarle un alias, igual que si fuera una tabla (porque la consulta externa debe referirse a ese resultado).
+Al poner una subconsulta en el \texttt{FROM}, \textbf{es obligatorio asignarle un alias}, igual que si fuera una tabla (porque la consulta externa debe referirse a ese resultado).
 %
 Además, podemos renombrar las columnas de la subconsulta para usarlas cómodamente fuera.
 
@@ -804,8 +804,6 @@ En SQL a veces existen formas alternativas.
 Por ejemplo, podríamos haber calculado el total de películas (\textit{N}) y el número de categorías (\textit{K}) para computar la media $\frac{N}{K}$ en una sola subconsulta.
 %
 O incluso usar una \texttt{WITH} (Common Table Expression) para definir la subconsulta de conteo y referenciarla dos veces.
-%
-Sin embargo, dado que nos limitamos a lo que los estudiantes conocen (SQL básico sin CTEs) y queremos mantener la claridad, hemos optado por la solución mostrada.
 
 
 Otra ilustración más sencilla de subconsulta en \texttt{FROM} es usarla para lograr un “paso intermedio”.
@@ -824,7 +822,7 @@ WHERE f.length > stats.avg_length;
 
 Aquí la subconsulta \texttt{(SELECT AVG(length) FROM film)} produce una relación de una sola fila con una columna \texttt{avg\_length}.
 %
-Al hacer un \texttt{JOIN} sin especificar condición (\texttt{JOIN} implícitamente es un \texttt{CROSS JOIN} cuando no hay \texttt{ON}), esa única fila se “adhiere” a cada película \texttt{f}, permitiéndonos comparar \texttt{f.length} con \texttt{stats.avg\_length} fácilmente.
+Al hacer un \texttt{JOIN} sin especificar condición (\texttt{JOIN} implícitamente es un \texttt{CROSS JOIN}\footnote{Un \texttt{CROSS JOIN} es como poner \texttt{FROM tabla1,tabla2}} cuando no hay \texttt{ON}), esa única fila se “adhiere” a cada película \texttt{f}, permitiéndonos comparar \texttt{f.length} con \texttt{stats.avg\_length} fácilmente.
 
 Esta forma puede parecer redundante para este caso trivial, pero demuestra que las subconsultas en \texttt{FROM} pueden ser útiles para almacenar valores globales (como una media) o resultados agregados que luego usamos en comparaciones con cada fila.
 %
@@ -869,7 +867,7 @@ Es importante practicar estos conceptos con variaciones:
 \end{itemize} Con esta base, el estudiante debería estar más cómodo abordando problemas SQL que involucren múltiples pasos.
 %
 Las subconsultas son una herramienta muy poderosa en SQL; dominarlas amplía significativamente el rango de consultas que podemos resolver directamente en la base de datos, incluso sin recurrir a programación procedimental o temporales.
-%
+
 Por último, hay que señalar que la legibilidad de una consulta SQL es tan importante como su corrección.
 %
 A veces una subconsulta puede hacer la solución más intuitiva, y otras veces un \texttt{JOIN} con \texttt{GROUP BY} es más natural.
@@ -882,14 +880,6 @@ La experiencia y la práctica ayudarán a decidir cuál emplear en cada caso.
 \subsection*{Ejercicio 1: Películas por encima de la duración promedio}
 \textbf{Camino:} \texttt{film}. \\
 \textbf{Enunciado:} listar \textbf{título} y \textbf{duración} (\texttt{length}) de las películas cuya duración es superior a la media global.
-
-\textbf{Consulta:}
-\begin{lstlisting}[language=SQL]
-SELECT title, length
-FROM film
-WHERE length > (SELECT AVG(length) FROM film)
-ORDER BY length DESC, title;
-\end{lstlisting}
 
 \textbf{Resultado esperado (extracto):}
 \begin{center}
@@ -907,9 +897,36 @@ ANTITRUST TOMATOES      & 179 \\
 \end{tabular}
 \end{center}
 
+\textbf{Consulta:}
+\begin{lstlisting}[language=SQL]
+SELECT title, length
+FROM film
+WHERE length > (SELECT AVG(length) FROM film)
+ORDER BY length DESC, title;
+\end{lstlisting}
+
+
+
 \subsection*{Ejercicio 2: Actores en ``Action'' y en ``Comedy''}
 \textbf{Camino:} \texttt{actor} $\rightarrow$ \texttt{film\_actor} $\rightarrow$ \texttt{film\_category} $\rightarrow$ \texttt{category}. \\
 \textbf{Enunciado:} actores con al menos una película en \texttt{Action} y al menos una en \texttt{Comedy}.
+
+
+
+\textbf{Resultado esperado (extracto):}
+\begin{center}
+\begin{tabular}{l l}
+\hline
+first\_name & last\_name \\
+\hline
+GINA    & DEGENERES \\
+KENNETH & TORN \\
+WALTER  & TORN \\
+\textit{...} & \textit{...} \\
+\hline
+\end{tabular}
+\end{center}
+
 
 \textbf{Posible solución (EXISTS doble):}
 \begin{lstlisting}[language=SQL]
@@ -932,23 +949,22 @@ AND EXISTS (
 ORDER BY a.last_name, a.first_name;
 \end{lstlisting}
 
-\textbf{Resultado esperado (extracto):}
-\begin{center}
-\begin{tabular}{l l}
-\hline
-first\_name & last\_name \\
-\hline
-GINA    & DEGENERES \\
-KENNETH & TORN \\
-WALTER  & TORN \\
-\textit{...} & \textit{...} \\
-\hline
-\end{tabular}
-\end{center}
-
 \subsection*{Ejercicio 3: Cliente con más alquileres}
 \textbf{Camino:} \texttt{rental} $\rightarrow$ (derivada por \texttt{customer\_id}) $\rightarrow$ \texttt{customer}. \\
 \textbf{Enunciado:} \texttt{customer\_id}, \textbf{nombre} y \textbf{apellido} del cliente con mayor número de alquileres.
+
+
+
+\textbf{Resultado esperado:}
+\begin{center}
+\begin{tabular}{r l l}
+\hline
+customer\_id & first\_name & last\_name \\
+\hline
+526 & ELEANOR & HUNT \\
+\hline
+\end{tabular}
+\end{center}
 
 \textbf{Consulta (una opción):}
 \begin{lstlisting}[language=SQL]
@@ -971,20 +987,22 @@ WHERE t.rentals = (
 
 Nota: puede ser que haya formas más concisas de operar esta consulta, pero la resolvemos así para mostrar cómo pueden funcionar las subconsultas.
 
-\textbf{Resultado esperado:}
-\begin{center}
-\begin{tabular}{r l l}
-\hline
-customer\_id & first\_name & last\_name \\
-\hline
-526 & ELEANOR & HUNT \\
-\hline
-\end{tabular}
-\end{center}
-
 \subsection*{Ejercicio 4: Películas de ``Sports'' no alquiladas en 2005}
 \textbf{Camino:} \texttt{film} $\rightarrow$ \texttt{film\_category} $\rightarrow$ \texttt{category} y anti-join \texttt{inventory} $\rightarrow$ \texttt{rental}. \\
 \textbf{Enunciado:} títulos de películas de \texttt{Sports} sin alquileres durante 2005.
+
+
+\textbf{Resultado esperado:}
+\begin{center}
+\begin{tabular}{l}
+\hline
+Título (\textit{Sports} sin alquileres en 2005) \\
+\hline
+JAWBREAKER BROOKLYN \\
+ROOF CHAMPION \\
+\hline
+\end{tabular}
+\end{center}
 
 \textbf{Consulta (NOT EXISTS):}
 \begin{lstlisting}[language=SQL]
@@ -1003,17 +1021,6 @@ WHERE c.name = 'Sports'
 ORDER BY f.title;
 \end{lstlisting}
 
-\textbf{Resultado esperado:}
-\begin{center}
-\begin{tabular}{l}
-\hline
-Título (\textit{Sports} sin alquileres en 2005) \\
-\hline
-JAWBREAKER BROOKLYN \\
-ROOF CHAMPION \\
-\hline
-\end{tabular}
-\end{center}
 
 \vspace{1em}
 
