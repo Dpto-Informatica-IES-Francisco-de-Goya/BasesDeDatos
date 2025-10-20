@@ -4,8 +4,10 @@ use sakila;
 select * from tienda_online.clientes;
 
 select * from actor limit 5;
-
+-------------------------------------------------------------------------------
 -- 1) Cinco actores con más películas
+-------------------------------------------------------------------------------
+
 SELECT 
     actor.first_name AS nombre,
     actor.last_name AS apellido,
@@ -33,7 +35,10 @@ LIMIT 5;
 -- OJO: first_name y last_name no están ni agregadas ni agrupadas. ¿Por qué funciona? 
 -- Víctor escribió cosas en la pizarra... Qué bien que me enteré perfectamente a la primera.
 
+
+-------------------------------------------------------------------------------
 -- 2) Películas que nunca han sido alquiladas
+-------------------------------------------------------------------------------
 -- CONSULTAS PREVIAS PARA SACAR INFORMACIÓN
 SELECT * FROM rental limit 5;
 SELECT * FROM inventory limit 5;
@@ -69,8 +74,10 @@ SELECT distinct inventory_id FROM inventory ORDER BY inventory_id ASC;
 
 -- CONCLUSION: Existen tipos de JOINS según quiera rellenar con NULL o ignorar las filas no relacionadas.
 
--- 3) País con más clientes
 
+-------------------------------------------------------------------------------
+-- 3) País con más clientes
+-------------------------------------------------------------------------------
 SELECT country AS Pais, count(customer_id) AS num_paises
 FROM 
 	customer c
@@ -98,8 +105,9 @@ FROM
 GROUP BY country.country_id
 ORDER BY num_paises DESC;
 
-
+-------------------------------------------------------------------------------
 -- 4) Tres películas con mayores ingresos por alquiler. 
+-------------------------------------------------------------------------------
 /* Pistas:
 - Los ingresos están en payment.amount
 - Saca id,nombre de cada película con los ingresos.
@@ -136,7 +144,12 @@ select * from staff;
 -- Ojo ojito: que no solo será necesario encontrar las tablas necesarias para el join, sino también
 -- saber qué columnas son las que hay que utilizar.
 
+
+
+-------------------------------------------------------------------------------
 /* -- 5) Ingreso promedio por alquiler en cada tienda
+-------------------------------------------------------------------------------
+
 
 OPCIONES:
 NO 1) STORE -> CUSTOMER -> PAYMENT (Solución de Michael)
@@ -208,7 +221,9 @@ CONCLUSIONES:
 - Sakila que parece muy compleja, en realidad, es normalita. 
 */
 
+-------------------------------------------------------------------------------
 -- 6) Ventas totales por categoría ordenadas
+-------------------------------------------------------------------------------
 
 -- PAYMENT -> RENTAL -> INVENTORY -> FILM -> FILM_CATEGORY -> CATEGORY
 SELECT category.name,sum(payment.amount)
@@ -226,7 +241,9 @@ FROM payment
 GROUP BY category.category_id;
  -- GROUP BY category.name;
 
+-------------------------------------------------------------------------------
 -- 7) Actores con al menos diez películas de categorías distintas
+-------------------------------------------------------------------------------
 
 -- ACTOR -> FILM_ACTOR -> FILM -> FILM_CATEGORY ¿-> CATEGORY?
 SELECT 
@@ -300,8 +317,9 @@ FROM
     film_category USING (film_id)
 order by nombre_completo;
 
-
+-------------------------------------------------------------------------------
 -- 8) Tiendas con más stock disponible. ¿Qué tiendas tienen más stock de películas actualmente disponibles para alquilar?
+-------------------------------------------------------------------------------
 SELECT 
     inventory_id, COUNT(*)
 FROM
@@ -353,7 +371,9 @@ GROUP BY store_id;
 -- CONCLUSIÓN:
 -- Las sopas se comen con cuchara, no con tenedor.
 
+-------------------------------------------------------------------------------
 -- 10 películas con mayor diferencia entre coste de reposición y tarifa de alquiler.
+-------------------------------------------------------------------------------
 -- FILM (coste de reposición, rental_rate)
 SELECT 
     *
@@ -367,6 +387,13 @@ FROM film f
 ORDER BY cost_diff DESC
 LIMIT 10;
 
+
+-------------------------------------------------------------------------------
 -- 10) Películas con más de tres actores y duración menor a 90 minutos (MUY BONITA)
+-------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------
 -- 11) Cliente que más ha gastado
+-------------------------------------------------------------------------------
 
