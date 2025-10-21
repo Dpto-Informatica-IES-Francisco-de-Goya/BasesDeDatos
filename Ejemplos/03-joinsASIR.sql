@@ -162,10 +162,12 @@ FROM productos
 ## 7) Obtén el listado de los pedidos que han 
 -- solicitado más de 10 productos en total (no tienen JOIN)
 
-SELECT id_pedido, sum(cantidad) as num_productos
-FROM detalle_pedido
+SELECT 
+    id_pedido, SUM(cantidad) AS num_productos
+FROM
+    detalle_pedido
 GROUP BY id_pedido
-HAVING sum(cantidad) > 10;
+HAVING SUM(cantidad) > 10;
 /* CONCLUSIONES:
 
 */
