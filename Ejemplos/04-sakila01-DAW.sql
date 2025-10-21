@@ -4,8 +4,10 @@ use sakila;
 select * from tienda_online.clientes;
 
 select * from actor limit 5;
-
+-------------------------------------------------------------------------------
 -- 1) Cinco actores con más películas
+-------------------------------------------------------------------------------
+
 SELECT 
     actor.first_name AS nombre,
     actor.last_name AS apellido,
@@ -33,7 +35,10 @@ LIMIT 5;
 -- OJO: first_name y last_name no están ni agregadas ni agrupadas. ¿Por qué funciona? 
 -- Víctor escribió cosas en la pizarra... Qué bien que me enteré perfectamente a la primera.
 
+
+-------------------------------------------------------------------------------
 -- 2) Películas que nunca han sido alquiladas
+-------------------------------------------------------------------------------
 -- CONSULTAS PREVIAS PARA SACAR INFORMACIÓN
 SELECT * FROM rental limit 5;
 SELECT * FROM inventory limit 5;
@@ -69,8 +74,10 @@ SELECT distinct inventory_id FROM inventory ORDER BY inventory_id ASC;
 
 -- CONCLUSION: Existen tipos de JOINS según quiera rellenar con NULL o ignorar las filas no relacionadas.
 
--- 3) País con más clientes
 
+-------------------------------------------------------------------------------
+-- 3) País con más clientes
+-------------------------------------------------------------------------------
 SELECT country AS Pais, count(customer_id) AS num_paises
 FROM 
 	customer c
@@ -98,8 +105,9 @@ FROM
 GROUP BY country.country_id
 ORDER BY num_paises DESC;
 
-
+-------------------------------------------------------------------------------
 -- 4) Tres películas con mayores ingresos por alquiler. 
+-------------------------------------------------------------------------------
 /* Pistas:
 - Los ingresos están en payment.amount
 - Saca id,nombre de cada película con los ingresos.
@@ -136,7 +144,12 @@ select * from staff;
 -- Ojo ojito: que no solo será necesario encontrar las tablas necesarias para el join, sino también
 -- saber qué columnas son las que hay que utilizar.
 
+
+
+-------------------------------------------------------------------------------
 /* -- 5) Ingreso promedio por alquiler en cada tienda
+-------------------------------------------------------------------------------
+
 
 OPCIONES:
 NO 1) STORE -> CUSTOMER -> PAYMENT (Solución de Michael)
@@ -208,9 +221,179 @@ CONCLUSIONES:
 - Sakila que parece muy compleja, en realidad, es normalita. 
 */
 
+-------------------------------------------------------------------------------
 -- 6) Ventas totales por categoría ordenadas
+-------------------------------------------------------------------------------
+
+-- PAYMENT -> RENTAL -> INVENTORY -> FILM -> FILM_CATEGORY -> CATEGORY
+SELECT category.name,sum(payment.amount)
+FROM payment
+		JOIN
+	rental using(rental_id)
+		JOIN
+	inventory using(inventory_id)
+		JOIN
+	film USING(film_id)
+		JOIN
+	film_category USING(film_id)
+		JOIN
+	category USING(category_id)
+GROUP BY category.category_id;
+ -- GROUP BY category.name;
+
+-------------------------------------------------------------------------------
 -- 7) Actores con al menos diez películas de categorías distintas
--- 8) Tiendas con más stock disponible
--- 9) Diez películas con mayor diferencia entre coste de reposición y tarifa de alquiler
--- 10) Películas con más de tres actores y duración menor a 90 minutos
+-------------------------------------------------------------------------------
+
+-- ACTOR -> FILM_ACTOR -> FILM -> FILM_CATEGORY ¿-> CATEGORY?
+SELECT 
+    a.actor_id,
+    CONCAT(a.first_name, ' ', a.last_name) AS nombre_completo,
+    COUNT( DISTINCT film_category.category_id) AS num_categorias_distintas
+FROM
+    actor a
+        JOIN
+    film_actor USING (actor_id)
+        JOIN
+    film USING (film_id)
+        JOIN
+    film_category USING (film_id)
+GROUP BY a.actor_id
+HAVING num_categorias_distintas >= 10
+ORDER BY num_categorias_distintas DESC;
+
+-- Vamos a hacer esta consulta con un WHERE en lugar de con un having.
+-- Esto es un adelanto de una tarea posterior.
+SELECT 
+    a.actor_id,
+    CONCAT(a.first_name, ' ', a.last_name) AS nombre_completo,
+    COUNT( DISTINCT film_category.category_id) AS num_categorias_distintas
+FROM
+    actor a
+        JOIN
+    film_actor USING (actor_id)
+        JOIN
+    film USING (film_id)
+        JOIN
+    film_category USING (film_id)
+GROUP BY a.actor_id;
+
+-- Distribución de número de actores por número de categorías distintas en las que trabajan.
+SELECT subconsulta.num_categorias_distintas, count(actor_id) AS num_actores
+FROM (
+		SELECT 
+			a.actor_id,
+			CONCAT(a.first_name, ' ', a.last_name) AS nombre_completo,
+			COUNT( DISTINCT film_category.category_id) AS num_categorias_distintas
+		FROM
+			actor a
+				JOIN
+			film_actor USING (actor_id)
+				JOIN
+			film USING (film_id)
+				JOIN
+			film_category USING (film_id)
+		GROUP BY a.actor_id
+	) AS subconsulta
+
+WHERE subconsulta.num_categorias_distintas >= 10
+GROUP BY subconsulta.num_categorias_distintas
+ORDER BY subconsulta.num_categorias_distintas DESC;
+
+
+
+-- Solo para mostrar la necesidad del distinct
+SELECT 
+    a.actor_id,
+    CONCAT(a.first_name, ' ', a.last_name) AS nombre_completo,
+    film_category.category_id
+FROM
+    actor a
+        JOIN
+    film_actor USING (actor_id)
+        JOIN
+    film USING (film_id)
+        JOIN
+    film_category USING (film_id)
+order by nombre_completo;
+
+-------------------------------------------------------------------------------
+-- 8) Tiendas con más stock disponible. ¿Qué tiendas tienen más stock de películas actualmente disponibles para alquilar?
+-------------------------------------------------------------------------------
+SELECT 
+    inventory_id, COUNT(*)
+FROM
+    rental
+WHERE
+    return_date IS NOT NULL
+GROUP BY inventory_id;
+
+SELECT 
+    *
+FROM
+    rental
+WHERE
+    inventory_id = 2047;
+    
+SELECT 
+    *
+FROM
+    rental
+WHERE
+    return_date IS NULL
+    AND rental_id = 11496;
+    
+SELECT 
+    *
+FROM
+    rental
+WHERE
+    return_date IS NULL; 
+
+-- Listado de inventarios disponibles.
+SELECT * 
+FROM 
+	inventory
+		JOIN
+	store USING(store_id)
+WHERE inventory_in_stock(inventory_id);
+    
+    
+-- SOLUCIÓN:
+SELECT store_id, COUNT(inventory_id) AS num_stock
+FROM 
+	inventory
+		JOIN
+	store USING(store_id)
+WHERE inventory_in_stock(inventory_id)
+GROUP BY store_id;
+    
+-- CONCLUSIÓN:
+-- Las sopas se comen con cuchara, no con tenedor.
+
+-------------------------------------------------------------------------------
+-- 10 películas con mayor diferencia entre coste de reposición y tarifa de alquiler.
+-------------------------------------------------------------------------------
+-- FILM (coste de reposición, rental_rate)
+SELECT 
+    *
+FROM
+    film
+LIMIT 15;
+
+
+SELECT f.film_id, f.title, (f.replacement_cost - f.rental_rate) AS cost_diff
+FROM film f
+ORDER BY cost_diff DESC
+LIMIT 10;
+
+
+-------------------------------------------------------------------------------
+-- 10) Películas con más de tres actores y duración menor a 90 minutos (MUY BONITA)
+-------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------
 -- 11) Cliente que más ha gastado
+-------------------------------------------------------------------------------
+

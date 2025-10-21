@@ -155,6 +155,7 @@ FROM (
 ) AS cnt;
 
 -- Solución 5: Ventas totales por categoría ordenadas
+
 SELECT c.category_id, c.name AS category, SUM(p.amount) AS total_sales
 FROM payment p
 JOIN rental r ON p.rental_id = r.rental_id

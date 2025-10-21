@@ -79,12 +79,19 @@
 Vamos a descubrir, primero de forma visual y luego con SQL, las diferencias entre \textbf{INNER}, \textbf{LEFT}, \textbf{RIGHT} y \textbf{FULL} (emulado en MySQL).
 \end{tcolorbox}
 
+Recuerda que esta base de datos la tienes disponible para cargarla en dbs/matriculaciones\_tiposJoin.
+
 \subsection*{Tablas}
 \begin{itemize}[leftmargin=1.2em]
   \item \texttt{alumnos}(\textit{id\_alumno}, nombre)
   \item \texttt{cursos}(\textit{id\_curso}, nombre\_curso)
   \item \texttt{matriculas}(\textit{id\_matricula}, id\_alumno, id\_curso)
 \end{itemize}
+
+\paragraph{Notación:} Esta forma en la que se escriben las tablas se denomina modelo relacional. Se indica el nombre de la tabla y, entre paréntesis, los atributos que tiene.
+% 
+Se indica en cursiva la clave primaria.
+
 
 \subsection*{Datos (mirada previa sin SQL)}
 \paragraph{\texttt{alumnos}}
@@ -282,7 +289,7 @@ id\_alumno & nombre & id\_matricula & id\_curso \\
 
 \paragraph{Left or right:} dependen del orden en el que escribas las tablas en la consulta. Para convertir un \texttt{left} en un \texttt{right}, cambia de orden las tablas.
 %
-Te dejo como reto que construyas las consultas de \texttt{left join} utilizando un \textt{right join} y viceversa.
+Te dejo como reto que construyas las consultas de \texttt{left join} utilizando un \texttt{right join} y viceversa.
 
 \subsection{FULL OUTER JOIN (emulado en MySQL)}
 \begin{tcolorbox}[title=Idea]
@@ -338,6 +345,98 @@ ORDER BY m.id_matricula;
 
 \subsection*{¿Cuál es el \texttt{join} por defecto?}
 Viendo lo visto, ¿cuál es el \texttt{join} por defecto?
+
+\subsection*{Anti-join: filtrar lo que \emph{no} tiene correspondencia}
+Ya nos ha salido algún ejemplo de estos, pero aquí presentamos un compendio de lo que, a veces, se llama \textit{anti-join}.
+
+
+\begin{tcolorbox}[title=Idea]
+Un \textbf{anti-join} devuelve las filas de una tabla que \emph{no} tienen pareja en la otra según la condición de emparejamiento. En MySQL se implementa con \texttt{LEFT/RIGHT JOIN + IS NULL} o con \texttt{NOT EXISTS} en una subconsulta (se verá más adelante).
+\end{tcolorbox}
+
+\paragraph{Patrones en MySQL}
+\begin{itemize}[leftmargin=1.2em]
+  \item \textbf{LEFT anti-join} (todo A sin pareja en B):
+\begin{lstlisting}
+SELECT a.*
+FROM alumnos a
+LEFT JOIN matriculas m ON m.id_alumno = a.id_alumno
+WHERE m.id_matricula IS NULL;
+\end{lstlisting}
+
+  \item \textbf{RIGHT anti-join} (todo B sin pareja en A), útil para detectar huérfanas:
+\begin{lstlisting}
+SELECT m.*
+FROM alumnos a
+RIGHT JOIN matriculas m ON m.id_alumno = a.id_alumno
+WHERE a.id_alumno IS NULL;
+\end{lstlisting}
+
+  \item Evita \texttt{NOT IN} si la subconsulta puede devolver \texttt{NULL}, ya que cambia la semántica.
+\end{itemize}
+
+\paragraph{Ejemplo 1 — Alumnos sin matrícula (LEFT anti-join)}
+\begin{lstlisting}
+SELECT a.id_alumno, a.nombre
+FROM alumnos a
+LEFT JOIN matriculas m ON m.id_alumno = a.id_alumno
+WHERE m.id_matricula IS NULL
+ORDER BY a.id_alumno;
+\end{lstlisting}
+
+\textbf{Resultado esperado (2 filas):}
+\begin{center}
+\begin{tabular}{r l}
+\toprule
+id\_alumno & nombre \\
+\midrule
+2 & Bruno \\
+5 & Eva \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Ejemplo 2 — Matrículas sin alumno (RIGHT anti-join)}
+\begin{lstlisting}
+SELECT m.id_matricula, m.id_alumno, m.id_curso
+FROM alumnos a
+RIGHT JOIN matriculas m ON m.id_alumno = a.id_alumno
+WHERE a.id_alumno IS NULL
+ORDER BY m.id_matricula;
+\end{lstlisting}
+
+\textbf{Resultado esperado (1 fila):}
+\begin{center}
+\begin{tabular}{r r r}
+\toprule
+id\_matricula & id\_alumno & id\_curso \\
+\midrule
+1004 & 6 & 103 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Ejemplo 3 — Cursos sin matrículas (LEFT anti-join)}
+\begin{lstlisting}
+SELECT c.id_curso, c.nombre_curso
+FROM cursos c
+LEFT JOIN matriculas m ON m.id_curso = c.id_curso
+WHERE m.id_matricula IS NULL
+ORDER BY c.id_curso;
+\end{lstlisting}
+
+\textbf{Resultado esperado (1 fila):}
+\begin{center}
+\begin{tabular}{r l}
+\toprule
+id\_curso & nombre\_curso \\
+\midrule
+104 & Redes \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%5 
 
 % =========================
 \section{Ejercicios: enunciados y resultados esperados}
@@ -435,6 +534,24 @@ id\_alumno & nombre & n \\
 \textbf{Enunciado:} FULL OUTER JOIN emulado (alumnos y sus matrículas, incluyendo huérfanas).\\
 \textbf{Resultado esperado (7 filas):} las 6 del LEFT + la fila \texttt{1004}.
 
+\textbf{Resultado (7 filas)}
+\begin{center}
+\begin{tabular}{r l r r}
+\toprule
+id\_alumno & nombre & id\_matricula & id\_curso \\
+\midrule
+1   & Ana   & 1002 & 102 \\
+1   & Ana   & 1001 & 101 \\
+2   & Bruno & NULL & NULL \\
+3   & Cris  & 1003 & 101 \\
+4   & Dani  & 1005 & 105 \\
+5   & Eva   & NULL & NULL \\
+\multicolumn{2}{c}{NULL} & 1004 & 103 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
 \subsection*{Ejercicio 8}
 \textbf{Enunciado:} Para cada curso del catálogo, número de alumnos con matrícula válida (alumno y curso existen).\\
 \textbf{Resultado esperado (4 filas):}
@@ -452,7 +569,7 @@ id\_curso & nombre\_curso & n\_alumnos \\
 \end{center}
 
 % =========================
-\section{Tipo test (Punto 5, sin soluciones marcadas)}
+\section{Tipo test}
 % =========================
 
 Marca una opción por pregunta.
@@ -460,7 +577,7 @@ Marca una opción por pregunta.
 \begin{enumerate}[label=\textbf{\arabic*.}]
 \item INNER JOIN devuelve…
   \begin{enumerate}[label=\Alph*.]
-    \item Todas las filas de la izquierda.
+    \item Todas las filas de la tabla de la izquierda.
     \item Solo las filas que cumplen la condición en ambas tablas.
     \item Todas las filas de ambas tablas.
     \item Solo las filas no emparejadas.
@@ -476,8 +593,8 @@ Marca una opción por pregunta.
 
 \item En un RIGHT JOIN, ¿qué se garantiza?
   \begin{enumerate}[label=\Alph*.]
-    \item Ver todas las filas de la izquierda.
-    \item Ver todas las filas de la derecha.
+    \item Ver todas las filas de la tabla izquierda.
+    \item Ver todas las filas de la tabla derecha.
     \item Ver solo la intersección.
     \item Ver ninguna fila \texttt{NULL}.
   \end{enumerate}
@@ -514,7 +631,7 @@ Marca una opción por pregunta.
     \item LEFT JOIN cursos$\to$matriculas + \texttt{IS NULL} en \texttt{id\_matricula}.
   \end{enumerate}
 
-\item Si haces INNER JOIN \texttt{matriculas m} con \texttt{cursos c} ON \texttt{m.id\_curso=c.id\_curso}, ¿aparece la matrícula 1005?
+\item Si haces \texttt{matriculas m} INNER JOIN \texttt{cursos c} ON \texttt{m.id\_curso=c.id\_curso}, ¿aparece la matrícula 1005?
   \begin{enumerate}[label=\Alph*.]
     \item Sí, con \texttt{NULL}.
     \item No, porque 105 no existe en \texttt{cursos}.
@@ -525,7 +642,7 @@ Marca una opción por pregunta.
 \item Para listar todos los cursos y cuántos alumnos tienen (incluye 0), lo más correcto es…
   \begin{enumerate}[label=\Alph*.]
     \item INNER JOIN cursos $\leftrightarrow$ matriculas.
-    \item LEFT JOIN desde \texttt{cursos} hacia \texttt{matriculas} y \texttt{GROUP BY}.
+    \item \texttt{cursos} LEFT JOIN  \texttt{matriculas} y \texttt{GROUP BY}
     \item RIGHT JOIN desde \texttt{matriculas}.
     \item FULL JOIN.
   \end{enumerate}
@@ -544,7 +661,7 @@ Marca una opción por pregunta.
 \addcontentsline{toc}{section}{Anexo: Soluciones}
 % =========================
 
-\subsection*{Soluciones de los ejercicios (Punto 4)}
+\subsection*{Soluciones de los ejercicios }
 \begin{enumerate}[leftmargin=1.2em,label=\textbf{\arabic*.}]
 \item
 \begin{lstlisting}
@@ -609,8 +726,7 @@ UNION
 SELECT a.id_alumno, a.nombre, m.id_matricula, m.id_curso
 FROM alumnos a
 RIGHT JOIN matriculas m ON m.id_alumno = a.id_alumno
-WHERE a.id_alumno IS NULL
-ORDER BY 1 IS NULL, a.id_alumno, m.id_matricula;
+WHERE a.id_alumno IS NULL;
 \end{lstlisting}
 
 \item
@@ -625,7 +741,7 @@ ORDER BY c.id_curso;
 \end{lstlisting}
 \end{enumerate}
 
-\subsection*{Plantilla de corrección del tipo test (Punto 5)}
+\subsection*{Plantilla de corrección del tipo test}
 \begin{center}
 \begin{tabular}{cccccccccc}
 \toprule
