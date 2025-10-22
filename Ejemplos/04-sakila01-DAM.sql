@@ -265,7 +265,6 @@ FROM
 GROUP BY category.category_id
 ORDER BY SUM(payment.amount) DESC;
 
-
 -- PARA EL MIÉRCOLES:
 -- -----------------------------------------------------------------------------
 -- 7) Actores con al menos diez películas de categorías distintas

@@ -187,7 +187,6 @@ WHERE f.rating = 'PG-13'
 -- Salida obligatoria (alias en orden): customer_id, first_name, last_name, distinct_categories_2006
 -- 88) Para cada empleado, meses distintos con pagos procesados (YYYY-MM).
 -- Salida obligatoria (alias en orden): staff_id, first_name, last_name, distinct_year_months
-       COUNT(DISTINCT CONCAT(YEAR(p.payment_date), '-', LPAD(MONTH(p.payment_date),2,'0'))) AS distinct_year_months
 -- 89) Para cada categoría, alquileres cuyo pago asociado (payment.amount) sea >= 5.
 -- Salida obligatoria (alias en orden): category_id, category_name, rentals_amount_ge_5
 -- 90) Para cada idioma, actores con apellido de longitud 5 en películas de ese idioma.
@@ -198,7 +197,6 @@ WHERE f.rating = 'PG-13'
 -- Salida obligatoria (alias en orden): country_id, country_name, customers_lastname_end_ez
 -- 93) Para cada categoría, alquileres de 2006 cuyo título tenga exactamente 2 palabras.
 -- Salida obligatoria (alias en orden): category_id, category_name, rentals_title_two_words_2006
-  AND (LENGTH(f.title) - LENGTH(REPLACE(f.title, ' ', ''))) = 1
 -- 94) Para cada tienda, media de replacement_cost de películas alquiladas por trimestre.
 -- Salida obligatoria (alias en orden): store_id, rental_quarter, avg_replacement_by_quarter
 -- 95) Para cada categoría, inventarios disponibles (filas en inventory) asociados a películas de esa categoría.
