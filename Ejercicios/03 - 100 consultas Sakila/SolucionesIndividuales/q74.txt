@@ -1,0 +1,19 @@
+74:  Para cada categoría, cuenta cuántos clientes distintos han alquilado películas de esa categoría.
+category_id	category_name	distinct_customers
+1	Action	510
+2	Animation	500
+3	Children	482
+4	Classics	468
+5	Comedy	495
+6	Documentary	483
+7	Drama	501
+8	Family	501
+9	Foreign	493
+10	Games	474
+11	Horror	451
+12	Music	447
+13	New	468
+14	Sci-Fi	507
+15	Sports	519
+16	Travel	442
+

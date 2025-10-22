@@ -1,0 +1,111 @@
+91:  Para cada país, cuenta cuántas categorías diferentes han sido alquiladas por clientes residentes en ese país.
+country_id	country	distinct_categories_rented_by_country
+1	Afghanistan	12
+2	Algeria	16
+3	American Samoa	13
+4	Angola	16
+5	Anguilla	13
+6	Argentina	16
+7	Armenia	11
+9	Austria	16
+10	Azerbaijan	16
+11	Bahrain	11
+12	Bangladesh	16
+13	Belarus	16
+14	Bolivia	15
+15	Brazil	16
+16	Brunei	15
+17	Bulgaria	15
+18	Cambodia	16
+19	Cameroon	15
+20	Canada	16
+21	Chad	15
+22	Chile	16
+23	China	16
+24	Colombia	16
+25	Congo, The Democratic Republic of the	15
+26	Czech Republic	13
+27	Dominican Republic	16
+28	Ecuador	16
+29	Egypt	16
+30	Estonia	15
+31	Ethiopia	14
+32	Faroe Islands	13
+33	Finland	11
+34	France	16
+35	French Guiana	12
+36	French Polynesia	15
+37	Gambia	14
+38	Germany	16
+39	Greece	15
+40	Greenland	15
+41	Holy See (Vatican City State)	14
+42	Hong Kong	14
+43	Hungary	13
+44	India	16
+45	Indonesia	16
+46	Iran	16
+47	Iraq	13
+48	Israel	16
+49	Italy	16
+50	Japan	16
+51	Kazakstan	15
+52	Kenya	14
+53	Kuwait	13
+54	Latvia	15
+55	Liechtenstein	12
+56	Lithuania	14
+57	Madagascar	10
+58	Malawi	14
+59	Malaysia	15
+60	Mexico	16
+61	Moldova	13
+62	Morocco	16
+63	Mozambique	16
+64	Myanmar	16
+65	Nauru	13
+66	Nepal	13
+67	Netherlands	16
+68	New Zealand	12
+69	Nigeria	16
+70	North Korea	14
+71	Oman	15
+72	Pakistan	16
+73	Paraguay	16
+74	Peru	16
+75	Philippines	16
+76	Poland	16
+77	Puerto Rico	15
+78	Romania	16
+79	Réunion	14
+80	Russian Federation	16
+81	Saint Vincent and the Grenadines	13
+82	Saudi Arabia	16
+83	Senegal	12
+84	Slovakia	11
+85	South Africa	16
+86	South Korea	16
+87	Spain	16
+88	Sri Lanka	11
+89	Sudan	15
+90	Sweden	15
+91	Switzerland	16
+92	Taiwan	16
+93	Tanzania	16
+94	Thailand	16
+95	Tonga	11
+96	Tunisia	11
+97	Turkey	16
+98	Turkmenistan	13
+99	Tuvalu	10
+100	Ukraine	16
+101	United Arab Emirates	16
+102	United Kingdom	16
+103	United States	16
+104	Venezuela	16
+105	Vietnam	16
+106	Virgin Islands, U.S.	13
+107	Yemen	16
+108	Yugoslavia	16
+109	Zambia	15
+

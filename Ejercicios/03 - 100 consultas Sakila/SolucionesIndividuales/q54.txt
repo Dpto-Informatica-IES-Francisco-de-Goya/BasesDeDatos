@@ -1,0 +1,159 @@
+54:  Para cada ciudad, cuenta cuántas películas del año 2006 han sido alquiladas por residentes en esa ciudad.
+city_id	city	rentals_2006_by_city
+361	Nantou	1
+329	Masqat	1
+440	Sagamihara	1
+120	Citrus Heights	1
+76	Bhopal	2
+525	Tangail	1
+443	Salé	1
+303	Liepaja	1
+346	Munger (Monghyr)	1
+474	Shimonoseki	1
+17	Alessandria	1
+586	Yerevan	1
+394	Pak Kret	2
+167	Faaa	2
+308	Lipetsk	1
+1	A Coruña (La Coruña)	1
+355	Nagareyama	2
+397	Papeete	1
+282	Kuching	1
+231	Jaipur	2
+139	Daxian	1
+63	Béchar	1
+114	Chiayi	1
+108	Changhwa	3
+217	Ife	1
+497	Springs	1
+480	Sincelejo	1
+53	Bandar Seri Begawan	1
+82	Bislig	1
+268	Kimchon	1
+238	Jelets	1
+2	Abha	1
+334	Merlo	2
+213	Huixquilucan	1
+102	Caracas	1
+148	Duisburg	1
+365	Nezahualcóyotl	1
+147	Dos Quebradas	1
+417	Pune	1
+149	Dundee	1
+354	Nagaon	1
+72	Bern	2
+297	Le Mans	1
+253	Kakamigahara	2
+240	Jinchang	1
+18	Allappuzha (Alleppey)	2
+456	Santa Bárbara d´Oeste	1
+405	Pereira	1
+333	Memphis	1
+195	Haldia	1
+62	Bayugan	1
+513	Tabora	1
+369	Novotšerkassk	1
+169	Firozabad	1
+271	Kisumu	1
+194	Haiphong	1
+35	Ashgabat	1
+51	Balurghat	2
+174	Fuyu	1
+518	Taizz	1
+508	Sunnyvale	1
+498	Stara Zagora	1
+28	Aparecida de Goiânia	2
+567	Vicente López	1
+439	Saarbrücken	1
+406	Phnom Penh	2
+26	Anápolis	1
+233	Jalib al-Shuyukh	1
+527	Tanza	1
+294	Lapu-Lapu	1
+553	Uijongbu	1
+198	Halle/Saale	1
+312	London	2
+323	Mandaluyong	1
+203	Higashiosaka	1
+298	Lengshuijiang	2
+446	Salinas	2
+263	Karnal	1
+514	Tabriz	1
+411	Ponce	1
+69	Benin City	2
+522	Tambaram	1
+274	Kolpino	1
+400	Patiala	1
+398	Parbhani	1
+57	Bat Yam	1
+545	Tórshavn	1
+591	Yuzhou	1
+5	Adana	1
+42	Aurora	2
+505	Sumqayit	1
+492	Sousse	1
+427	Rampur	1
+382	Onomichi	1
+221	Imus	1
+52	Bamenda	1
+461	Santo André	2
+331	Matsue	1
+20	Almirante Brown	1
+585	Yaoundé	2
+50	Balikesir	1
+250	Juárez	1
+523	Tanauan	1
+572	Vitória de Santo Antão	1
+104	Cavite	1
+181	Gijón	1
+524	Tandil	1
+430	Richmond Hill	1
+117	Cianjur	1
+208	Hoshiarpur	1
+16	al-Qatif	1
+416	Pudukkottai	1
+293	Laohekou	1
+468	Shanwei	1
+501	Sucre	1
+272	Kitwe	1
+144	Dhule (Dhulia)	1
+59	Batna	1
+160	Erlangen	2
+509	Surakarta	1
+3	Abu Dhabi	1
+435	Rockford	2
+359	Nam Dinh	1
+158	Emmen	1
+179	Gatineau	1
+11	Akron	1
+504	Sultanbeyli	1
+47	Baiyin	1
+432	Rizhao	1
+589	York	1
+519	Talavera	1
+568	Vijayawada	1
+60	Battambang	2
+588	Yingkou	1
+551	Udine	1
+339	Mogiljov	1
+165	Ezeiza	1
+100	Cam Ranh	1
+80	Binzhou	1
+24	Amroha	1
+528	Tarlac	1
+599	Zhoushan	1
+570	Vilnius	1
+43	Avellaneda	2
+178	Garland	1
+55	Barcelona	1
+341	Monclova	1
+168	Fengshan	2
+344	Mosul	1
+212	Huejutla de Reyes	1
+424	Quilmes	1
+106	Celaya	1
+14	al-Manama	1
+512	Székesfehérvár	1
+401	Patras	1
+503	Sullana	1
+

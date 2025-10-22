@@ -1,0 +1,5 @@
+13:  Para cada empleado, muestra el importe total procesado.
+staff_id	first_name	last_name	total_processed
+1	Mike	Hillyer	33482.50
+2	Jon	Stephens	33924.06
+

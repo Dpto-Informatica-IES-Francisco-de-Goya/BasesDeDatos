@@ -1,0 +1,5 @@
+65:  Para cada tienda, cuenta cuántos actores distintos aparecen en las películas de su inventario.
+store_id	distinct_actors_in_store_inventory
+1	200
+2	200
+

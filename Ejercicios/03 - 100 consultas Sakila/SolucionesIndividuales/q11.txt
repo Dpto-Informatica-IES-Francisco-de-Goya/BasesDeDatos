@@ -1,0 +1,5 @@
+11:  Muestra los clientes cuyo importe total pagado es al menos 200.
+customer_id	first_name	last_name	total_amount
+148	ELEANOR	HUNT	216.54
+526	KARL	SEAL	221.55
+

@@ -1,0 +1,5 @@
+18:  Para cada dirección, cuenta cuántos empleados residen en esa dirección.
+address_id	address	staff_here
+3	23 Workhaven Lane	1
+4	1411 Lillydale Drive	1
+

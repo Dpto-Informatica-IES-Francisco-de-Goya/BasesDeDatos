@@ -1,0 +1,19 @@
+79:  Para cada categoría, cuenta cuántas películas con título de longitud > 15 han sido alquiladas.
+category_id	category_name	rentals_long_title
+1	Action	312
+2	Animation	336
+3	Children	396
+4	Classics	301
+5	Comedy	253
+6	Documentary	417
+7	Drama	348
+8	Family	330
+9	Foreign	231
+10	Games	178
+11	Horror	331
+12	Music	213
+13	New	323
+14	Sci-Fi	319
+15	Sports	503
+16	Travel	292
+

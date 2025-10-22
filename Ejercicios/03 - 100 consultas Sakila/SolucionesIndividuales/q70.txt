@@ -1,0 +1,111 @@
+70:  Para cada país, suma los importes pagados por sus clientes.
+country_id	country	total_paid_by_country
+50	Japan	3470.75
+103	United States	4110.32
+39	Greece	232.46
+64	Myanmar	194.48
+92	Taiwan	1209.95
+108	Yugoslavia	259.43
+68	New Zealand	92.76
+71	Oman	187.50
+46	Iran	950.75
+44	India	6628.28
+97	Turkey	1662.12
+102	United Kingdom	922.81
+80	Russian Federation	3045.87
+69	Nigeria	1511.48
+85	South Africa	1204.15
+72	Pakistan	525.72
+12	Bangladesh	402.05
+62	Morocco	307.29
+54	Latvia	262.40
+6	Argentina	1434.48
+41	Holy See (Vatican City State)	152.66
+75	Philippines	2381.32
+49	Italy	831.11
+34	France	374.04
+23	China	5798.74
+61	Moldova	127.66
+15	Brazil	3200.52
+7	Armenia	118.75
+94	Thailand	419.04
+36	French Polynesia	235.46
+22	Chile	328.29
+82	Saudi Arabia	523.79
+89	Sudan	227.46
+87	Spain	606.58
+55	Liechtenstein	114.72
+59	Malaysia	369.15
+91	Switzerland	252.39
+35	French Guiana	103.78
+90	Sweden	144.66
+2	Algeria	383.10
+51	Kazakstan	198.48
+57	Madagascar	93.78
+100	Ukraine	730.42
+60	Mexico	3307.04
+24	Colombia	709.41
+86	South Korea	574.65
+16	Brunei	113.65
+63	Mozambique	344.20
+101	United Arab Emirates	333.16
+48	Israel	422.01
+99	Tuvalu	120.74
+104	Venezuela	683.30
+38	Germany	831.04
+45	Indonesia	1510.33
+29	Egypt	694.39
+74	Peru	468.88
+76	Poland	877.97
+67	Netherlands	586.66
+13	Belarus	277.34
+79	Réunion	216.54
+70	North Korea	113.69
+9	Austria	307.22
+58	Malawi	123.72
+20	Canada	593.63
+93	Tanzania	341.17
+52	Kenya	253.46
+105	Vietnam	746.28
+98	Turkmenistan	136.73
+73	Paraguay	275.38
+40	Greenland	137.66
+107	Yemen	510.83
+17	Bulgaria	204.50
+1	Afghanistan	67.82
+18	Cambodia	191.47
+78	Romania	235.38
+53	Kuwait	111.74
+27	Dominican Republic	318.23
+28	Ecuador	390.13
+26	Czech Republic	133.71
+77	Puerto Rico	254.39
+42	Hong Kong	142.70
+33	Finland	101.74
+32	Faroe Islands	114.72
+3	American Samoa	71.80
+66	Nepal	116.78
+81	Saint Vincent and the Grenadines	96.75
+10	Azerbaijan	245.43
+96	Tunisia	78.77
+95	Tonga	73.82
+19	Cameroon	200.46
+84	Slovakia	89.74
+25	Congo, The Democratic Republic of the	212.50
+5	Anguilla	106.65
+4	Angola	215.48
+31	Ethiopia	91.77
+106	Virgin Islands, U.S.	122.68
+88	Sri Lanka	116.70
+14	Bolivia	183.53
+109	Zambia	134.67
+30	Estonia	115.70
+83	Senegal	100.75
+65	Nauru	148.69
+21	Chad	135.68
+56	Lithuania	73.76
+47	Iraq	111.73
+37	Gambia	129.70
+11	Bahrain	112.75
+43	Hungary	111.71
+

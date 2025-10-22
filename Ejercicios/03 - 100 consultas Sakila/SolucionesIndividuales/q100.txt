@@ -1,0 +1,18 @@
+100:  Para cada categoría, calcula la media de duración (length) de películas alquiladas en 2006 y ordénalas descendentemente por dicha media.
+category_id	category_name	avg_length_rented_2006
+7	Drama	135.0000
+15	Sports	133.2000
+10	Games	128.8571
+9	Foreign	126.9091
+5	Comedy	124.3333
+8	Family	123.6923
+11	Horror	122.9167
+16	Travel	117.8000
+13	New	115.0769
+3	Children	106.3333
+12	Music	105.9091
+2	Animation	104.6190
+4	Classics	100.3333
+6	Documentary	89.6667
+1	Action	86.2941
+14	Sci-Fi	81.7500

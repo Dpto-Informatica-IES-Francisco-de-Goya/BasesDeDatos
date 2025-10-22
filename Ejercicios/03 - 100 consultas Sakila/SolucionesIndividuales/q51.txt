@@ -1,0 +1,5 @@
+51:  Para cada tienda, cuenta cuántos clientes activos (active=1) tiene.
+store_id	active_customers
+1	318
+2	266
+

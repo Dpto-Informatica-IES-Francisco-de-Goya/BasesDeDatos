@@ -1,0 +1,5 @@
+30:  Para cada tienda, cuenta cuántos alquileres totales se originan en su inventario.
+store_id	rentals_by_store_inventory
+1	7923
+2	8121
+

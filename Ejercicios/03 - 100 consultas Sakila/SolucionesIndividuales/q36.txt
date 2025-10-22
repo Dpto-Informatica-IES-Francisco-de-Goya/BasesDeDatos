@@ -1,0 +1,5 @@
+36:  Para cada ciudad, cuenta cuántos empleados residen ahí (staff -> address -> city).
+city_id	city	staff_in_city
+300	Lethbridge	1
+576	Woodridge	1
+

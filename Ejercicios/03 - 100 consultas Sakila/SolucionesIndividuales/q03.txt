@@ -1,0 +1,4 @@
+3:  Para cada idioma, indica cuántas películas están catalogadas en ese idioma.
+language_id	language_name	films_in_language
+1	English	1000
+

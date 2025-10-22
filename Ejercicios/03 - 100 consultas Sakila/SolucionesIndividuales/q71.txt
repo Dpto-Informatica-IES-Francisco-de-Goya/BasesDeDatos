@@ -1,0 +1,5 @@
+71:  Para cada tienda, cuenta cuántas categorías distintas existen en su inventario.
+store_id	distinct_categories_in_store
+1	16
+2	16
+

@@ -1,0 +1,602 @@
+20:  Para cada ciudad, cuenta cuántas direcciones hay registradas.
+city_id	city	addresses_in_city
+1	A Coruña (La Coruña)	1
+2	Abha	1
+3	Abu Dhabi	1
+4	Acuña	1
+5	Adana	1
+6	Addis Abeba	1
+7	Aden	1
+8	Adoni	1
+9	Ahmadnagar	1
+10	Akishima	1
+11	Akron	1
+12	al-Ayn	1
+13	al-Hawiya	1
+14	al-Manama	1
+15	al-Qadarif	1
+16	al-Qatif	1
+17	Alessandria	1
+18	Allappuzha (Alleppey)	1
+19	Allende	1
+20	Almirante Brown	1
+21	Alvorada	1
+22	Ambattur	1
+23	Amersfoort	1
+24	Amroha	1
+25	Angra dos Reis	1
+26	Anápolis	1
+27	Antofagasta	1
+28	Aparecida de Goiânia	1
+29	Apeldoorn	1
+30	Araçatuba	1
+31	Arak	1
+32	Arecibo	1
+33	Arlington	1
+34	Ashdod	1
+35	Ashgabat	1
+36	Ashqelon	1
+37	Asunción	1
+38	Athenai	1
+39	Atšinsk	1
+40	Atlixco	1
+41	Augusta-Richmond County	1
+42	Aurora	2
+43	Avellaneda	1
+44	Bagé	1
+45	Bahía Blanca	1
+46	Baicheng	1
+47	Baiyin	1
+48	Baku	1
+49	Balašiha	1
+50	Balikesir	1
+51	Balurghat	1
+52	Bamenda	1
+53	Bandar Seri Begawan	1
+54	Banjul	1
+55	Barcelona	1
+56	Basel	1
+57	Bat Yam	1
+58	Batman	1
+59	Batna	1
+60	Battambang	1
+61	Baybay	1
+62	Bayugan	1
+63	Béchar	1
+64	Beira	1
+65	Bellevue	1
+66	Belém	1
+67	Benguela	1
+68	Beni-Mellal	1
+69	Benin City	1
+70	Bergamo	1
+71	Berhampore (Baharampur)	1
+72	Bern	1
+73	Bhavnagar	1
+74	Bhilwara	1
+75	Bhimavaram	1
+76	Bhopal	1
+77	Bhusawal	1
+78	Bijapur	1
+79	Bilbays	1
+80	Binzhou	1
+81	Birgunj	1
+82	Bislig	1
+83	Blumenau	1
+84	Boa Vista	1
+85	Boksburg	1
+86	Botosani	1
+87	Botshabelo	1
+88	Bradford	1
+89	Brasília	1
+90	Bratislava	1
+91	Brescia	1
+92	Brest	1
+93	Brindisi	1
+94	Brockton	1
+95	Bucuresti	1
+96	Buenaventura	1
+97	Bydgoszcz	1
+98	Cabuyao	1
+99	Callao	1
+100	Cam Ranh	1
+101	Cape Coral	1
+102	Caracas	1
+103	Carmen	1
+104	Cavite	1
+105	Cayenne	1
+106	Celaya	1
+107	Chandrapur	1
+108	Changhwa	1
+109	Changzhou	1
+110	Chapra	1
+111	Charlotte Amalie	1
+112	Chatsworth	1
+113	Cheju	1
+114	Chiayi	1
+115	Chisinau	1
+116	Chungho	1
+117	Cianjur	1
+118	Ciomas	1
+119	Ciparay	1
+120	Citrus Heights	1
+121	Città del Vaticano	1
+122	Ciudad del Este	1
+123	Clarksville	1
+124	Coacalco de Berriozábal	1
+125	Coatzacoalcos	1
+126	Compton	1
+127	Coquimbo	1
+128	Córdoba	1
+129	Cuauhtémoc	1
+130	Cuautla	1
+131	Cuernavaca	1
+132	Cumaná	1
+133	Czestochowa	1
+134	Dadu	1
+135	Dallas	1
+136	Datong	1
+137	Daugavpils	1
+138	Davao	1
+139	Daxian	1
+140	Dayton	1
+141	Deba Habe	1
+142	Denizli	1
+143	Dhaka	1
+144	Dhule (Dhulia)	1
+145	Dongying	1
+146	Donostia-San Sebastián	1
+147	Dos Quebradas	1
+148	Duisburg	1
+149	Dundee	1
+150	Dzerzinsk	1
+151	Ede	1
+152	Effon-Alaiye	1
+153	El Alto	1
+154	El Fuerte	1
+155	El Monte	1
+156	Elista	1
+157	Emeishan	1
+158	Emmen	1
+159	Enshi	1
+160	Erlangen	1
+161	Escobar	1
+162	Esfahan	1
+163	Eskisehir	1
+164	Etawah	1
+165	Ezeiza	1
+166	Ezhou	1
+167	Faaa	1
+168	Fengshan	1
+169	Firozabad	1
+170	Florencia	1
+171	Fontana	1
+172	Fukuyama	1
+173	Funafuti	1
+174	Fuyu	1
+175	Fuzhou	1
+176	Gandhinagar	1
+177	Garden Grove	1
+178	Garland	1
+179	Gatineau	1
+180	Gaziantep	1
+181	Gijón	1
+182	Gingoog	1
+183	Goiânia	1
+184	Gorontalo	1
+185	Grand Prairie	1
+186	Graz	1
+187	Greensboro	1
+188	Guadalajara	1
+189	Guarujá	1
+190	Águas Lindas de Goiás	1
+191	Gulbarga	1
+192	Hagonoy	1
+193	Haining	1
+194	Haiphong	1
+195	Haldia	1
+196	Halifax	1
+197	Halisahar	1
+198	Halle/Saale	1
+199	Hami	1
+200	Hamilton	1
+201	Hanoi	1
+202	Hidalgo	1
+203	Higashiosaka	1
+204	Hino	1
+205	Hiroshima	1
+206	Hodeida	1
+207	Hohhot	1
+208	Hoshiarpur	1
+209	Hsichuh	1
+210	Huai´an	1
+211	Hubli-Dharwad	1
+212	Huejutla de Reyes	1
+213	Huixquilucan	1
+214	Huánuco	1
+215	Ibirité	1
+216	Idfu	1
+217	Ife	1
+218	Ikerre	1
+219	Iligan	1
+220	Ilorin	1
+221	Imus	1
+222	Inegöl	1
+223	Ipoh	1
+224	Isesaki	1
+225	Ivanovo	1
+226	Iwaki	1
+227	Iwakuni	1
+228	Iwatsuki	1
+229	Izumisano	1
+230	Jaffna	1
+231	Jaipur	1
+232	Jakarta	1
+233	Jalib al-Shuyukh	1
+234	Jamalpur	1
+235	Jaroslavl	1
+236	Jastrzebie-Zdrój	1
+237	Jedda	1
+238	Jelets	1
+239	Jhansi	1
+240	Jinchang	1
+241	Jining	1
+242	Jinzhou	1
+243	Jodhpur	1
+244	Johannesburg	1
+245	Joliet	1
+246	José Azueta	1
+247	Juazeiro do Norte	1
+248	Juiz de Fora	1
+249	Junan	1
+250	Juárez	1
+251	Kabul	1
+252	Kaduna	1
+253	Kakamigahara	1
+254	Kaliningrad	1
+255	Kalisz	1
+256	Kamakura	1
+257	Kamarhati	1
+258	Kamjanets-Podilskyi	1
+259	Kamyšin	1
+260	Kanazawa	1
+261	Kanchrapara	1
+262	Kansas City	1
+263	Karnal	1
+264	Katihar	1
+265	Kermanshah	1
+266	Kilis	1
+267	Kimberley	1
+268	Kimchon	1
+269	Kingstown	1
+270	Kirovo-Tšepetsk	1
+271	Kisumu	1
+272	Kitwe	1
+273	Klerksdorp	1
+274	Kolpino	1
+275	Konotop	1
+276	Koriyama	1
+277	Korla	1
+278	Korolev	1
+279	Kowloon and New Kowloon	1
+280	Kragujevac	1
+281	Kütahya	1
+282	Kuching	1
+283	Kumbakonam	1
+284	Kurashiki	1
+285	Kurgan	1
+286	Kursk	1
+287	Kuwana	1
+288	La Paz	1
+289	La Plata	1
+290	La Romana	1
+291	Laiwu	1
+292	Lancaster	1
+293	Laohekou	1
+294	Lapu-Lapu	1
+295	Laredo	1
+296	Lausanne	1
+297	Le Mans	1
+298	Lengshuijiang	1
+299	Leshan	1
+300	Lethbridge	2
+301	Lhokseumawe	1
+302	Liaocheng	1
+303	Liepaja	1
+304	Lilongwe	1
+305	Lima	1
+306	Lincoln	1
+307	Linz	1
+308	Lipetsk	1
+309	Livorno	1
+310	Ljubertsy	1
+311	Loja	1
+312	London	2
+314	Lublin	1
+315	Lubumbashi	1
+316	Lungtan	1
+317	Luziânia	1
+318	Madiun	1
+319	Mahajanga	1
+320	Maikop	1
+321	Malmö	1
+322	Manchester	1
+323	Mandaluyong	1
+324	Mandi Bahauddin	1
+325	Mannheim	1
+326	Maracaíbo	1
+327	Mardan	1
+328	Maringá	1
+329	Masqat	1
+330	Matamoros	1
+331	Matsue	1
+332	Meixian	1
+333	Memphis	1
+334	Merlo	1
+335	Mexicali	1
+336	Miraj	1
+337	Mit Ghamr	1
+338	Miyakonojo	1
+339	Mogiljov	1
+340	Molodetšno	1
+341	Monclova	1
+342	Monywa	1
+343	Moscow	1
+344	Mosul	1
+345	Mukatševe	1
+346	Munger (Monghyr)	1
+347	Mwanza	1
+348	Mwene-Ditu	1
+349	Myingyan	1
+350	Mysore	1
+351	Naçala-Porto	1
+352	Nabereznyje Tšelny	1
+353	Nador	1
+354	Nagaon	1
+355	Nagareyama	1
+356	Najafabad	1
+357	Naju	1
+358	Nakhon Sawan	1
+359	Nam Dinh	1
+360	Namibe	1
+361	Nantou	1
+362	Nanyang	1
+363	NDjamna	1
+364	Newcastle	1
+365	Nezahualcóyotl	1
+366	Nha Trang	1
+367	Niznekamsk	1
+368	Novi Sad	1
+369	Novotšerkassk	1
+370	Nuku´alofa	1
+371	Nuuk	1
+372	Nyeri	1
+373	Ocumare del Tuy	1
+374	Ogbomosho	1
+375	Okara	1
+376	Okayama	1
+377	Okinawa	1
+378	Olomouc	1
+379	Omdurman	1
+380	Omiya	1
+381	Ondo	1
+382	Onomichi	1
+383	Oshawa	1
+384	Osmaniye	1
+385	Šostka	1
+386	Otsu	1
+387	Oulu	1
+388	Ourense (Orense)	1
+389	Owo	1
+390	Oyo	1
+391	Ozamis	1
+392	Paarl	1
+393	Pachuca de Soto	1
+394	Pak Kret	1
+395	Palghat (Palakkad)	1
+396	Pangkal Pinang	1
+397	Papeete	1
+398	Parbhani	1
+399	Pathankot	1
+400	Patiala	1
+401	Patras	1
+402	Pavlodar	1
+403	Pemalang	1
+404	Peoria	1
+405	Pereira	1
+406	Phnom Penh	1
+407	Pingxiang	1
+408	Pjatigorsk	1
+409	Plock	1
+410	Poá	1
+411	Ponce	1
+412	Pontianak	1
+413	Poços de Caldas	1
+414	Portoviejo	1
+415	Probolinggo	1
+416	Pudukkottai	1
+417	Pune	1
+418	Purnea (Purnia)	1
+419	Purwakarta	1
+420	Pyongyang	1
+421	Qalyub	1
+422	Qinhuangdao	1
+423	Qomsheh	1
+424	Quilmes	1
+425	Rae Bareli	1
+426	Rajkot	1
+427	Rampur	1
+428	Rancagua	1
+429	Ranchi	1
+430	Richmond Hill	1
+431	Rio Claro	1
+432	Rizhao	1
+433	Roanoke	1
+434	Ríobamba	1
+435	Rockford	1
+436	Ruse	1
+437	Rustenburg	1
+438	´s-Hertogenbosch	1
+439	Saarbrücken	1
+440	Sagamihara	1
+441	Saint Louis	1
+442	Saint-Denis	1
+443	Salé	1
+444	Salala	1
+445	Salamanca	1
+446	Salinas	1
+447	Salzburg	1
+448	Sambhal	1
+449	San Bernardino	1
+450	San Felipe de Puerto Plata	1
+451	San Felipe del Progreso	1
+452	San Juan Bautista Tuxtepec	1
+453	San Lorenzo	1
+454	San Miguel de Tucumán	1
+455	Sanaa	1
+456	Santa Bárbara d´Oeste	1
+457	Santa Fé	1
+458	Santa Rosa	1
+459	Santiago de Compostela	1
+460	Santiago de los Caballeros	1
+461	Santo André	1
+462	Sanya	1
+463	Sasebo	1
+464	Satna	1
+465	Sawhaj	1
+466	Serpuhov	1
+467	Shahr-e Kord	1
+468	Shanwei	1
+469	Shaoguan	1
+470	Sharja	1
+471	Shenzhen	1
+472	Shikarpur	1
+473	Shimoga	1
+474	Shimonoseki	1
+475	Shivapuri	1
+476	Shubra al-Khayma	1
+477	Siegen	1
+478	Siliguri (Shiliguri)	1
+479	Simferopol	1
+480	Sincelejo	1
+481	Sirjan	1
+482	Sivas	1
+483	Skikda	1
+484	Smolensk	1
+485	São Bernardo do Campo	1
+486	São Leopoldo	1
+487	Sogamoso	1
+488	Sokoto	1
+489	Songkhla	1
+490	Sorocaba	1
+491	Soshanguve	1
+492	Sousse	1
+493	South Hill	1
+494	Southampton	1
+495	Southend-on-Sea	1
+496	Southport	1
+497	Springs	1
+498	Stara Zagora	1
+499	Sterling Heights	1
+500	Stockport	1
+501	Sucre	1
+502	Suihua	1
+503	Sullana	1
+504	Sultanbeyli	1
+505	Sumqayit	1
+506	Sumy	1
+507	Sungai Petani	1
+508	Sunnyvale	1
+509	Surakarta	1
+510	Syktyvkar	1
+511	Syrakusa	1
+512	Székesfehérvár	1
+513	Tabora	1
+514	Tabriz	1
+515	Tabuk	1
+516	Tafuna	1
+517	Taguig	1
+518	Taizz	1
+519	Talavera	1
+520	Tallahassee	1
+521	Tama	1
+522	Tambaram	1
+523	Tanauan	1
+524	Tandil	1
+525	Tangail	1
+526	Tanshui	1
+527	Tanza	1
+528	Tarlac	1
+529	Tarsus	1
+530	Tartu	1
+531	Tšeboksary	1
+532	Tegal	1
+533	Tel Aviv-Jaffa	1
+534	Tete	1
+535	Tianjin	1
+536	Tiefa	1
+537	Tieli	1
+538	Tokat	1
+539	Tonghae	1
+540	Tongliao	1
+541	Torreón	1
+542	Touliu	1
+543	Toulon	1
+544	Toulouse	1
+545	Tórshavn	1
+546	Tsaotun	1
+547	Tsuyama	1
+548	Tuguegarao	1
+549	Tychy	1
+550	Udaipur	1
+551	Udine	1
+552	Ueda	1
+553	Uijongbu	1
+554	Uluberia	1
+555	Urawa	1
+556	Uruapan	1
+557	Usak	1
+558	Usolje-Sibirskoje	1
+559	Uttarpara-Kotrung	1
+560	Vaduz	1
+561	Valencia	1
+562	Valle de la Pascua	1
+563	Valle de Santiago	1
+564	Valparai	1
+565	Vancouver	1
+566	Varanasi (Benares)	1
+567	Vicente López	1
+568	Vijayawada	1
+569	Vila Velha	1
+570	Vilnius	1
+571	Vinh	1
+572	Vitória de Santo Antão	1
+573	Warren	1
+574	Weifang	1
+575	Witten	1
+576	Woodridge	2
+577	Wroclaw	1
+578	Xi´angfan	1
+579	Xi´angtan	1
+580	Xintai	1
+581	Xinxiang	1
+582	Yamuna Nagar	1
+583	Yangor	1
+584	Yantai	1
+585	Yaoundé	1
+586	Yerevan	1
+587	Yinchuan	1
+588	Yingkou	1
+589	York	1
+590	Yuncheng	1
+591	Yuzhou	1
+592	Zalantun	1
+593	Zanzibar	1
+594	Zaoyang	1
+595	Zapopan	1
+596	Zaria	1
+597	Zeleznogorsk	1
+598	Zhezqazghan	1
+599	Zhoushan	1
+600	Ziguinchor	1
+

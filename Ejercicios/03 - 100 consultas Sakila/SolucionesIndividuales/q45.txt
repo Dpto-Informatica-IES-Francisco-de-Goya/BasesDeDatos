@@ -1,0 +1,5 @@
+45:  Para cada tienda, cuenta cuántas copias totales (inventario) tiene de películas en 2006.
+store_id	copies_2006
+2	2311
+1	2270
+

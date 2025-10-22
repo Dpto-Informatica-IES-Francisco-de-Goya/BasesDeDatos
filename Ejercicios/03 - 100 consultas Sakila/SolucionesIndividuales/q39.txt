@@ -1,0 +1,7 @@
+39:  Para cada categoría, calcula la duración media y muestra solo las que superan 120.
+category_id	category_name	avg_len
+7	Drama	120.8387
+9	Foreign	121.6986
+10	Games	127.8361
+15	Sports	128.2027
+

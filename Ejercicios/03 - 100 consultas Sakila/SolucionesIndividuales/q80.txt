@@ -1,0 +1,5 @@
+80:  Para cada país, suma los pagos procesados por los empleados de las tiendas ubicadas en ese país.
+country_id	country	revenue_by_country_staff
+20	Canada	33482.50
+8	Australia	33924.06
+

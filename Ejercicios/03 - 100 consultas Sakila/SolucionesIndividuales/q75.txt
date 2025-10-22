@@ -1,0 +1,4 @@
+75:  Para cada idioma, cuenta cuántos actores distintos participan en películas alquiladas en ese idioma.
+language_id	language_name	actors_in_rented_language_films
+1	English	200
+

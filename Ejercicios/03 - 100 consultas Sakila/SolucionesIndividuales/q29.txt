@@ -1,0 +1,19 @@
+29:  Para cada categoría (por id), cuenta cuántas películas pertenecen a ella (sin nombre de categoría para mantener 2 tablas).
+category_id	films_in_category
+1	64
+2	66
+3	60
+4	57
+5	58
+6	68
+7	62
+8	69
+9	73
+10	61
+11	56
+12	51
+13	63
+14	61
+15	74
+16	57
+

@@ -1,0 +1,602 @@
+19:  Para cada dirección, cuenta cuántos clientes residen ahí.
+address_id	address	customers_here
+5	1913 Hanoi Way	1
+6	1121 Loja Avenue	1
+7	692 Joliet Street	1
+8	1566 Inegöl Manor	1
+9	53 Idfu Parkway	1
+10	1795 Santiago de Compostela Way	1
+11	900 Santiago de Compostela Parkway	1
+12	478 Joliet Way	1
+13	613 Korolev Drive	1
+14	1531 Salé Drive	1
+15	1542 Tarlac Parkway	1
+16	808 Bhopal Manor	1
+17	270 Amroha Parkway	1
+18	770 Bydgoszcz Avenue	1
+19	419 Iligan Lane	1
+20	360 Toulouse Parkway	1
+21	270 Toulon Boulevard	1
+22	320 Brest Avenue	1
+23	1417 Lancaster Avenue	1
+24	1688 Okara Way	1
+25	262 A Coruña (La Coruña) Parkway	1
+26	28 Charlotte Amalie Street	1
+27	1780 Hino Boulevard	1
+28	96 Tafuna Way	1
+29	934 San Felipe de Puerto Plata Street	1
+30	18 Duisburg Boulevard	1
+31	217 Botshabelo Place	1
+32	1425 Shikarpur Manor	1
+33	786 Aurora Avenue	1
+34	1668 Anápolis Street	1
+35	33 Gorontalo Way	1
+36	176 Mandaluyong Place	1
+37	127 Purnea (Purnia) Manor	1
+38	61 Tama Street	1
+39	391 Callao Drive	1
+40	334 Munger (Monghyr) Lane	1
+41	1440 Fukuyama Loop	1
+42	269 Cam Ranh Parkway	1
+43	306 Antofagasta Place	1
+44	671 Graz Street	1
+45	42 Brindisi Place	1
+46	1632 Bislig Avenue	1
+47	1447 Imus Way	1
+48	1998 Halifax Drive	1
+49	1718 Valencia Street	1
+50	46 Pjatigorsk Lane	1
+51	686 Garland Manor	1
+52	909 Garland Manor	1
+53	725 Isesaki Place	1
+54	115 Hidalgo Parkway	1
+55	1135 Izumisano Parkway	1
+56	939 Probolinggo Loop	1
+57	17 Kabul Boulevard	1
+58	1964 Allappuzha (Alleppey) Street	1
+59	1697 Kowloon and New Kowloon Loop	1
+60	1668 Saint Louis Place	1
+61	943 Tokat Street	1
+62	1114 Liepaja Street	1
+63	1213 Ranchi Parkway	1
+64	81 Hodeida Way	1
+65	915 Ponce Place	1
+66	1717 Guadalajara Lane	1
+67	1214 Hanoi Way	1
+68	1966 Amroha Avenue	1
+69	698 Otsu Street	1
+70	1150 Kimchon Manor	1
+71	1586 Guarujá Place	1
+72	57 Arlington Manor	1
+73	1031 Daugavpils Parkway	1
+74	1124 Buenaventura Drive	1
+75	492 Cam Ranh Street	1
+76	89 Allappuzha (Alleppey) Manor	1
+77	1947 Poços de Caldas Boulevard	1
+78	1206 Dos Quebradas Place	1
+79	1551 Rampur Lane	1
+80	602 Paarl Street	1
+81	1692 Ede Loop	1
+82	936 Salzburg Lane	1
+83	586 Tete Way	1
+84	1888 Kabul Drive	1
+85	320 Baiyin Parkway	1
+86	927 Bahía Blanca Parkway	1
+87	929 Tallahassee Loop	1
+88	125 Città del Vaticano Boulevard	1
+89	1557 Kütahya Boulevard	1
+90	870 Ashqelon Loop	1
+91	1740 Portoviejo Avenue	1
+92	1942 Ciparay Parkway	1
+93	1926 El Alto Avenue	1
+94	1952 Chatsworth Drive	1
+95	1370 Le Mans Avenue	1
+96	984 Effon-Alaiye Avenue	1
+97	832 Nakhon Sawan Manor	1
+98	152 Kitwe Parkway	1
+99	1697 Tanauan Lane	1
+100	1308 Arecibo Way	1
+101	1599 Plock Drive	1
+102	669 Firozabad Loop	1
+103	588 Vila Velha Manor	1
+104	1913 Kamakura Place	1
+105	733 Mandaluyong Place	1
+106	659 Vaduz Drive	1
+107	1177 Jelets Way	1
+108	1386 Yangor Avenue	1
+109	454 Nakhon Sawan Boulevard	1
+110	1867 San Juan Bautista Tuxtepec Avenue	1
+111	1532 Dzerzinsk Way	1
+112	1002 Ahmadnagar Manor	1
+113	682 Junan Way	1
+114	804 Elista Drive	1
+115	1378 Alvorada Avenue	1
+116	793 Cam Ranh Avenue	1
+117	1079 Tel Aviv-Jaffa Boulevard	1
+118	442 Rae Bareli Place	1
+119	1107 Nakhon Sawan Avenue	1
+120	544 Malmö Parkway	1
+121	1967 Sincelejo Place	1
+122	333 Goiânia Way	1
+123	1987 Coacalco de Berriozábal Loop	1
+124	241 Mosul Lane	1
+125	211 Chiayi Drive	1
+126	1175 Tanauan Way	1
+127	117 Boa Vista Way	1
+128	848 Tafuna Manor	1
+129	569 Baicheng Lane	1
+130	1666 Qomsheh Drive	1
+131	801 Hagonoy Drive	1
+132	1050 Garden Grove Avenue	1
+133	1854 Tieli Street	1
+134	758 Junan Lane	1
+135	1752 São Leopoldo Parkway	1
+136	898 Belém Manor	1
+137	261 Saint Louis Way	1
+138	765 Southampton Drive	1
+139	943 Johannesburg Avenue	1
+140	788 Atšinsk Street	1
+141	1749 Daxian Place	1
+142	1587 Sullana Lane	1
+143	1029 Dzerzinsk Manor	1
+144	1666 Beni-Mellal Place	1
+145	928 Jaffna Loop	1
+146	483 Ljubertsy Parkway	1
+147	374 Bat Yam Boulevard	1
+148	1027 Songkhla Manor	1
+149	999 Sanaa Loop	1
+150	879 Newcastle Way	1
+151	1337 Lincoln Parkway	1
+152	1952 Pune Lane	1
+153	782 Mosul Street	1
+154	781 Shimonoseki Drive	1
+155	1560 Jelets Boulevard	1
+156	1963 Moscow Place	1
+157	456 Escobar Way	1
+158	798 Cianjur Avenue	1
+159	185 Novi Sad Place	1
+160	1367 Yantai Manor	1
+161	1386 Nakhon Sawan Boulevard	1
+162	369 Papeete Way	1
+163	1440 Compton Place	1
+164	1623 Bahía Blanca Manor	1
+165	97 Shimoga Avenue	1
+166	1740 Le Mans Loop	1
+167	1287 Xi´angfan Boulevard	1
+168	842 Salzburg Lane	1
+169	154 Tallahassee Loop	1
+170	710 San Felipe del Progreso Avenue	1
+171	1540 Wroclaw Drive	1
+172	475 Atšinsk Way	1
+173	1294 Firozabad Drive	1
+174	1877 Ezhou Lane	1
+175	316 Uruapan Street	1
+176	29 Pyongyang Loop	1
+177	1010 Klerksdorp Way	1
+178	1848 Salala Boulevard	1
+179	431 Xi´angtan Avenue	1
+180	757 Rustenburg Avenue	1
+181	146 Johannesburg Way	1
+182	1891 Rizhao Boulevard	1
+183	1089 Iwatsuki Avenue	1
+184	1410 Benin City Parkway	1
+185	682 Garden Grove Place	1
+186	533 al-Ayn Boulevard	1
+187	1839 Székesfehérvár Parkway	1
+188	741 Ambattur Manor	1
+189	927 Barcelona Street	1
+190	435 0 Way	1
+191	140 Chiayi Parkway	1
+192	1166 Changhwa Street	1
+193	891 Novi Sad Manor	1
+194	605 Rio Claro Parkway	1
+195	1077 San Felipe de Puerto Plata Place	1
+196	9 San Miguel de Tucumán Manor	1
+197	447 Surakarta Loop	1
+198	345 Oshawa Boulevard	1
+199	1792 Valle de la Pascua Place	1
+200	1074 Binzhou Manor	1
+201	817 Bradford Loop	1
+202	955 Bamenda Way	1
+203	1149 A Coruña (La Coruña) Boulevard	1
+204	387 Mwene-Ditu Drive	1
+205	68 Molodetšno Manor	1
+206	642 Nador Drive	1
+207	1688 Nador Lane	1
+208	1215 Pyongyang Parkway	1
+209	1679 Antofagasta Street	1
+210	1304 ´s-Hertogenbosch Way	1
+211	850 Salala Loop	1
+212	624 Oshawa Boulevard	1
+213	43 Dadu Avenue	1
+214	751 Lima Loop	1
+215	1333 Haldia Street	1
+216	660 Jedda Boulevard	1
+217	1001 Miyakonojo Lane	1
+218	226 Brest Manor	1
+219	1229 Valencia Parkway	1
+220	1201 Qomsheh Manor	1
+221	866 Shivapuri Manor	1
+222	1168 Najafabad Parkway	1
+223	1244 Allappuzha (Alleppey) Place	1
+224	1842 Luziânia Boulevard	1
+225	1926 Gingoog Street	1
+226	810 Palghat (Palakkad) Boulevard	1
+227	1820 Maringá Parkway	1
+228	60 Poços de Caldas Street	1
+229	1014 Loja Manor	1
+230	201 Effon-Alaiye Way	1
+231	430 Alessandria Loop	1
+232	754 Valencia Place	1
+233	356 Olomouc Manor	1
+234	1256 Bislig Boulevard	1
+235	954 Kimchon Place	1
+236	885 Yingkou Manor	1
+237	1736 Cavite Place	1
+238	346 Skikda Parkway	1
+239	98 Stara Zagora Boulevard	1
+240	1479 Rustenburg Boulevard	1
+241	647 A Coruña (La Coruña) Street	1
+242	1964 Gijón Manor	1
+243	47 Syktyvkar Lane	1
+244	1148 Saarbrücken Parkway	1
+245	1103 Bilbays Parkway	1
+246	1246 Boksburg Parkway	1
+247	1483 Pathankot Street	1
+248	582 Papeete Loop	1
+249	300 Junan Street	1
+250	829 Grand Prairie Way	1
+251	1473 Changhwa Parkway	1
+252	1309 Weifang Street	1
+253	1760 Oshawa Manor	1
+254	786 Stara Zagora Way	1
+255	1966 Tonghae Street	1
+256	1497 Yuzhou Drive	1
+258	752 Ondo Loop	1
+259	1338 Zalantun Lane	1
+260	127 Iwakuni Boulevard	1
+261	51 Laredo Avenue	1
+262	771 Yaoundé Manor	1
+263	532 Toulon Street	1
+264	1027 Banjul Place	1
+265	1158 Mandi Bahauddin Parkway	1
+266	862 Xintai Lane	1
+267	816 Cayenne Parkway	1
+268	1831 Nam Dinh Loop	1
+269	446 Kirovo-Tšepetsk Lane	1
+270	682 Halisahar Place	1
+271	1587 Loja Manor	1
+272	1762 Paarl Parkway	1
+273	1519 Ilorin Place	1
+274	920 Kumbakonam Loop	1
+275	906 Goiânia Way	1
+276	1675 Xi´angfan Manor	1
+277	85 San Felipe de Puerto Plata Drive	1
+278	144 South Hill Loop	1
+279	1884 Shikarpur Avenue	1
+280	1980 Kamjanets-Podilskyi Street	1
+281	1944 Bamenda Way	1
+282	556 Baybay Manor	1
+283	457 Tongliao Loop	1
+284	600 Bradford Street	1
+285	1006 Santa Bárbara d´Oeste Manor	1
+286	1308 Sumy Loop	1
+287	1405 Chisinau Place	1
+288	226 Halifax Street	1
+289	1279 Udine Parkway	1
+290	1336 Benin City Drive	1
+291	1155 Liaocheng Place	1
+292	1993 Tabuk Lane	1
+293	86 Higashiosaka Lane	1
+294	1912 Allende Manor	1
+295	544 Tarsus Boulevard	1
+296	1936 Cumaná Avenue	1
+297	1192 Tongliao Street	1
+298	44 Najafabad Way	1
+299	32 Pudukkottai Lane	1
+300	661 Chisinau Lane	1
+301	951 Stara Zagora Manor	1
+302	922 Vila Velha Loop	1
+303	898 Jining Lane	1
+304	1635 Kuwana Boulevard	1
+305	41 El Alto Parkway	1
+306	1883 Maikop Lane	1
+307	1908 Gaziantep Place	1
+308	687 Alessandria Parkway	1
+309	827 Yuncheng Drive	1
+310	913 Coacalco de Berriozábal Loop	1
+311	715 São Bernardo do Campo Lane	1
+312	1354 Siegen Street	1
+313	1191 Sungai Petani Boulevard	1
+314	1224 Huejutla de Reyes Boulevard	1
+315	543 Bergamo Avenue	1
+316	746 Joliet Lane	1
+317	780 Kimberley Way	1
+318	1774 Yaoundé Place	1
+319	1957 Yantai Lane	1
+320	1542 Lubumbashi Boulevard	1
+321	651 Pathankot Loop	1
+322	1359 Zhoushan Parkway	1
+323	1769 Iwaki Lane	1
+324	1145 Vilnius Manor	1
+325	1892 Nabereznyje Tšelny Lane	1
+326	470 Boksburg Street	1
+327	1427 A Coruña (La Coruña) Place	1
+328	479 San Felipe del Progreso Avenue	1
+329	867 Benin City Avenue	1
+330	981 Kumbakonam Place	1
+331	1016 Iwakuni Street	1
+332	663 Bahía Blanca Parkway	1
+333	1860 Taguig Loop	1
+334	1816 Bydgoszcz Loop	1
+335	587 Benguela Manor	1
+336	430 Kumbakonam Drive	1
+337	1838 Tabriz Lane	1
+338	431 Székesfehérvár Avenue	1
+339	503 Sogamoso Loop	1
+340	507 Smolensk Loop	1
+341	1920 Weifang Avenue	1
+342	124 al-Manama Way	1
+343	1443 Mardan Street	1
+344	1909 Benguela Lane	1
+345	68 Ponce Parkway	1
+346	1217 Konotop Avenue	1
+347	1293 Nam Dinh Way	1
+348	785 Vaduz Street	1
+349	1516 Escobar Drive	1
+350	1628 Nagareyama Lane	1
+351	1157 Nyeri Loop	1
+352	1673 Tangail Drive	1
+353	381 Kabul Way	1
+354	953 Hodeida Street	1
+355	469 Nakhon Sawan Street	1
+356	1378 Beira Loop	1
+357	1641 Changhwa Place	1
+358	1698 Southport Loop	1
+359	519 Nyeri Manor	1
+360	619 Huánuco Avenue	1
+361	45 Aparecida de Goiânia Place	1
+362	482 Kowloon and New Kowloon Manor	1
+363	604 Bern Place	1
+364	1623 Kingstown Drive	1
+365	1009 Zanzibar Lane	1
+366	114 Jalib al-Shuyukh Manor	1
+367	1163 London Parkway	1
+368	1658 Jastrzebie-Zdrój Loop	1
+369	817 Laredo Avenue	1
+370	1565 Tangail Manor	1
+371	1912 Emeishan Drive	1
+372	230 Urawa Drive	1
+373	1922 Miraj Way	1
+374	433 Florencia Street	1
+375	1049 Matamoros Parkway	1
+376	1061 Ede Avenue	1
+377	154 Oshawa Manor	1
+378	1191 Tandil Drive	1
+379	1133 Rizhao Avenue	1
+380	1519 Santiago de los Caballeros Loop	1
+381	1618 Olomouc Manor	1
+382	220 Hidalgo Drive	1
+383	686 Donostia-San Sebastián Lane	1
+384	97 Mogiljov Lane	1
+385	1642 Charlotte Amalie Drive	1
+386	1368 Maracaíbo Boulevard	1
+387	401 Sucre Boulevard	1
+388	368 Huánuco Boulevard	1
+389	500 Lincoln Parkway	1
+390	102 Chapra Drive	1
+391	1793 Meixian Place	1
+392	514 Ife Way	1
+393	717 Changzhou Lane	1
+394	753 Ilorin Avenue	1
+395	1337 Mit Ghamr Avenue	1
+396	767 Pyongyang Drive	1
+397	614 Pak Kret Street	1
+398	954 Lapu-Lapu Way	1
+399	331 Bydgoszcz Parkway	1
+400	1152 Citrus Heights Manor	1
+401	168 Cianjur Manor	1
+402	616 Hagonoy Avenue	1
+403	1190 0 Place	1
+404	734 Béchar Place	1
+405	530 Lausanne Lane	1
+406	454 Patiala Lane	1
+407	1346 Mysore Drive	1
+408	990 Etawah Loop	1
+409	1266 Laredo Parkway	1
+410	88 Nagaon Manor	1
+411	264 Bhimavaram Manor	1
+412	1639 Saarbrücken Drive	1
+413	692 Amroha Drive	1
+414	1936 Lapu-Lapu Parkway	1
+415	432 Garden Grove Street	1
+416	1445 Carmen Parkway	1
+417	791 Salinas Street	1
+418	126 Acuña Parkway	1
+419	397 Sunnyvale Avenue	1
+420	992 Klerksdorp Loop	1
+421	966 Arecibo Loop	1
+422	289 Santo André Manor	1
+423	437 Chungho Drive	1
+424	1948 Bayugan Parkway	1
+425	1866 al-Qatif Avenue	1
+426	1661 Abha Drive	1
+427	1557 Cape Coral Parkway	1
+428	1727 Matamoros Place	1
+429	1269 Botosani Manor	1
+430	355 Vitória de Santo Antão Way	1
+431	1596 Acuña Parkway	1
+432	259 Ipoh Drive	1
+433	1823 Hoshiarpur Lane	1
+434	1404 Taguig Drive	1
+435	740 Udaipur Lane	1
+436	287 Cuautla Boulevard	1
+437	1766 Almirante Brown Street	1
+438	596 Huixquilucan Place	1
+439	1351 Aparecida de Goiânia Parkway	1
+440	722 Bradford Lane	1
+441	983 Santa Fé Way	1
+442	1245 Ibirité Way	1
+443	1836 Korla Parkway	1
+444	231 Kaliningrad Place	1
+445	495 Bhimavaram Lane	1
+446	1924 Shimonoseki Drive	1
+447	105 Dzerzinsk Manor	1
+448	614 Denizli Parkway	1
+449	1289 Belém Boulevard	1
+450	203 Tambaram Street	1
+451	1704 Tambaram Manor	1
+452	207 Cuernavaca Loop	1
+453	319 Springs Loop	1
+454	956 Nam Dinh Manor	1
+455	1947 Paarl Way	1
+456	814 Simferopol Loop	1
+457	535 Ahmadnagar Manor	1
+458	138 Caracas Boulevard	1
+459	251 Florencia Drive	1
+460	659 Gatineau Boulevard	1
+461	1889 Valparai Way	1
+462	1485 Bratislava Place	1
+463	935 Aden Boulevard	1
+464	76 Kermanshah Manor	1
+465	734 Tanshui Avenue	1
+466	118 Jaffna Loop	1
+467	1621 Tongliao Avenue	1
+468	1844 Usak Avenue	1
+469	1872 Toulon Loop	1
+470	1088 Ibirité Place	1
+471	1322 Mosul Parkway	1
+472	1447 Chatsworth Place	1
+473	1257 Guadalajara Street	1
+474	1469 Plock Lane	1
+475	434 Ourense (Orense) Manor	1
+476	270 Tambaram Parkway	1
+477	1786 Salinas Place	1
+478	1078 Stara Zagora Drive	1
+479	1854 Okara Boulevard	1
+480	421 Yaoundé Street	1
+481	1153 Allende Way	1
+482	808 Naçala-Porto Parkway	1
+483	632 Usolje-Sibirskoje Parkway	1
+484	98 Pyongyang Boulevard	1
+485	984 Novotšerkassk Loop	1
+486	64 Korla Street	1
+487	1785 São Bernardo do Campo Street	1
+488	698 Jelets Boulevard	1
+489	1297 Alvorada Parkway	1
+490	1909 Dayton Avenue	1
+491	1789 Saint-Denis Parkway	1
+492	185 Mannheim Lane	1
+493	184 Mandaluyong Street	1
+494	591 Sungai Petani Drive	1
+495	656 Matamoros Drive	1
+496	775 Šostka Drive	1
+497	1013 Tabuk Boulevard	1
+498	319 Plock Parkway	1
+499	1954 Kowloon and New Kowloon Way	1
+500	362 Rajkot Lane	1
+501	1060 Tandil Lane	1
+502	1515 Korla Way	1
+503	1416 San Juan Bautista Tuxtepec Avenue	1
+504	1 Valle de Santiago Avenue	1
+505	519 Brescia Parkway	1
+506	414 Mandaluyong Street	1
+507	1197 Sokoto Boulevard	1
+508	496 Celaya Drive	1
+509	786 Matsue Way	1
+510	48 Maracaíbo Place	1
+511	1152 al-Qatif Lane	1
+512	1269 Ipoh Avenue	1
+513	758 Korolev Parkway	1
+514	1747 Rustenburg Place	1
+515	886 Tonghae Place	1
+516	1574 Goiânia Boulevard	1
+517	548 Uruapan Street	1
+519	962 Tama Loop	1
+520	1778 Gijón Manor	1
+521	568 Dhule (Dhulia) Loop	1
+522	1768 Udine Loop	1
+523	608 Birgunj Parkway	1
+524	680 A Coruña (La Coruña) Manor	1
+525	1949 Sanya Street	1
+526	617 Klerksdorp Place	1
+527	1993 0 Loop	1
+528	1176 Southend-on-Sea Manor	1
+529	600 Purnea (Purnia) Avenue	1
+530	1003 Qinhuangdao Street	1
+531	1986 Sivas Place	1
+532	1427 Tabuk Place	1
+533	556 Asunción Way	1
+534	486 Ondo Parkway	1
+535	635 Brest Manor	1
+536	166 Jinchang Street	1
+537	958 Sagamihara Lane	1
+538	1817 Livorno Way	1
+539	1332 Gaziantep Lane	1
+540	949 Allende Lane	1
+541	195 Ilorin Street	1
+542	193 Bhusawal Place	1
+543	43 Vilnius Manor	1
+544	183 Haiphong Street	1
+545	163 Augusta-Richmond County Loop	1
+546	191 José Azueta Parkway	1
+547	379 Lublin Parkway	1
+548	1658 Cumaná Loop	1
+549	454 Qinhuangdao Drive	1
+550	1715 Okayama Street	1
+551	182 Nuku´alofa Drive	1
+552	390 Wroclaw Way	1
+553	1421 Quilmes Lane	1
+554	947 Tórshavn Place	1
+555	1764 Jalib al-Shuyukh Parkway	1
+556	346 Cam Ranh Avenue	1
+557	1407 Pachuca de Soto Place	1
+558	904 Clarksville Drive	1
+559	1917 Kumbakonam Parkway	1
+560	1447 Imus Place	1
+561	1497 Fengshan Drive	1
+562	869 Shikarpur Way	1
+563	1059 Yuncheng Avenue	1
+564	505 Madiun Boulevard	1
+565	1741 Hoshiarpur Boulevard	1
+566	1229 Varanasi (Benares) Manor	1
+567	1894 Boa Vista Way	1
+568	1342 Sharja Way	1
+569	1342 Abha Boulevard	1
+570	415 Pune Avenue	1
+571	1746 Faaa Way	1
+572	539 Hami Way	1
+573	1407 Surakarta Manor	1
+574	502 Mandi Bahauddin Parkway	1
+575	1052 Pathankot Avenue	1
+576	1351 Sousse Lane	1
+577	1501 Pangkal Pinang Avenue	1
+578	1405 Hagonoy Avenue	1
+579	521 San Juan Bautista Tuxtepec Place	1
+580	923 Tangail Boulevard	1
+581	186 Skikda Lane	1
+582	1568 Celaya Parkway	1
+583	1489 Kakamigahara Lane	1
+584	1819 Alessandria Loop	1
+585	1208 Tama Loop	1
+586	951 Springs Lane	1
+587	760 Miyakonojo Drive	1
+588	966 Asunción Way	1
+589	1584 Ljubertsy Lane	1
+590	247 Jining Parkway	1
+591	773 Dallas Manor	1
+592	1923 Stara Zagora Lane	1
+593	1402 Zanzibar Boulevard	1
+594	1464 Kursk Parkway	1
+595	1074 Sanaa Parkway	1
+596	1759 Niznekamsk Avenue	1
+597	32 Liaocheng Way	1
+598	42 Fontana Avenue	1
+599	1895 Zhezqazghan Drive	1
+600	1837 Kaduna Parkway	1
+601	844 Bucuresti Place	1
+602	1101 Bucuresti Boulevard	1
+603	1103 Quilmes Boulevard	1
+604	1331 Usak Boulevard	1
+605	1325 Fukuyama Street	1
+

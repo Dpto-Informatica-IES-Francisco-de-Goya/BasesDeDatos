@@ -1,0 +1,19 @@
+59:  Para cada categoría, cuenta cuántas películas tienen rating 'PG' o 'PG-13'.
+category_id	category_name	films_pg_pg13
+6	Documentary	28
+9	Foreign	33
+5	Comedy	28
+11	Horror	26
+12	Music	18
+2	Animation	30
+1	Action	20
+7	Drama	29
+4	Classics	23
+16	Travel	26
+14	Sci-Fi	25
+13	New	24
+3	Children	29
+8	Family	29
+10	Games	19
+15	Sports	30
+

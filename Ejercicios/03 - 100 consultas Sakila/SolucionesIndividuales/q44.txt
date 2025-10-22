@@ -1,0 +1,19 @@
+44:  Para cada categoría, muestra cuántos actores distintos participan en películas de esa categoría.
+category_id	category_name	actors_in_category
+1	Action	166
+2	Animation	166
+3	Children	163
+4	Classics	162
+5	Comedy	147
+6	Documentary	168
+7	Drama	162
+8	Family	164
+9	Foreign	175
+10	Games	150
+11	Horror	156
+12	Music	144
+13	New	169
+14	Sci-Fi	167
+15	Sports	182
+16	Travel	166
+

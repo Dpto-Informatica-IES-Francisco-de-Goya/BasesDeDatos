@@ -1,0 +1,5 @@
+83:  Para cada tienda, muestra la media de length de las películas alquiladas en 2005 y filtra las tiendas con media >= 100.
+store_id	avg_length_2005
+1	115.0950
+2	114.8930
+

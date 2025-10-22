@@ -1,0 +1,5 @@
+35:  Para cada tienda, suma el importe cobrado por todos sus empleados.
+store_id	revenue_by_store_staff
+1	33482.50
+2	33924.06
+

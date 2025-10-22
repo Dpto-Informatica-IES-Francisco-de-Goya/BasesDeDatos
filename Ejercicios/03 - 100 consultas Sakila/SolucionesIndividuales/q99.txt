@@ -1,0 +1,5 @@
+99:  Para cada tienda, muestra la media de importes cobrados por transacción en el año 2006, con dos decimales.
+store_id	avg_payment_2006
+1	2.46
+2	3.22
+

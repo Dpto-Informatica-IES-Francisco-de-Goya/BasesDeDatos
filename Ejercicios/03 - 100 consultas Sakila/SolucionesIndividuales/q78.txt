@@ -1,0 +1,5 @@
+78:  Para cada tienda, cuenta cuántos clientes distintos realizaron pagos en 2005.
+store_id	distinct_customers_2005
+1	599
+2	599
+

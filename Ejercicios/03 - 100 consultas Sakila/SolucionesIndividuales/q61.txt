@@ -1,0 +1,2 @@
+61:  Para cada ciudad, cuenta cuántos clientes hay y muestra solo ciudades con 10 o más clientes.
+
