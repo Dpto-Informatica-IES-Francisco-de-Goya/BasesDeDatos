@@ -30,8 +30,8 @@
 % ============================
 \title{U.T. 4: Normalización de Bases de Datos}
 \subtitle{Teoría, Anomalías y Formas Normales}
-\author{Profesor: Víctor de Juan}
-\date{\today}
+\author{Departamento de Informática - IES Francisco de Goya}
+\date{febrero de 2026}
 
 \begin{document}
 
@@ -94,13 +94,18 @@
 
 
 \begin{frame}
-  \frametitle{Problemas de un mal diseño}
-
-  
+  \frametitle{Problemas de un mal diseño 1/2}
   \begin{itemize}
     \item \textbf{Anomalías de inserción:} Dar de alta a un libro obliga a insertar tantas tuplas como autores tenga el libro. Además, pueden añadirse inconsistencias. ¿Qué pasa si al añadir una de esas tuplas pongo un año diferente para el mismo libro?
     \item \textbf{Anomalías de modificación:} Cambiar la editorial de un libro obliga a modificar todas las tuplas que corresponden a ese libro.
     \item \textbf{Anomalías de borrado:} Para dar de baja a un libro hay que borrar tantas tuplas como autores tenga el libro y, viceversa, para dar de baja a un autor hay que borrar tantas tuplas como libros haya escrito.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Problemas de un mal diseño 2/2}
+  
+  \begin{itemize}
     \item \textbf{Pérdida de semántica:} No podemos almacenar información sobre un autor sobre el que no exista ningún libro en la biblioteca. Esto es debido a que el ISBN forma parte de la clave, y no puede contener valores nulos (integridad de la clave).
     \SubItem Análogamente, no podemos registrar libros con autores anónimos. Por la misma razón que antes, dado que el nombre del autor también forma parte de la clave primaria.
     \item \textbf{Pérdidas de información:} Al dar de baja a un libro, se pierde información sobre sus autores (si éstos sólo tuviesen ese libro en la BD).
@@ -121,6 +126,68 @@
       \caption{Esquema Relacional Correcto: Autor, Libro y Escribe}
   \end{figure}
 \end{frame}
+
+
+\begin{frame}
+  \frametitle{Solución al Ejemplo 1}
+    \centering
+    
+    % --- Tabla de Libros ---
+    \textbf{Tabla: Libro} \\
+    \resizebox{0.6\textwidth}{!}{
+        \begin{tabular}{llll}
+            \toprule
+            \textbf{ISBN} & \textbf{Título} & \textbf{Editorial} & \textbf{Año} \\
+            \midrule
+            7445 & Bases de Datos & Mc. Graw-Hill & 1998 \\
+            8458 & Lenguaje C++ & Mc. Graw-Hill & 1996 \\
+            5885 & El Modelo Relacional & Ra-Ma & 1995 \\
+            2169 & Linux & Anaya & 1999 \\
+            \bottomrule
+        \end{tabular}
+    }
+    
+    \vspace{0.5cm}
+    
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \textbf{Tabla: Autor} \\
+        \resizebox{\textwidth}{!}{
+            \begin{tabular}{ll}
+                \toprule
+                \textbf{Autor} & \textbf{Nacional.} \\
+                \midrule
+                Pérez Martín & Española \\
+                García Sánchez & Española \\
+                Cousteau & Francesa \\
+                Romboni & Italiana \\
+                \bottomrule
+            \end{tabular}
+        }
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \textbf{Tabla: Libro\_Autor} \\
+        \resizebox{\textwidth}{!}{
+            \begin{tabular}{ll}
+                \toprule
+                \textbf{ISBN} & \textbf{Autor} \\
+                \midrule
+                7445 & Pérez Martín \\
+                8458 & Pérez Martín \\
+                5885 & Pérez Martín \\
+                5885 & García Sánchez \\
+                2169 & García Sánchez \\
+                2169 & Cousteau \\
+                2169 & Romboni \\
+                \bottomrule
+            \end{tabular}
+        }
+    \end{minipage}
+\end{frame}
+\end{frame}
+
 
 % ============================
 % 2. PRINCIPIOS
@@ -190,8 +257,14 @@
 
 
 \begin{frame}
-  \frametitle{Ejemplo: Préstamos de Biblioteca}
+
+  \frametitle{Ejemplo: Préstamos de Biblioteca 1/2}
+    \texttt{Prestamos (\underline{Cód\_Libro}, Título, Editorial, \underline{Num\_Socio}, Nombre, Domicilio, FechaPréstamo, FechaDevolución)} 
+\end{frame}
+
   
+  \begin{frame}
+  \frametitle{Ejemplo: Préstamos de Biblioteca 2/2}
   % [IMAGEN 5 del md: Diagrama de dependencias préstamos]
   \begin{figure}
       \centering
@@ -212,21 +285,30 @@
 % ============================
 \begin{frame}
   \frametitle{Dependencia Funcional Completa}
-
   \begin{block}{Definición}
     Sea un atributo $X$ compuesto ($X_1, X_2$). Se dice que $Y$ tiene \textbf{dependencia funcional completa} respecto a $X$ si depende de $X$ en su totalidad, y no de $X_1$ ni de $X_2$ por separado.
     $$ X \Rightarrow Y $$
   \end{block}
 
-  \begin{exampleblock}{Ejemplo: Notas de Alumnos}
-    Dada la tabla: \texttt{NOTAS(NT\_ASIG, NT\_ALUM, NT\_NOT)}
-    \begin{itemize}
-        \item La nota (\texttt{NT\_NOT}) depende de la combinación (Asignatura + Alumno).
-        \item Un solo valor de esta pareja define la nota.
-    \end{itemize}
-  \end{exampleblock}
+  \begin{exampleblock}{Ejemplo: ¿Dependencias funcionales completas de la PK?}
+    \texttt{Prestamos (\underline{Cód\_Libro}, Título, Editorial, \underline{Num\_Socio}, Nombre, Domicilio, FechaPréstamo, FechaDevolución)} 
 
-  \vspace{1em}
+  \end{exampleblock}
+  
+  \textbf{Regla de Oro:} En una tabla, todos los atributos deben tener una dependencia funcional completa de la clave principal.
+\end{frame}
+
+\begin{frame}
+  \begin{exampleblock}{Ejemplo: ¿Dependencias funcionales completas de la PK?}
+    \texttt{Prestamos (\underline{Cód\_Libro}, Título, Editorial, \underline{Num\_Socio}, Nombre, Domicilio, FechaPréstamo, FechaDevolución)} 
+
+    \textbf{(\underline{Cód\_Libro}, \underline{Num\_Socio}) $\Rightarrow$ FechaPréstamo, FechaDevolución}
+
+    \textbf{(\underline{Cód\_Libro}, \underline{Num\_Socio}) $\not\Rightarrow$ Título}
+
+    \textbf{(\underline{Cód\_Libro}, \underline{Num\_Socio}) $\rightarrow$ Título}
+  \end{exampleblock}
+  
   \textbf{Regla de Oro:} En una tabla, todos los atributos deben tener una dependencia funcional completa de la clave principal.
 \end{frame}
 
@@ -279,6 +361,7 @@
 % 4. FORMAS NORMALES
 % ============================
 
+\section{4. Formas Normales}
 % ============================
 % 1FN: Definición y Problema
 % ============================
@@ -298,8 +381,8 @@
       \toprule
       \textbf{NPed} & \textbf{Fecha} & \textbf{CodC} & \textbf{Nom} & \textbf{CodArt} & \textbf{Cant.} & \textbf{Desc.} & \textbf{Pre.} \\
       \midrule
-      123 & 19/11 & C14 & Pepe & A03,A15,A01 & 24,10,100 & Lápiz,Goma & 25,15 \\
-      145 & 24/11 & C67 & Juan & A02,A15,A24 & 1000,10,30 & Folio,Goma & 1,15 \\
+      123 & 19/11 & C14 & Pepe & A03,A15 & 24,10 & Lápiz,Goma & 25,15 \\
+      145 & 24/11 & C67 & Juan & A02,A15 & 1000,10 & Folio,Goma & 1,15 \\
       \bottomrule
     \end{tabular}
     }
@@ -353,11 +436,13 @@
       123 & A03 & 24 & Lápiz & 25 \\
       123 & A15 & 10 & Goma & 15 \\
       145 & A02 & 1000 & Folio & 1 \\
+      145 & A05 & 10 & Goma & 15 \\
       \bottomrule
     \end{tabular}
   }
   \end{center}
   \tiny{* Nota: La clave de la segunda tabla es compuesta (NPed + CodArt) para evitar duplicados.}
+  \tiny{** Pregunta: ¿Qué pasa aquí con las dependencias funcionales?}
 \end{frame}
 
 % ============================
@@ -442,9 +527,9 @@
 \begin{frame}
   \frametitle{Solución: Tablas en 2FN}
   Separamos las dependencias parciales en nuevas tablas.
-
+    \vspace{1cm}
   \begin{columns}[t]
-    \begin{column}{0.48\textwidth}
+    \begin{column}{0.3\textwidth}
       \textbf{1. ALUMNO}
       \resizebox{\textwidth}{!}{
       \begin{tabular}{lll}
@@ -475,7 +560,7 @@
       }
     \end{column}
 
-    \begin{column}{0.48\textwidth}
+    \begin{column}{0.4\textwidth}
       \textbf{3. NOTAS (Relación)}
       \resizebox{\textwidth}{!}{
       \begin{tabular}{lll}
@@ -496,6 +581,40 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}
+\frametitle{Ejercicio: ¿Está en 2FN?}
+  \textbf{1. Tabla PEDIDOS} (Datos únicos por pedido)
+  \begin{center}
+  \resizebox{0.7\textwidth}{!}{
+    \begin{tabular}{llll}
+      \toprule
+      \textbf{NPed (PK)} & \textbf{Fecha} & \textbf{Cod\_Cli} & \textbf{Nom\_Cli} \\
+      \midrule
+      123 & 19/11/96 & C14 & Pepe \\
+      145 & 24/11/96 & C67 & Juan \\
+      \bottomrule
+    \end{tabular}
+  }
+  \end{center}
+
+  \textbf{2. Tabla PED\_ART} (Desglose de artículos)
+  \begin{center}
+  \resizebox{0.9\textwidth}{!}{
+    \begin{tabular}{llllll}
+      \toprule
+      \textbf{NPed (PK)} & \textbf{CodArt (PK)} & \textbf{Cant.} & \textbf{Desc.} & \textbf{Precio} \\
+      \midrule
+      123 & A03 & 24 & Lápiz & 25 \\
+      123 & A15 & 10 & Goma & 15 \\
+      145 & A02 & 1000 & Folio & 1 \\
+      145 & A05 & 10 & Goma & 15 \\
+      \bottomrule
+    \end{tabular}
+  }
+  \end{center}
+  \tiny{Solución en pizarra.}
+  
+\end{frame}
 % ============================
 % 3FN: Definición
 % ============================
@@ -545,7 +664,7 @@
   \end{center}
   
   \vspace{0.5em}
-  \small{\textbf{Problema:} Aunque la Provincia está relacionada con el Cliente, en realidad depende directamente del Código Postal.}
+  \small{\textbf{Problema:} Aunque la Provincia está relacionada con el Cliente (DNI_CL $\to$ Provincia), en realidad depende directamente del Código Postal (DNI_CL $\to$ C_POS $\to$ PROV.}
 \end{frame}
 
 % ============================
@@ -570,7 +689,7 @@
   \textbf{Cadena transitiva:}
   $$ \text{DNI\_CL} \to \text{C\_POS} \to \text{PROV} $$
   
-  Debemos romper esta cadena separando los datos del Código Postal y Provincia.
+  Debemos romper esta cadena separando Código Postal de Provincia.
 \end{frame}
 
 % ============================
@@ -613,9 +732,9 @@
       \end{tabular}
       }
       \vspace{1em}
-      \footnotesize{\textit{* Ahora PROV depende únicamente de la clave (CP) de su propia tabla.}}
     \end{column}
   \end{columns}
+  \footnotesize{\textit{* Ahora PROV depende únicamente de la clave (CP) de su propia tabla.}}
 \end{frame}
 
 
