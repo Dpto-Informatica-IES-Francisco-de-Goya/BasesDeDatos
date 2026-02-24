@@ -389,6 +389,34 @@
   \footnotesize{\textit{* Nota cómo los artículos están separados por comas en una misma celda.}}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Primera Forma Normal (1FN)}
+
+  \begin{alertblock}{Definición}
+    Una tabla está en 1FN si \textbf{no admite atributos multivaluados}.
+    \\ Es decir, cada celda debe contener un único valor atómico.
+  \end{alertblock}
+
+  \vspace{0.5em}
+  \textbf{Solución 1: Tabla Normalizada}
+  \begin{center}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{llllllll}
+      \toprule
+      \textbf{NPed} & \textbf{Fecha} & \textbf{CodC} & \textbf{Nom} & \textbf{CodArt} & \textbf{Cant.} & \textbf{Desc.} & \textbf{Pre.} \\
+      \midrule
+      123 & 19/11 & C14 & Pepe & A03 & 24 & Lápiz & 25\\
+      123 & 19/11 & C14 & Pepe & A15 & 10 & Goma & 15 \\
+      145 & 24/11 & C67 & Juan & A02 & 1000 & Folio & 1 \\
+      145 & 24/11 & C67 & Juan & A15 & 10 & Goma & 15 \\
+      \bottomrule
+    \end{tabular}
+    }
+  \end{center}
+  
+\end{frame}
+
+
 % ============================
 % 1FN: Procedimiento
 % ============================
@@ -409,7 +437,7 @@
 % 1FN: Solución
 % ============================
 \begin{frame}
-  \frametitle{Solución: Tablas Normalizadas}
+  \frametitle{Solución 2: Tablas Normalizadas}
 
   \textbf{1. Tabla PEDIDOS} (Datos únicos por pedido)
   \begin{center}
@@ -507,15 +535,14 @@
 
   \begin{enumerate}
       \item \textbf{Datos del Alumno:}
-      $$ \text{COD\_AL} \to \text{NOM\_AL, TF\_AL} $$
+      $$ \text{(COD\_AL, COD\_ASIG)} \to \text{NOM\_AL, TF\_AL} $$
       \textcolor{red}{X Dependencia Parcial} (Solo depende de una parte de la clave).
 
       \item \textbf{Datos de la Asignatura:}
-      $$ \text{COD\_ASIG} \to \text{CURSO, HORAS} $$
+      $$ \text{(COD\_AL, COD\_ASIG)} \to \text{CURSO, HORAS} $$
       \textcolor{red}{X Dependencia Parcial} (Solo depende de la otra parte).
 
       \item \textbf{La Nota:}
-      $$ (\text{COD\_AL, COD\_ASIG}) \to \text{NOTA} $$
       $$ (\text{COD\_AL, COD\_ASIG}) \Rightarrow \text{NOTA} $$
       \textcolor{mygreen}{\checkmark Dependencia Completa} (Depende de ambos: quién y en qué).
   \end{enumerate}
