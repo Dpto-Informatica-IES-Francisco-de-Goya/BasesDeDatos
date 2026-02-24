@@ -1,3 +1,4 @@
+USE sakila;
 -- Solución 1: Título de la película más larga por categoría
 WITH max_lengths AS (
     SELECT fc.category_id, MAX(f.length) AS max_length
