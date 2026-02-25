@@ -2,7 +2,6 @@
 
 ### 3. Ejercicios Prácticos de Implementación
 
-Dado que los alumnos ya disponen de modelos relacionales, estos ejercicios se enfocan estrictamente en la sintaxis, el descubrimiento de errores y la modificación de estructuras (evitando crear modelos desde cero).
 
 ### Ejercicio 1: Auditoría de Sintaxis y Refactorización
 
