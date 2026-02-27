@@ -68,5 +68,27 @@ VALUES
 'F1',
 150);
 
+-- FALLA POR REGEXP DE MATRICULA
+INSERT INTO `ejercicio1`.`vehiculos`
+(
+`matricula`,
+`tipo`,
+`precio`)
+VALUES
+('5BBB',
+'F1',
+150);
+
+-- FALLA POR REGEXP DE MATRICULA
+INSERT INTO `ejercicio1`.`vehiculos`
+(
+`matricula`,
+`tipo`,
+`precio`)
+VALUES
+('5BBB5BBB5BBB',
+'F1',
+150);
+
 select * from vehiculos;
 
