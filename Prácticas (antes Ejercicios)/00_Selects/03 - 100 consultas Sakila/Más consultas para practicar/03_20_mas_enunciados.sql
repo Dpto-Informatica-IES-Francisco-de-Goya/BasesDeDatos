@@ -1,0 +1,20 @@
+-- 1) Películas y categoría: columnas -> film_id AS film_id, title AS titulo, category.name AS categoria 
+-- 2) Reparto por película: columnas -> title AS titulo, first_name AS nombre_actor, last_name AS apellido_actor 
+-- 3) Alquileres con título: columnas -> rental_id AS id_alquiler, rental_date AS fecha_alquiler, title AS titulo 
+-- 4) Cobros por cliente (importe total): columnas -> customer_id AS id_cliente, cliente, total_pagado 
+-- 5) Top 10 actores por nº de películas: columnas -> id_actor, actor, num_peliculas 
+-- 6) Películas >=120 min y su categoría: columnas -> titulo, minutos, categoria 
+-- 7) Cobros por país: columnas -> pais, total_pais 
+-- 8) Rotación por tienda (alquileres): columnas -> tienda, alquileres 
+-- 9) Ticket medio por empleado: columnas -> id_staff, staff, ticket_medio 
+-- 10) Películas por idioma y rating: columnas -> idioma, clasificacion, num_peliculas 
+-- 11) Duración media por categoría: columnas -> categoria, duracion_media 
+-- 12) Top 5 países por nº de clientes: columnas -> pais, clientes 
+-- 13) Importe total cobrado por tienda: columnas -> tienda, total_tienda 
+-- 14) Nº de copias por película y tienda: columnas -> tienda, titulo, copias 
+-- 15) Actores con >= 20 películas: columnas -> actor, num_peliculas 
+-- 16) Clientes inactivos y país: columnas -> cliente, pais 
+-- 17) Alquileres por año-mes y tienda: columnas -> anio, mes, tienda, alquileres 
+-- 18) Ticket medio por país: columnas -> pais, ticket_medio 
+-- 19) Películas con > 3 actores: columnas -> titulo, num_actores 
+-- 20) Importe total por categoría 

@@ -1,0 +1,19 @@
+93:  Para cada categoría, muestra el número de películas con replacement_cost > 20 que hayan sido alquiladas al menos una vez.
+category_id	category_name	pricey_rented_films
+1	Action	32
+2	Animation	32
+3	Children	28
+4	Classics	29
+5	Comedy	22
+6	Documentary	31
+7	Drama	33
+8	Family	32
+9	Foreign	30
+10	Games	30
+11	Horror	27
+12	Music	21
+13	New	25
+14	Sci-Fi	39
+15	Sports	40
+16	Travel	23
+

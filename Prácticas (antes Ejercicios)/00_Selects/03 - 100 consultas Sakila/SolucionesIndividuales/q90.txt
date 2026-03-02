@@ -1,0 +1,5 @@
+90:  Para cada tienda, cuenta cuántos clientes distintos alquilaron en el primer trimestre de 2006 (enero-marzo).
+store_id	distinct_customers_q1_2006
+1	85
+2	83
+

@@ -1,0 +1,19 @@
+55:  Para cada categoría, calcula el promedio de replacement_cost de sus películas.
+category_id	category_name	avg_replacement_cost
+1	Action	20.911875
+2	Animation	20.126364
+3	Children	20.056667
+4	Classics	21.007544
+5	Comedy	19.024483
+6	Documentary	19.622353
+7	Drama	21.086774
+8	Family	19.729130
+9	Foreign	18.647534
+10	Games	20.285082
+11	Horror	19.865000
+12	Music	19.440980
+13	New	19.418571
+14	Sci-Fi	21.153934
+15	Sports	20.395405
+16	Travel	19.025088
+

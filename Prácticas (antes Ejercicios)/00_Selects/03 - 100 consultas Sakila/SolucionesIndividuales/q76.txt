@@ -1,0 +1,5 @@
+76:  Para cada país, cuenta cuántas tiendas hay (país->ciudad->address->store).
+country_id	country	stores_in_country
+20	Canada	1
+8	Australia	1
+

@@ -1,0 +1,5 @@
+15:  Para cada tienda, cuenta cuántos clientes tiene asignados.
+store_id	customers_in_store
+1	326
+2	273
+

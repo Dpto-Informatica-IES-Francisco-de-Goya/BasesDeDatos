@@ -1,0 +1,5 @@
+94:  Para cada tienda, suma los importes pagados en fines de semana.
+store_id	weekend_revenue
+1	9686.92
+2	9989.77
+

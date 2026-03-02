@@ -1,0 +1,19 @@
+32:  Para cada categoría (por nombre), cuenta cuántas películas hay en esa categoría.
+category_id	category_name	films_in_category
+1	Action	64
+2	Animation	66
+3	Children	60
+4	Classics	57
+5	Comedy	58
+6	Documentary	68
+7	Drama	62
+8	Family	69
+9	Foreign	73
+10	Games	61
+11	Horror	56
+12	Music	51
+13	New	63
+14	Sci-Fi	61
+15	Sports	74
+16	Travel	57
+

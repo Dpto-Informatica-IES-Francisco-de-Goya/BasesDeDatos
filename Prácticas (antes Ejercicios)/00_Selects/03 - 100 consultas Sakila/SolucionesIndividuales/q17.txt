@@ -1,0 +1,5 @@
+17:  Para cada dirección (address), cuenta cuántas tiendas hay ubicadas ahí (debería ser 0/1 en datos estándar).
+address_id	address	stores_here
+1	47 MySakila Drive	1
+2	28 MySQL Boulevard	1
+

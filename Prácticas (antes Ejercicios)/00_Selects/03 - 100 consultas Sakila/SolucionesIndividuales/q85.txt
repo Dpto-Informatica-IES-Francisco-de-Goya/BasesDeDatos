@@ -1,0 +1,5 @@
+85:  Para cada empleado, muestra el importe total por pagos realizados entre las 00:00 y 06:00 (inclusive 00:00, exclusivo 06:00).
+staff_id	first_name	last_name	night_shift_amount
+1	Mike	Hillyer	8251.70
+2	Jon	Stephens	8190.44
+

@@ -163,7 +163,7 @@ Cada vez que quieras usar MySQL:
 
 1. Abre el **menú Inicio**
 2. Escribe **Ubuntu** y ábrelo (es la terminal de Linux)
-3. Arranca el servidor MySQL:
+3. Arranca el servidor MySQL (si no se hace por defecto)
 
 ```bash
 sudo service mysql start
@@ -178,6 +178,18 @@ mysql -u admin -p
 (escribe `1234`)
 
 ---
+# PASO 6 - Git
+
+Esto solo se hace una vez en cada ordenador
+```bash
+cd
+git clone https://github.com/Dpto-Informatica-IES-Francisco-de-Goya/BasesDeDatos.git
+```
+
+Cada día que vayas a trabajar, entra en el repositorio (`cd BasesDeDatos`)  y descarga los últimos cambios.
+```bash
+git pull
+```
 
 # 📝 Notas importantes
 

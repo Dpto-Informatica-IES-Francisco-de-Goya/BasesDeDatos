@@ -1,0 +1,275 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{float}
+\usepackage{lmodern} % fuente segura para pdfLaTeX
+
+% Colores
+\definecolor{primary}{RGB}{15,118,110}
+\definecolor{secondary}{RGB}{37,99,235}
+\definecolor{muted}{RGB}{107,114,128}
+\definecolor{bgcode}{RGB}{248,250,252}
+\definecolor{frame}{RGB}{226,232,240}
+
+% Estilo de secciones
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{secondary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\color{secondary}}{\thesubsubsection}{0.6em}{}
+
+% Listings (SQL)
+\lstdefinelanguage{SQLPlus}[]{SQL}{
+  morekeywords={IF,ELSE,END,DECLARE,BEGIN,EXCEPTION,WHEN,LOOP,ELSIF,THEN,RAISE,RETURN},
+  sensitive=false
+}
+\lstset{
+  language=SQLPlus,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{secondary}\bfseries,
+  commentstyle=\color{muted}\itshape,
+  stringstyle=\color{primary},
+  columns=fullflexible,
+  backgroundcolor=\color{bgcode},
+  frame=single,
+  rulecolor=\color{frame},
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+    inputencoding = utf8,  % Input encoding
+    extendedchars = true,  % Extended ASCII
+    literate      =        % Support additional characters
+      {á}{{\'a}}1  {é}{{\'e}}1  {í}{{\'i}}1 {ó}{{\'o}}1  {ú}{{\'u}}1
+      {Á}{{\'A}}1  {É}{{\'E}}1  {Í}{{\'I}}1 {Ó}{{\'O}}1  {Ú}{{\'U}}1
+      {à}{{\`a}}1  {è}{{\`e}}1  {ì}{{\`i}}1 {ò}{{\`o}}1  {ù}{{\`u}}1
+      {À}{{\`A}}1  {È}{{\`E}}1  {Ì}{{\`I}}1 {Ò}{{\`O}}1  {Ù}{{\`U}}1
+      {ä}{{\"a}}1  {ë}{{\"e}}1  {ï}{{\"i}}1 {ö}{{\"o}}1  {ü}{{\"u}}1
+      {Ä}{{\"A}}1  {Ë}{{\"E}}1  {Ï}{{\"I}}1 {Ö}{{\"O}}1  {Ü}{{\"U}}1
+      {â}{{\^a}}1  {ê}{{\^e}}1  {î}{{\^i}}1 {ô}{{\^o}}1  {û}{{\^u}}1
+      {Â}{{\^A}}1  {Ê}{{\^E}}1  {Î}{{\^I}}1 {Ô}{{\^O}}1  {Û}{{\^U}}1
+      {œ}{{\oe}}1  {Œ}{{\OE}}1  {æ}{{\ae}}1 {Æ}{{\AE}}1  {ß}{{\ss}}1
+      {ẞ}{{\SS}}1  {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1 {ø}{{\o}}1  {Ø}{{\O}}1
+      {å}{{\aa}}1  {Å}{{\AA}}1  {ã}{{\~a}}1  {õ}{{\~o}}1 {Ã}{{\~A}}1
+      {Õ}{{\~O}}1  {ñ}{{\~n}}1  {Ñ}{{\~N}}1  {¿}{{?`}}1  {¡}{{!`}}1
+      {„}{\quotedblbase}1 {“}{\textquotedblleft}1 {–}{$-$}1
+      {°}{{\textdegree}}1 {º}{{\textordmasculine}}1 {ª}{{\textordfeminine}}1
+      {£}{{\pounds}}1  {©}{{\copyright}}1  {®}{{\textregistered}}1
+      {«}{{\guillemotleft}}1  {»}{{\guillemotright}}1  {Ð}{{\DH}}1  {ð}{{\dh}}1
+      {Ý}{{\'Y}}1    {ý}{{\'y}}1    {Þ}{{\TH}}1    {þ}{{\th}}1    {Ă}{{\u{A}}}1
+      {ă}{{\u{a}}}1  {Ą}{{\k{A}}}1  {ą}{{\k{a}}}1  {Ć}{{\'C}}1    {ć}{{\'c}}1
+      {Č}{{\v{C}}}1  {č}{{\v{c}}}1  {Ď}{{\v{D}}}1  {ď}{{\v{d}}}1  {Đ}{{\DJ}}1
+      {đ}{{\dj}}1    {Ė}{{\.{E}}}1  {ė}{{\.{e}}}1  {Ę}{{\k{E}}}1  {ę}{{\k{e}}}1
+      {Ě}{{\v{E}}}1  {ě}{{\v{e}}}1  {Ğ}{{\u{G}}}1  {ğ}{{\u{g}}}1  {Ĩ}{{\~I}}1
+      {ĩ}{{\~\i}}1   {Į}{{\k{I}}}1  {į}{{\k{i}}}1  {İ}{{\.{I}}}1  {ı}{{\i}}1
+      {Ĺ}{{\'L}}1    {ĺ}{{\'l}}1    {Ľ}{{\v{L}}}1  {ľ}{{\v{l}}}1  {Ł}{{\L{}}}1
+      {ł}{{\l{}}}1   {Ń}{{\'N}}1    {ń}{{\'n}}1    {Ň}{{\v{N}}}1  {ň}{{\v{n}}}1
+      {Ő}{{\H{O}}}1  {ő}{{\H{o}}}1  {Ŕ}{{\'{R}}}1  {ŕ}{{\'{r}}}1  {Ř}{{\v{R}}}1
+      {ř}{{\v{r}}}1  {Ś}{{\'S}}1    {ś}{{\'s}}1    {Ş}{{\c{S}}}1  {ş}{{\c{s}}}1
+      {Š}{{\v{S}}}1  {š}{{\v{s}}}1  {Ť}{{\v{T}}}1  {ť}{{\v{t}}}1  {Ũ}{{\~U}}1
+      {ũ}{{\~u}}1    {Ū}{{\={U}}}1  {ū}{{\={u}}}1  {Ů}{{\r{U}}}1  {ů}{{\r{u}}}1
+      {Ű}{{\H{U}}}1  {ű}{{\H{u}}}1  {Ų}{{\k{U}}}1  {ų}{{\k{u}}}1  {Ź}{{\'Z}}1
+      {ź}{{\'z}}1    {Ż}{{\.Z}}1    {ż}{{\.z}}1    {Ž}{{\v{Z}}}1  {ž}{{\v{z}}}1
+}
+
+% Caja de aviso
+\tcbset{
+  colback=white,
+  colframe=primary,
+  coltitle=white,
+  colbacktitle=primary,
+  fonttitle=\bfseries,
+  arc=2mm,
+  boxrule=0.6pt
+}
+
+
+\title{\textbf{Guía de Auditoría y Control de Datos en MySQL}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Para garantizar que el despliegue de permisos es exacto y evaluar de forma eficiente el trabajo en la terminal, no basta con ejecutar las sentencias de control de datos (DCL). Es fundamental auditar el diccionario de datos interno de MySQL.
+
+A continuación, se presenta la guía completa estructurada, incorporando las consultas de verificación directas a las tablas del sistema para comprobar que cada paso se ha ejecutado correctamente.
+
+\section{Arquitectura de Cuentas: Usuario y Host}
+En MySQL, una cuenta se define estrictamente por la combinación de nombre de usuario y el host desde el que se conecta (\texttt{'usuario'@'host'}).
+
+\subsection{Creación y Modificación}
+\textbf{Crear un usuario:}
+\begin{lstlisting}
+CREATE USER 'dev_app'@'10.0.0.%' IDENTIFIED BY 'PasswordSegura123!';
+\end{lstlisting}
+
+\textbf{Bloquear una cuenta temporalmente:}
+\begin{lstlisting}
+ALTER USER 'dev_app'@'10.0.0.%' ACCOUNT LOCK;
+\end{lstlisting}
+
+\subsection*{ Verificación de Cuentas}
+Para comprobar que el usuario se ha creado con los atributos correctos, consulta la tabla principal del sistema:
+\begin{lstlisting}
+SELECT host, user, plugin, authentication_string, account_locked 
+FROM mysql.user 
+WHERE user = 'dev_app';
+\end{lstlisting}
+
+\section{Gestión de Privilegios (GRANT / REVOKE)}
+La asignación debe basarse en el principio de mínimo privilegio. Evita los permisos globales (\texttt{*.*}) y ajusta el acceso a la base de datos o tabla específica.
+
+\subsection{Asignación y Revocación}
+\textbf{Nivel de Base de Datos:}
+\begin{lstlisting}
+GRANT SELECT, INSERT, UPDATE, DELETE ON tienda_web.* TO 'app_backend'@'localhost';
+\end{lstlisting}
+
+\textbf{Nivel de Tabla y Columna:}
+\begin{lstlisting}
+GRANT SELECT, UPDATE (precio, stock) ON tienda_web.productos TO 'gestor_precios'@'%';
+\end{lstlisting}
+
+\textbf{Revocar permisos:}
+\begin{lstlisting}
+REVOKE DELETE ON tienda_web.* FROM 'app_backend'@'localhost';
+\end{lstlisting}
+
+\subsection*{ Verificación de Privilegios}
+Aunque \texttt{SHOW GRANTS FOR 'usuario'@'host';} es útil, para automatizar comprobaciones es mejor consultar las tablas de privilegios específicas:
+
+\begin{lstlisting}
+-- Verificar privilegios globales (deben estar en 'N' para usuarios normales)
+SELECT user, host, Select_priv, Insert_priv, Super_priv
+FROM mysql.user WHERE user = 'app_backend';
+
+-- Verificar privilegios a nivel de base de datos
+SELECT host, user, db, Select_priv, Insert_priv
+FROM mysql.db WHERE user = 'app_backend';
+
+-- Verificar privilegios a nivel de tabla
+SELECT host, user, db, table_name, table_priv, column_priv
+FROM mysql.tables_priv WHERE user = 'gestor_precios';
+\end{lstlisting}
+
+\section{Implementación de Roles (MySQL 8.0+)}
+Los roles agrupan permisos y estandarizan la seguridad, evitando la gestión individualizada que propicia errores humanos.
+
+\subsection{Flujo de Trabajo con Roles}
+\textbf{Crear y configurar el rol:}
+\begin{lstlisting}
+CREATE ROLE 'rol_lectura';
+GRANT SELECT ON erp_empresa.* TO 'rol_lectura';
+\end{lstlisting}
+
+\textbf{Asignar y activar el rol en el usuario:}
+\begin{lstlisting}
+GRANT 'rol_lectura' TO 'empleado_ventas'@'%';
+SET DEFAULT ROLE ALL TO 'empleado_ventas'@'%';
+\end{lstlisting}
+
+\subsection*{ Verificación de Roles}
+Para comprobar qué roles están asignados y si están configurados para activarse por defecto:
+\begin{lstlisting}
+-- Ver las relaciones entre roles y usuarios
+SELECT from_user AS 'Rol', to_user AS 'Usuario_Asignado' 
+FROM mysql.role_edges 
+WHERE to_user = 'empleado_ventas';
+
+-- Ver si el rol se activa automaticamente al inicio de sesion
+SELECT user, default_role_user AS 'Rol_Por_Defecto' 
+FROM mysql.default_roles 
+WHERE user = 'empleado_ventas';
+\end{lstlisting}
+
+\newpage
+
+\section{Ejercicios Prácticos y Solucionario}
+\textbf{Escenario:} Trabajas desde la terminal MySQL como root. Existe una base de datos llamada \texttt{sistema\_academico}.
+
+\subsection*{Ejercicio 1: Despliegue seguro de aplicación}
+\begin{itemize}
+    \item Crea el usuario \texttt{webapp\_front} limitado a la IP \texttt{192.168.50.100}.
+    \item Otórgale solo permisos de lectura (\texttt{SELECT}) sobre \texttt{sistema\_academico}.
+    \item \textbf{Comprobación:} Escribe las consultas para verificar la creación del usuario y sus permisos a nivel de base de datos.
+\end{itemize}
+
+\textbf{Solución Ejercicio 1:}
+\begin{lstlisting}
+CREATE DATABASE IF NOT EXISTS sistema_academico;
+CREATE USER 'webapp_front'@'192.168.50.100' IDENTIFIED BY 'PasswordFuerte123!';
+GRANT SELECT ON sistema_academico.* TO 'webapp_front'@'192.168.50.100';
+
+-- Consultas de verificacion
+SELECT host, user FROM mysql.user WHERE user = 'webapp_front';
+SELECT host, user, db, Select_priv, Insert_priv FROM mysql.db WHERE user = 'webapp_front';
+\end{lstlisting}
+
+\subsection*{Ejercicio 2: Diseño basado en Roles (RBAC)}
+\begin{itemize}
+    \item Crea los roles \texttt{auditor\_academico} (solo SELECT) y \texttt{gestor\_matriculas} (INSERT, UPDATE).
+    \item Crea el usuario local \texttt{secretaria\_juan} y asígnale ambos roles, activándolos por defecto.
+    \item \textbf{Comprobación:} Verifica en el diccionario de datos que los roles se han vinculado correctamente al usuario.
+\end{itemize}
+
+\textbf{Solución Ejercicio 2:}
+\begin{lstlisting}
+CREATE ROLE 'auditor_academico', 'gestor_matriculas';
+GRANT SELECT ON sistema_academico.* TO 'auditor_academico';
+GRANT INSERT, UPDATE ON sistema_academico.* TO 'gestor_matriculas';
+
+CREATE USER 'secretaria_juan'@'localhost' IDENTIFIED BY 'PassSecre456!';
+GRANT 'auditor_academico', 'gestor_matriculas' TO 'secretaria_juan'@'localhost';
+SET DEFAULT ROLE ALL TO 'secretaria_juan'@'localhost';
+
+-- Consultas de verificacion
+SELECT from_user, to_user FROM mysql.role_edges WHERE to_user = 'secretaria_juan';
+SELECT user, default_role_user FROM mysql.default_roles WHERE user = 'secretaria_juan';
+\end{lstlisting}
+
+\subsection*{Ejercicio 3: Auditoría y corrección de incidentes}
+\begin{itemize}
+    \item \textbf{Simula este error crítico:} \texttt{CREATE USER 'dev\_junior'@'\%' IDENTIFIED BY '1234'; GRANT ALL PRIVILEGES ON *.* TO 'dev\_junior'@'\%';}
+    \item \textbf{Corrige el problema:} revoca los privilegios globales, asígnale solo DML (SELECT, INSERT, UPDATE, DELETE) confinado a \texttt{sistema\_academico} y fuerza la expiración de su contraseña.
+    \item \textbf{Comprobación:} Demuestra mediante una consulta a \texttt{mysql.user} que el usuario ya no tiene privilegios globales.
+\end{itemize}
+
+\textbf{Solución Ejercicio 3:}
+\begin{lstlisting}
+-- 1. Simulacion del error
+CREATE USER 'dev_junior'@'%' IDENTIFIED BY '1234';
+GRANT ALL PRIVILEGES ON *.* TO 'dev_junior'@'%';
+
+-- 2. Correccion
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'dev_junior'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON sistema_academico.* TO 'dev_junior'@'%';
+ALTER USER 'dev_junior'@'%' PASSWORD EXPIRE;
+
+-- 3. Consultas de verificacion (Auditoria rigurosa)
+-- Comprobamos que a nivel global ya no tiene poder
+SELECT user, host, Select_priv, Drop_priv, Super_priv 
+FROM mysql.user WHERE user = 'dev_junior';
+
+-- Comprobamos que la contrasena esta marcada como expirada
+SELECT user, host, password_expired 
+FROM mysql.user WHERE user = 'dev_junior';
+
+-- Comprobamos que sus permisos estan confinados a la BD correcta
+SELECT host, user, db, Select_priv, Delete_priv, Drop_priv 
+FROM mysql.db WHERE user = 'dev_junior';
+\end{lstlisting}
+
+\end{document}

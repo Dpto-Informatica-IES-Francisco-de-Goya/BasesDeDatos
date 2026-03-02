@@ -1,0 +1,233 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{float}
+\usepackage{lmodern} % fuente segura para pdfLaTeX
+
+% Colores
+\definecolor{primary}{RGB}{15,118,110}
+\definecolor{secondary}{RGB}{37,99,235}
+\definecolor{muted}{RGB}{107,114,128}
+\definecolor{bgcode}{RGB}{248,250,252}
+\definecolor{frame}{RGB}{226,232,240}
+
+% Estilo de secciones
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{secondary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\color{secondary}}{\thesubsubsection}{0.6em}{}
+
+% Listings (SQL)
+\lstdefinelanguage{SQLPlus}[]{SQL}{
+  morekeywords={IF,ELSE,END,DECLARE,BEGIN,EXCEPTION,WHEN,LOOP,ELSIF,THEN,RAISE,RETURN},
+  sensitive=false
+}
+\lstset{
+  language=SQLPlus,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{secondary}\bfseries,
+  commentstyle=\color{muted}\itshape,
+  stringstyle=\color{primary},
+  columns=fullflexible,
+  backgroundcolor=\color{bgcode},
+  frame=single,
+  rulecolor=\color{frame},
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+    inputencoding = utf8,  % Input encoding
+    extendedchars = true,  % Extended ASCII
+    literate      =        % Support additional characters
+      {á}{{\'a}}1  {é}{{\'e}}1  {í}{{\'i}}1 {ó}{{\'o}}1  {ú}{{\'u}}1
+      {Á}{{\'A}}1  {É}{{\'E}}1  {Í}{{\'I}}1 {Ó}{{\'O}}1  {Ú}{{\'U}}1
+      {à}{{\`a}}1  {è}{{\`e}}1  {ì}{{\`i}}1 {ò}{{\`o}}1  {ù}{{\`u}}1
+      {À}{{\`A}}1  {È}{{\`E}}1  {Ì}{{\`I}}1 {Ò}{{\`O}}1  {Ù}{{\`U}}1
+      {ä}{{\"a}}1  {ë}{{\"e}}1  {ï}{{\"i}}1 {ö}{{\"o}}1  {ü}{{\"u}}1
+      {Ä}{{\"A}}1  {Ë}{{\"E}}1  {Ï}{{\"I}}1 {Ö}{{\"O}}1  {Ü}{{\"U}}1
+      {â}{{\^a}}1  {ê}{{\^e}}1  {î}{{\^i}}1 {ô}{{\^o}}1  {û}{{\^u}}1
+      {Â}{{\^A}}1  {Ê}{{\^E}}1  {Î}{{\^I}}1 {Ô}{{\^O}}1  {Û}{{\^U}}1
+      {œ}{{\oe}}1  {Œ}{{\OE}}1  {æ}{{\ae}}1 {Æ}{{\AE}}1  {ß}{{\ss}}1
+      {ẞ}{{\SS}}1  {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1 {ø}{{\o}}1  {Ø}{{\O}}1
+      {å}{{\aa}}1  {Å}{{\AA}}1  {ã}{{\~a}}1  {õ}{{\~o}}1 {Ã}{{\~A}}1
+      {Õ}{{\~O}}1  {ñ}{{\~n}}1  {Ñ}{{\~N}}1  {¿}{{?`}}1  {¡}{{!`}}1
+      {„}{\quotedblbase}1 {“}{\textquotedblleft}1 {–}{$-$}1
+      {°}{{\textdegree}}1 {º}{{\textordmasculine}}1 {ª}{{\textordfeminine}}1
+      {£}{{\pounds}}1  {©}{{\copyright}}1  {®}{{\textregistered}}1
+      {«}{{\guillemotleft}}1  {»}{{\guillemotright}}1  {Ð}{{\DH}}1  {ð}{{\dh}}1
+      {Ý}{{\'Y}}1    {ý}{{\'y}}1    {Þ}{{\TH}}1    {þ}{{\th}}1    {Ă}{{\u{A}}}1
+      {ă}{{\u{a}}}1  {Ą}{{\k{A}}}1  {ą}{{\k{a}}}1  {Ć}{{\'C}}1    {ć}{{\'c}}1
+      {Č}{{\v{C}}}1  {č}{{\v{c}}}1  {Ď}{{\v{D}}}1  {ď}{{\v{d}}}1  {Đ}{{\DJ}}1
+      {đ}{{\dj}}1    {Ė}{{\.{E}}}1  {ė}{{\.{e}}}1  {Ę}{{\k{E}}}1  {ę}{{\k{e}}}1
+      {Ě}{{\v{E}}}1  {ě}{{\v{e}}}1  {Ğ}{{\u{G}}}1  {ğ}{{\u{g}}}1  {Ĩ}{{\~I}}1
+      {ĩ}{{\~\i}}1   {Į}{{\k{I}}}1  {į}{{\k{i}}}1  {İ}{{\.{I}}}1  {ı}{{\i}}1
+      {Ĺ}{{\'L}}1    {ĺ}{{\'l}}1    {Ľ}{{\v{L}}}1  {ľ}{{\v{l}}}1  {Ł}{{\L{}}}1
+      {ł}{{\l{}}}1   {Ń}{{\'N}}1    {ń}{{\'n}}1    {Ň}{{\v{N}}}1  {ň}{{\v{n}}}1
+      {Ő}{{\H{O}}}1  {ő}{{\H{o}}}1  {Ŕ}{{\'{R}}}1  {ŕ}{{\'{r}}}1  {Ř}{{\v{R}}}1
+      {ř}{{\v{r}}}1  {Ś}{{\'S}}1    {ś}{{\'s}}1    {Ş}{{\c{S}}}1  {ş}{{\c{s}}}1
+      {Š}{{\v{S}}}1  {š}{{\v{s}}}1  {Ť}{{\v{T}}}1  {ť}{{\v{t}}}1  {Ũ}{{\~U}}1
+      {ũ}{{\~u}}1    {Ū}{{\={U}}}1  {ū}{{\={u}}}1  {Ů}{{\r{U}}}1  {ů}{{\r{u}}}1
+      {Ű}{{\H{U}}}1  {ű}{{\H{u}}}1  {Ų}{{\k{U}}}1  {ų}{{\k{u}}}1  {Ź}{{\'Z}}1
+      {ź}{{\'z}}1    {Ż}{{\.Z}}1    {ż}{{\.z}}1    {Ž}{{\v{Z}}}1  {ž}{{\v{z}}}1
+}
+
+% Caja de aviso
+\tcbset{
+  colback=white,
+  colframe=primary,
+  coltitle=white,
+  colbacktitle=primary,
+  fonttitle=\bfseries,
+  arc=2mm,
+  boxrule=0.6pt
+}
+
+
+\title{\textbf{Guía Práctica: Integridad Referencial en SQL}\\ \large Comportamiento de ON DELETE y ON UPDATE}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+La integridad referencial garantiza que las relaciones entre las tablas de una base de datos se mantengan consistentes. Las cláusulas \texttt{ON DELETE} y \texttt{ON UPDATE} definen el comportamiento de los registros dependientes (claves foráneas) cuando el registro principal es modificado o eliminado.
+
+Esta guía presenta un entorno de pruebas estructurado en cuatro niveles jerárquicos: Departamentos, Profesores, Módulos y Matrículas.
+
+\section{Creación del Esquema e Inserción de Datos}
+Ejecuta el siguiente bloque (compatible con MariaDB/MySQL y PostgreSQL) para preparar el entorno de pruebas.
+
+%%% TODO: Incluir diagrama relacional.
+
+\begin{lstlisting}
+DROP DATABASE IF EXISTS integridad_referencial;
+CREATE DATABASE integridad_referencial;
+USE integridad_referencial;
+
+-- 1. Tabla Padre (Nivel 1)
+CREATE TABLE departamentos (
+    id_dept INT PRIMARY KEY,
+    nombre VARCHAR(50)
+);
+
+-- 2. Tabla Intermedia (Nivel 2)
+CREATE TABLE profesores (
+    id_prof INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    id_dept INT,
+    CONSTRAINT fk_prof_dept FOREIGN KEY (id_dept) 
+        REFERENCES departamentos(id_dept)
+        ON DELETE SET NULL
+);
+
+-- 3. Tabla Intermedia (Nivel 3)
+CREATE TABLE modulos (
+    id_mod INT PRIMARY KEY,
+    siglas VARCHAR(10),
+    id_prof INT,
+    CONSTRAINT fk_mod_prof FOREIGN KEY (id_prof) 
+        REFERENCES profesores(id_prof)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
+-- 4. Tabla Hija Final (Nivel 4)
+CREATE TABLE matriculas (
+    id_matricula INT PRIMARY KEY,
+    alumno VARCHAR(50),
+    id_mod INT,
+    CONSTRAINT fk_mat_mod FOREIGN KEY (id_mod) 
+        REFERENCES modulos(id_mod)
+        ON DELETE CASCADE
+);
+
+-- INSERCION DE DATOS DE PRUEBA
+INSERT INTO departamentos VALUES (10, 'Informatica y Comunicaciones'), (20, 'Formacion y Orientacion Laboral');
+
+INSERT INTO profesores VALUES (1, 'Ada', 10), (2, 'Alan', 10), (3, 'Grace', 20);
+
+INSERT INTO modulos VALUES (101, 'GBD', 1), (102, 'ASO', 1), (103, 'LMSGI', 2);
+
+INSERT INTO matriculas VALUES (1001, 'Estudiante A', 101), (1002, 'Estudiante B', 101), (1003, 'Estudiante C', 103);
+\end{lstlisting}
+
+\section{Laboratorio de Operaciones}
+
+\subsection{Caso A: \texttt{ON UPDATE CASCADE} (Actualización en cascada)}
+Modificamos la clave primaria de un registro padre. La base de datos propaga el cambio automáticamente a las tablas hijas para no romper la relación.
+
+\begin{lstlisting}
+SELECT * FROM modulos;
+-- Actualizamos el ID del profesor Ada
+UPDATE profesores SET id_prof = 99 WHERE id_prof = 1;
+-- Los modulos 101 y 102 ahora tienen fk_prof = 99
+SELECT * FROM modulos;
+\end{lstlisting}
+
+\subsection{Caso B: \texttt{ON DELETE RESTRICT} (Bloqueo de seguridad)}
+Evita la eliminación de un registro si este tiene dependencias activas.
+
+\begin{lstlisting}
+-- Intentamos eliminar a Alan, que imparte LMSGI
+DELETE FROM profesores WHERE id_prof = 2;
+-- RESULTADO: ERROR. El sistema bloquea la operacion.
+\end{lstlisting}
+
+\subsection{Caso C: \texttt{ON DELETE SET NULL} (Puesta a nulo)}
+Si el registro padre desaparece, la clave foránea en los registros hijos adquiere el valor \texttt{NULL}, manteniéndose el registro hijo.
+
+\begin{lstlisting}
+SELECT * FROM profesores;
+-- Eliminamos el departamento de FOL
+DELETE FROM departamentos WHERE id_dept = 20;
+-- Grace (id_prof 3) sigue existiendo, pero su id_dept es NULL
+SELECT * FROM profesores;
+\end{lstlisting}
+
+\subsection{Caso D: \texttt{ON DELETE CASCADE} (Borrado en cadena)}
+La eliminación del registro padre desencadena la destrucción automática de todos los registros hijos asociados.
+
+\begin{lstlisting}
+SELECT * FROM matriculas;
+-- Retiramos el modulo GBD del catalogo
+DELETE FROM modulos WHERE id_mod = 101;
+-- Las matriculas 1001 y 1002 han sido eliminadas fisicamente
+SELECT * FROM matriculas;
+\end{lstlisting}
+
+\section{Criterios de Elección: ¿Cuándo utilizar cada opción?}
+
+La elección del comportamiento de las claves foráneas en un diseño físico depende completamente de la lógica de negocio y de la naturaleza de la relación entre las entidades (diagrama Entidad-Relación). A continuación se detallan las buenas prácticas para cada caso:
+
+\subsection{\texttt{RESTRICT} / \texttt{NO ACTION} (Opción por defecto y de seguridad)}
+\begin{itemize}
+    \item \textbf{¿Cuándo usarlo?:} Cuando los registros dependientes contienen información histórica, legal o vital que no debe desaparecer ni quedar "huérfana" de forma accidental. Obliga al administrador de la base de datos a tomar una decisión consciente (reasignar los hijos o borrarlos a mano) antes de eliminar el padre.
+    \item \textbf{Ejemplo clásico:} \textit{Clientes} y \textit{Facturas}. Un cliente no debe poder borrarse jamás si tiene facturas emitidas a su nombre. El sistema debe bloquear la operación.
+\end{itemize}
+
+\subsection{\texttt{CASCADE} (Dependencia Existencial estricta)}
+\begin{itemize}
+    \item \textbf{¿Cuándo usarlo?:} Cuando la entidad hija es una \textit{entidad débil} por identificación; es decir, su existencia no tiene ningún sentido lógico si desaparece la entidad padre a la que pertenece.
+    \item \textbf{Ejemplo clásico:} \textit{Facturas} y \textit{Líneas de Factura}. Si se elimina una factura del sistema, todas las líneas de detalle que la componen deben desaparecer fulminantemente.
+\end{itemize}
+
+\subsection{\texttt{SET NULL} (Relaciones Opcionales o Temporales)}
+\begin{itemize}
+    \item \textbf{¿Cuándo usarlo?:} Cuando la entidad hija tiene entidad propia y puede existir de forma totalmente independiente. La relación con la tabla padre representa una asignación o estado temporal. Requisito imprescindible: la columna de la clave foránea debe admitir valores \texttt{NULL}.
+    \item \textbf{Ejemplo clásico:} \textit{Empleados} y \textit{Equipos Informáticos}. Si un empleado es dado de baja de la empresa, su registro se elimina, pero el ordenador portátil que tenía asignado sigue existiendo físicamente en el inventario. Su campo \texttt{id\_empleado} pasará a ser \texttt{NULL} (equipo disponible).
+\end{itemize}
+\end{document}

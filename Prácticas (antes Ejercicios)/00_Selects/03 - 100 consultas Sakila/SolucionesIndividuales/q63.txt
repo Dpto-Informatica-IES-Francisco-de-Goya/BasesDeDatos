@@ -1,0 +1,19 @@
+63:  Para cada categoría, suma los importes pagados derivados de películas de esa categoría.
+category_id	category_name	revenue_by_category
+1	Action	4375.85
+2	Animation	4656.30
+3	Children	3655.55
+4	Classics	3639.59
+5	Comedy	4383.58
+6	Documentary	4217.52
+7	Drama	4587.39
+8	Family	4226.07
+9	Foreign	4270.67
+10	Games	4281.33
+11	Horror	3722.54
+12	Music	3417.72
+13	New	4351.62
+14	Sci-Fi	4756.98
+15	Sports	5314.21
+16	Travel	3549.64
+

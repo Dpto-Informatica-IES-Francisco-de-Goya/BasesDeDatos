@@ -1,0 +1,4 @@
+4:  Muestra el promedio de duración (length) de las películas por idioma y filtra aquellos idiomas con duración media estrictamente mayor a 110 minutos.
+language_id	language_name	avg_length
+1	English	115.2720
+

@@ -1,0 +1,4 @@
+40:  Para cada idioma, suma las tarifas de alquiler (rental_rate) de todas sus películas.
+language_id	language_name	sum_rates
+1	English	13517.19
+

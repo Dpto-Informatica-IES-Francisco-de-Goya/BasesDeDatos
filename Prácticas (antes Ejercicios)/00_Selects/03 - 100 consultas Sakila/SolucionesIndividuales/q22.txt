@@ -1,0 +1,4 @@
+22:  Para cada idioma, calcula la duración media de películas y muestra solo los idiomas con media entre 90 y 120 inclusive.
+language_id	language_name	avg_length
+1	English	115.2720
+

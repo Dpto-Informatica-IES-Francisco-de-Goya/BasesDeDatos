@@ -1,0 +1,4 @@
+66:  Para cada idioma, cuenta cuántos alquileres totales se han hecho de películas en ese idioma.
+language_id	language_name	rentals_in_language
+1	English	16044
+

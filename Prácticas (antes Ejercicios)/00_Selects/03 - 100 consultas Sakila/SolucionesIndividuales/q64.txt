@@ -1,0 +1,600 @@
+64:  Para cada ciudad, suma los importes pagados por clientes residentes en esa ciudad en 2005.
+city_id	city	total_paid_2005
+463	Sasebo	118.68
+449	San Bernardino	128.73
+38	Athenai	135.74
+349	Myingyan	81.78
+361	Nantou	143.63
+295	Laredo	93.72
+280	Kragujevac	151.67
+200	Hamilton	92.76
+329	Masqat	84.78
+162	Esfahan	99.75
+440	Sagamihara	105.77
+582	Yamuna Nagar	103.72
+384	Osmaniye	131.73
+120	Citrus Heights	112.73
+76	Bhopal	130.70
+495	Southend-on-Sea	118.72
+156	Elista	98.79
+252	Kaduna	91.78
+267	Kimberley	125.76
+327	Mardan	115.70
+525	Tangail	152.66
+443	Salé	108.79
+303	Liepaja	116.71
+128	Córdoba	95.75
+472	Shikarpur	115.71
+121	Città del Vaticano	152.66
+138	Davao	126.69
+346	Munger (Monghyr)	108.69
+474	Shimonoseki	139.65
+316	Lungtan	123.66
+257	Kamarhati	104.74
+239	Jhansi	127.71
+17	Alessandria	90.80
+284	Kurashiki	89.76
+544	Toulouse	129.68
+31	Arak	92.73
+362	Nanyang	95.77
+115	Chisinau	127.66
+569	Vila Velha	141.71
+353	Nador	110.73
+586	Yerevan	115.76
+394	Pak Kret	111.72
+167	Faaa	95.78
+308	Lipetsk	109.75
+27	Antofagasta	127.73
+343	Moscow	142.66
+247	Juazeiro do Norte	108.78
+367	Niznekamsk	76.83
+237	Jedda	130.72
+379	Omdurman	169.65
+171	Fontana	138.67
+1	A Coruña (La Coruña)	102.72
+355	Nagareyama	107.72
+227	Iwakuni	128.71
+49	Balašiha	100.78
+397	Papeete	130.71
+560	Vaduz	114.72
+282	Kuching	114.74
+350	Mysore	133.73
+231	Jaipur	88.77
+56	Basel	58.86
+441	Saint Louis	84.77
+306	Lincoln	112.75
+139	Daxian	95.68
+105	Cayenne	103.78
+321	Malmö	144.66
+579	Xi´angtan	99.78
+475	Shivapuri	94.78
+63	Béchar	95.76
+13	al-Hawiya	80.82
+61	Baybay	129.70
+517	Taguig	99.70
+114	Chiayi	94.77
+431	Rio Claro	103.73
+108	Changhwa	146.62
+402	Pavlodar	77.77
+30	Araçatuba	100.72
+425	Rae Bareli	141.69
+256	Kamakura	84.78
+217	Ife	134.71
+319	Mahajanga	93.78
+479	Simferopol	130.74
+497	Springs	96.76
+40	Atlixco	141.67
+88	Bradford	87.77
+489	Songkhla	148.67
+480	Sincelejo	140.71
+113	Cheju	87.79
+289	La Plata	134.68
+332	Meixian	110.72
+53	Bandar Seri Begawan	108.66
+183	Goiânia	133.72
+592	Zalantun	91.77
+82	Bislig	74.80
+399	Pathankot	77.82
+41	Augusta-Richmond County	105.73
+534	Tete	58.82
+12	al-Ayn	106.75
+268	Kimchon	90.77
+238	Jelets	101.77
+2	Abha	95.77
+34	Ashdod	137.67
+220	Ilorin	146.69
+543	Toulon	92.76
+173	Funafuti	120.74
+225	Ivanovo	100.77
+334	Merlo	124.72
+213	Huixquilucan	127.71
+273	Klerksdorp	107.74
+159	Enshi	59.86
+102	Caracas	94.75
+292	Lancaster	133.70
+132	Cumaná	113.71
+148	Duisburg	134.68
+365	Nezahualcóyotl	88.71
+403	Pemalang	111.73
+176	Gandhinagar	71.81
+185	Grand Prairie	82.79
+476	Shubra al-Khayma	153.66
+147	Dos Quebradas	138.69
+164	Etawah	109.74
+305	Lima	126.68
+566	Varanasi (Benares)	100.76
+281	Kütahya	73.82
+85	Boksburg	135.68
+410	Poá	117.72
+484	Smolensk	107.76
+236	Jastrzebie-Zdrój	127.68
+302	Liaocheng	124.66
+190	Águas Lindas de Goiás	93.76
+345	Mukatševe	128.70
+87	Botshabelo	95.72
+541	Torreón	98.73
+421	Qalyub	94.77
+417	Pune	109.71
+211	Hubli-Dharwad	62.85
+29	Apeldoorn	194.61
+207	Hohhot	110.66
+542	Touliu	113.73
+123	Clarksville	83.82
+172	Fukuyama	130.68
+149	Dundee	93.75
+266	Kilis	89.78
+340	Molodetšno	195.58
+491	Soshanguve	108.72
+499	Sterling Heights	139.71
+555	Urawa	127.66
+442	Saint-Denis	216.54
+94	Brockton	121.74
+202	Hidalgo	105.75
+291	Laiwu	92.73
+354	Nagaon	78.80
+232	Jakarta	94.76
+590	Yuncheng	130.70
+72	Bern	101.77
+381	Ondo	101.75
+420	Pyongyang	113.69
+187	Greensboro	126.68
+307	Linz	68.79
+310	Ljubertsy	106.73
+533	Tel Aviv-Jaffa	112.70
+297	Le Mans	70.81
+253	Kakamigahara	114.73
+529	Tarsus	66.84
+199	Hami	86.79
+304	Lilongwe	123.72
+107	Chandrapur	119.68
+240	Jinchang	134.67
+407	Pingxiang	95.78
+550	Udaipur	119.74
+223	Ipoh	114.74
+58	Batman	145.67
+186	Graz	119.71
+373	Ocumare del Tuy	92.79
+18	Allappuzha (Alleppey)	94.78
+483	Skikda	173.63
+330	Matamoros	71.77
+456	Santa Bárbara d´Oeste	189.62
+270	Kirovo-Tšepetsk	133.71
+405	Pereira	93.78
+333	Memphis	171.67
+126	Compton	97.74
+317	Luziânia	76.77
+438	´s-Hertogenbosch	90.77
+467	Shahr-e Kord	84.77
+195	Haldia	111.70
+506	Sumy	159.72
+62	Bayugan	89.76
+383	Oshawa	93.78
+513	Tabora	105.74
+369	Novotšerkassk	73.81
+169	Firozabad	94.78
+271	Kisumu	106.76
+204	Hino	87.82
+477	Siegen	86.81
+325	Mannheim	151.65
+109	Changzhou	154.60
+218	Ikerre	141.63
+194	Haiphong	100.76
+35	Ashgabat	133.74
+575	Witten	108.75
+77	Bhusawal	103.74
+184	Gorontalo	88.80
+557	Usak	147.65
+122	Ciudad del Este	80.82
+83	Blumenau	126.73
+371	Nuuk	137.66
+51	Balurghat	85.76
+74	Bhilwara	161.68
+7	Aden	137.69
+174	Fuyu	146.67
+65	Bellevue	91.80
+518	Taizz	108.73
+508	Sunnyvale	113.70
+498	Stara Zagora	90.75
+28	Aparecida de Goiânia	89.79
+448	Sambhal	98.77
+251	Kabul	67.82
+567	Vicente López	96.75
+593	Zanzibar	114.73
+511	Syrakusa	132.72
+235	Jaroslavl	91.79
+324	Mandi Bahauddin	80.83
+243	Jodhpur	76.78
+22	Ambattur	120.74
+37	Asunción	87.79
+439	Saarbrücken	82.77
+406	Phnom Penh	88.75
+26	Anápolis	92.76
+86	Botosani	124.67
+559	Uttarpara-Kotrung	110.74
+596	Zaria	95.75
+216	Idfu	89.77
+233	Jalib al-Shuyukh	110.75
+96	Buenaventura	93.75
+527	Tanza	174.59
+357	Naju	144.67
+473	Shimoga	94.79
+118	Ciomas	142.66
+226	Iwaki	117.74
+578	Xi´angfan	122.66
+422	Qinhuangdao	140.68
+454	San Miguel de Tucumán	82.76
+294	Lapu-Lapu	124.69
+553	Uijongbu	129.69
+328	Maringá	107.77
+124	Coacalco de Berriozábal	104.78
+520	Tallahassee	50.85
+535	Tianjin	107.77
+390	Oyo	73.80
+198	Halle/Saale	119.70
+312	London	174.54
+338	Miyakonojo	127.71
+413	Poços de Caldas	116.68
+192	Hagonoy	70.82
+342	Monywa	112.70
+64	Beira	151.63
+460	Santiago de los Caballeros	110.76
+197	Halisahar	168.68
+136	Datong	122.69
+548	Tuguegarao	107.74
+414	Portoviejo	119.72
+323	Mandaluyong	121.72
+203	Higashiosaka	95.76
+378	Olomouc	133.71
+447	Salzburg	118.72
+298	Lengshuijiang	151.66
+395	Palghat (Palakkad)	123.71
+446	Salinas	125.72
+255	Kalisz	104.75
+283	Kumbakonam	68.82
+584	Yantai	98.80
+445	Salamanca	157.65
+263	Karnal	151.66
+404	Peoria	108.70
+573	Warren	122.72
+374	Ogbomosho	144.68
+222	Inegöl	88.74
+514	Tabriz	130.70
+389	Owo	118.73
+175	Fuzhou	50.86
+411	Ponce	102.74
+277	Korla	86.72
+69	Benin City	120.74
+386	Otsu	135.74
+152	Effon-Alaiye	117.73
+522	Tambaram	114.72
+563	Valle de Santiago	80.76
+279	Kowloon and New Kowloon	142.70
+562	Valle de la Pascua	109.72
+433	Roanoke	95.77
+470	Sharja	118.73
+146	Donostia-San Sebastián	158.69
+140	Dayton	113.74
+274	Kolpino	161.63
+400	Patiala	126.71
+9	Ahmadnagar	128.67
+387	Oulu	101.74
+205	Hiroshima	131.70
+398	Parbhani	132.70
+254	Kaliningrad	92.79
+536	Tiefa	127.71
+455	Sanaa	100.74
+99	Callao	115.74
+33	Arlington	109.75
+507	Sungai Petani	138.68
+25	Angra dos Reis	134.70
+262	Kansas City	105.75
+91	Brescia	147.69
+215	Ibirité	97.80
+286	Kursk	120.77
+515	Tabuk	104.74
+166	Ezhou	89.77
+490	Sorocaba	131.67
+57	Bat Yam	81.84
+336	Miraj	132.71
+545	Tórshavn	113.73
+97	Bydgoszcz	52.88
+451	San Felipe del Progreso	132.70
+516	Tafuna	71.80
+81	Birgunj	116.78
+45	Bahía Blanca	128.72
+130	Cuautla	114.69
+591	Yuzhou	100.76
+89	Brasília	91.78
+269	Kingstown	96.75
+5	Adana	109.75
+119	Ciparay	90.77
+234	Jamalpur	127.68
+42	Aurora	190.52
+457	Santa Fé	122.73
+143	Dhaka	118.72
+48	Baku	109.73
+505	Sumqayit	134.71
+492	Sousse	77.78
+427	Rampur	118.71
+382	Onomichi	142.72
+392	Paarl	114.72
+581	Xinxiang	127.70
+201	Hanoi	119.69
+151	Ede	106.77
+84	Boa Vista	130.68
+335	Mexicali	114.75
+370	Nuku´alofa	73.82
+453	San Lorenzo	106.77
+320	Maikop	155.68
+137	Daugavpils	142.70
+209	Hsichuh	146.64
+221	Imus	135.72
+531	Tšeboksary	73.77
+597	Zeleznogorsk	89.76
+52	Bamenda	96.78
+393	Pachuca de Soto	72.82
+461	Santo André	121.66
+331	Matsue	71.81
+464	Satna	121.70
+90	Bratislava	89.74
+429	Ranchi	80.79
+20	Almirante Brown	96.76
+32	Arecibo	150.66
+585	Yaoundé	96.71
+66	Belém	145.68
+372	Nyeri	143.71
+188	Guadalajara	95.77
+377	Okinawa	103.77
+50	Balikesir	147.64
+8	Adoni	101.78
+356	Najafabad	157.65
+250	Juárez	87.76
+191	Gulbarga	70.81
+98	Cabuyao	149.65
+415	Probolinggo	158.66
+523	Tanauan	160.66
+572	Vitória de Santo Antão	100.73
+348	Mwene-Ditu	110.76
+285	Kurgan	110.72
+265	Kermanshah	93.74
+471	Shenzhen	71.81
+73	Bhavnagar	106.77
+549	Tychy	136.64
+493	South Hill	106.65
+322	Manchester	91.76
+360	Namibe	103.73
+210	Huai´an	89.75
+521	Tama	101.74
+258	Kamjanets-Podilskyi	117.71
+315	Lubumbashi	101.74
+104	Cavite	123.71
+157	Emeishan	124.74
+358	Nakhon Sawan	152.67
+229	Izumisano	104.70
+6	Addis Abeba	91.77
+278	Korolev	121.69
+181	Gijón	79.79
+15	al-Qadarif	57.81
+228	Iwatsuki	111.73
+39	Atšinsk	105.71
+44	Bagé	78.84
+375	Okara	91.79
+135	Dallas	124.72
+276	Koriyama	73.79
+92	Brest	79.80
+564	Valparai	166.65
+380	Omiya	139.70
+524	Tandil	108.69
+111	Charlotte Amalie	122.68
+437	Rustenburg	112.73
+230	Jaffna	116.70
+141	Deba Habe	104.77
+430	Richmond Hill	164.63
+117	Cianjur	75.75
+208	Hoshiarpur	84.80
+71	Berhampore (Baharampur)	75.79
+19	Allende	105.75
+23	Amersfoort	93.77
+134	Dadu	121.69
+16	al-Qatif	107.76
+450	San Felipe de Puerto Plata	107.70
+264	Katihar	89.75
+155	El Monte	79.79
+416	Pudukkottai	118.74
+293	Laohekou	94.75
+465	Sawhaj	120.74
+468	Shanwei	109.71
+452	San Juan Bautista Tuxtepec	104.74
+418	Purnea (Purnia)	126.73
+189	Guarujá	114.76
+510	Syktyvkar	78.80
+547	Tsuyama	105.79
+150	Dzerzinsk	79.78
+501	Sucre	92.78
+364	Newcastle	116.77
+351	Naçala-Porto	133.75
+391	Ozamis	128.73
+249	Junan	91.75
+565	Vancouver	144.70
+290	La Romana	99.77
+272	Kitwe	133.68
+70	Bergamo	151.64
+144	Dhule (Dhulia)	83.79
+59	Batna	107.73
+540	Tongliao	118.68
+486	São Leopoldo	98.78
+530	Tartu	115.70
+161	Escobar	102.74
+554	Uluberia	116.69
+352	Nabereznyje Tšelny	113.71
+160	Erlangen	131.73
+481	Sirjan	99.80
+509	Surakarta	88.75
+154	El Fuerte	128.67
+3	Abu Dhabi	102.69
+326	Maracaíbo	111.77
+556	Uruapan	151.67
+153	El Alto	87.76
+600	Ziguinchor	100.75
+435	Rockford	110.74
+532	Tegal	66.81
+423	Qomsheh	186.62
+170	Florencia	109.75
+182	Gingoog	97.72
+558	Usolje-Sibirskoje	159.67
+196	Halifax	91.75
+428	Rancagua	73.84
+595	Zapopan	69.83
+145	Dongying	104.77
+129	Cuauhtémoc	139.71
+78	Bijapur	175.61
+388	Ourense (Orense)	177.60
+206	Hodeida	160.68
+244	Johannesburg	109.73
+359	Nam Dinh	136.71
+301	Lhokseumawe	134.66
+158	Emmen	99.75
+385	Šostka	103.76
+179	Gatineau	94.79
+500	Stockport	109.78
+36	Ashqelon	86.81
+11	Akron	145.70
+180	Gaziantep	101.78
+347	Mwanza	115.71
+125	Coatzacoalcos	138.71
+142	Denizli	88.82
+587	Yinchuan	139.70
+469	Shaoguan	115.71
+4	Acuña	113.74
+408	Pjatigorsk	119.74
+288	La Paz	95.78
+376	Okayama	99.79
+487	Sogamoso	117.76
+337	Mit Ghamr	124.73
+261	Kanchrapara	65.84
+504	Sultanbeyli	109.78
+434	Ríobamba	140.69
+47	Baiyin	119.75
+432	Rizhao	85.80
+589	York	124.73
+444	Salala	97.73
+93	Brindisi	123.70
+318	Madiun	115.72
+314	Lublin	89.79
+478	Siliguri (Shiliguri)	138.66
+552	Ueda	115.68
+245	Joliet	133.72
+519	Talavera	92.80
+412	Pontianak	152.65
+163	Eskisehir	95.75
+568	Vijayawada	126.76
+110	Chapra	100.80
+259	Kamyšin	122.74
+502	Suihua	99.76
+583	Yangor	148.69
+594	Zaoyang	74.78
+127	Coquimbo	126.72
+60	Battambang	92.76
+116	Chungho	105.75
+482	Sivas	111.74
+224	Isesaki	103.77
+366	Nha Trang	134.68
+588	Yingkou	75.78
+458	Santa Rosa	167.67
+571	Vinh	93.78
+419	Purwakarta	87.81
+551	Udine	71.82
+101	Cape Coral	221.55
+339	Mogiljov	78.77
+67	Benguela	111.75
+75	Bhimavaram	118.71
+165	Ezeiza	73.78
+287	Kuwana	118.75
+100	Cam Ranh	151.69
+80	Binzhou	138.68
+24	Amroha	85.77
+363	NDjamna	135.68
+539	Tonghae	117.75
+46	Baicheng	117.71
+561	Valencia	90.78
+436	Ruse	112.76
+309	Livorno	108.76
+396	Pangkal Pinang	94.82
+68	Beni-Mellal	82.78
+485	São Bernardo do Campo	98.78
+275	Konotop	89.79
+462	Sanya	103.75
+260	Kanazawa	99.77
+528	Tarlac	78.82
+459	Santiago de Compostela	77.80
+599	Zhoushan	156.69
+21	Alvorada	96.74
+193	Haining	90.79
+368	Novi Sad	107.76
+426	Rajkot	101.78
+112	Chatsworth	74.83
+496	Southport	83.79
+570	Vilnius	68.77
+577	Wroclaw	135.72
+79	Bilbays	110.72
+43	Avellaneda	126.72
+178	Garland	95.74
+488	Sokoto	109.75
+95	Bucuresti	110.71
+580	Xintai	91.76
+214	Huánuco	126.71
+538	Tokat	141.66
+466	Serpuhov	85.80
+55	Barcelona	63.80
+299	Leshan	134.68
+341	Monclova	98.75
+409	Plock	121.76
+133	Czestochowa	108.75
+598	Zhezqazghan	120.71
+10	Akishima	109.72
+131	Cuernavaca	126.71
+168	Fengshan	133.68
+526	Tanshui	117.73
+103	Carmen	96.78
+344	Mosul	110.74
+219	Iligan	99.73
+246	José Azueta	107.73
+212	Huejutla de Reyes	110.76
+494	Southampton	117.77
+54	Banjul	129.70
+424	Quilmes	112.77
+546	Tsaotun	64.81
+106	Celaya	107.75
+574	Weifang	115.71
+311	Loja	129.72
+14	al-Manama	109.76
+248	Juiz de Fora	134.73
+512	Székesfehérvár	110.72
+177	Garden Grove	113.74
+241	Jining	130.73
+242	Jinzhou	117.70
+401	Patras	95.73
+503	Sullana	94.76
+296	Lausanne	83.78
+537	Tieli	83.81
+

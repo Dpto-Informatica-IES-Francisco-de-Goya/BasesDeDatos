@@ -1,0 +1,19 @@
+84:  Para cada categoría, muestra la media de replacement_cost de las películas alquiladas un domingo.
+category_id	category_name	avg_replacement_sundays
+1	Action	21.163410
+2	Animation	20.393846
+3	Children	19.344430
+4	Classics	20.467273
+5	Comedy	19.221405
+6	Documentary	21.331040
+7	Drama	20.896667
+8	Family	19.762455
+9	Foreign	18.282683
+10	Games	21.096383
+11	Horror	19.259565
+12	Music	18.671416
+13	New	19.504493
+14	Sci-Fi	20.847955
+15	Sports	20.124503
+16	Travel	18.556372
+

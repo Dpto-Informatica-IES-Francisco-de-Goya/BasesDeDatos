@@ -1,0 +1,19 @@
+48:  Para cada categoría, suma la duración total (length) de sus películas.
+category_id	category_name	total_length
+1	Action	7143
+2	Animation	7327
+3	Children	6588
+4	Classics	6365
+5	Comedy	6718
+6	Documentary	7395
+7	Drama	7492
+8	Family	7920
+9	Foreign	8884
+10	Games	7798
+11	Horror	6299
+12	Music	5796
+13	New	7001
+14	Sci-Fi	6600
+15	Sports	9487
+16	Travel	6459
+

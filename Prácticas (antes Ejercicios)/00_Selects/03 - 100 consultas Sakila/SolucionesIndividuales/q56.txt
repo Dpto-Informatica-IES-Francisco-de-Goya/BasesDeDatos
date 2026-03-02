@@ -1,0 +1,5 @@
+56:  Para cada tienda, suma los importes cobrados en 2006 (vía empleados de esa tienda).
+store_id	revenue_2006
+1	234.09
+2	280.09
+

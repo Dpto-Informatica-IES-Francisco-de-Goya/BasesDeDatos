@@ -1,0 +1,27 @@
+82:  Para cada hora del día (0-23), cuenta cuántos alquileres se iniciaron en esa hora.
+rental_hour	rentals_in_hour
+0	694
+1	649
+2	630
+3	684
+4	681
+5	648
+6	647
+7	667
+8	696
+9	652
+10	673
+11	663
+12	632
+13	645
+14	653
+15	887
+16	664
+17	634
+18	688
+19	676
+20	658
+21	671
+22	610
+23	642
+

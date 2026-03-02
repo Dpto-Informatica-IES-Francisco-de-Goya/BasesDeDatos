@@ -1,0 +1,19 @@
+89:  Para cada categoría, calcula la longitud media de títulos (número de caracteres) de sus películas alquiladas.
+category_id	category_name	avg_title_len_rented
+1	Action	14.4811
+2	Animation	13.8799
+3	Children	14.9545
+4	Classics	14.5027
+5	Comedy	14.0744
+6	Documentary	14.3610
+7	Drama	13.9858
+8	Family	14.1551
+9	Foreign	13.6728
+10	Games	13.5232
+11	Horror	14.5296
+12	Music	13.7699
+13	New	14.3649
+14	Sci-Fi	14.5976
+15	Sports	15.1349
+16	Travel	14.1350
+

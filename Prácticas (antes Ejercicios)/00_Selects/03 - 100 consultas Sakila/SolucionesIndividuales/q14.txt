@@ -1,0 +1,5 @@
+14:  Para cada tienda, cuenta cuántos artículos de inventario tiene.
+store_id	total_inventory_items
+1	2270
+2	2311
+

@@ -1,0 +1,17 @@
+97:  Para cada país, suma el importe total de pagos realizados por clientes residentes y filtra países con total >= 1000.
+country_id	country	total_amount
+50	Japan	3470.75
+103	United States	4110.32
+92	Taiwan	1209.95
+44	India	6628.28
+97	Turkey	1662.12
+80	Russian Federation	3045.87
+69	Nigeria	1511.48
+85	South Africa	1204.15
+6	Argentina	1434.48
+75	Philippines	2381.32
+23	China	5798.74
+15	Brazil	3200.52
+60	Mexico	3307.04
+45	Indonesia	1510.33
+

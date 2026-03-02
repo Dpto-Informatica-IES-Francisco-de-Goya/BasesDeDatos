@@ -1,0 +1,19 @@
+68:  Para cada categoría, calcula la duración media de las películas alquiladas (considerando solo películas alquiladas).
+category_id	category_name	avg_length_rented
+1	Action	108.7455
+2	Animation	108.7787
+3	Children	111.4423
+4	Classics	113.0618
+5	Comedy	111.7109
+6	Documentary	110.9714
+7	Drama	122.6047
+8	Family	111.3294
+9	Foreign	123.1249
+10	Games	128.1538
+11	Horror	113.3227
+12	Music	115.7036
+13	New	109.0500
+14	Sci-Fi	105.5649
+15	Sports	128.7498
+16	Travel	117.0072
+

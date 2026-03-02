@@ -1,0 +1,4 @@
+96:  Para cada idioma, muestra el número de películas cuyo título empieza por la letra 'A' y que han sido alquiladas.
+language_id	language_name	films_starting_A_rented
+1	English	41
+

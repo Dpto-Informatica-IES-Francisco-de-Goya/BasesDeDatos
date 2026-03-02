@@ -1,0 +1,213 @@
+-- ==============================================
+-- SECCIÓN E) 30 CONSULTAS (JOIN DE EXACTAMENTE 2 TABLAS)
+-- ==============================================
+-- 1) Para cada idioma, obtener el replacement_cost máximo y mínimo de sus películas (idioma con >=10 películas).
+-- Salida obligatoria (alias en orden): language_id, language_name, max_replacement_cost, min_replacement_cost
+-- 2) Para cada idioma, contar cuántas películas tienen rating 'R'.
+-- Salida obligatoria (alias en orden): language_id, language_name, films_rating_r
+-- 3) Para cada idioma, media de replacement_cost redondeada a 2 decimales (>=20).
+-- Salida obligatoria (alias en orden): language_id, language_name, avg_replacement_cost_2d
+-- 4) Para cada cliente, fecha del primer y último pago registrados.
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, first_payment_date, last_payment_date
+-- 5) Para cada cliente, pago medio (2 decimales) solo si tiene más de 5 pagos.
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, avg_payment_2d
+-- 6) Para cada cliente, número de pagos hechos en domingo (DAYOFWEEK=1).
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, sunday_payments
+-- 7) Para cada empleado, importe máximo y mínimo de un pago procesado.
+-- Salida obligatoria (alias en orden): staff_id, first_name, last_name, max_payment, min_payment
+-- 8) Para cada empleado, media de importes entre 12:00 y 18:00.
+-- Salida obligatoria (alias en orden): staff_id, first_name, last_name, avg_amount_12_18
+-- 9) Para cada inventario, duración media del alquiler en días (return - rental).
+-- Salida obligatoria (alias en orden): inventory_id, avg_days_rented
+-- 10) Para cada inventario, número de devoluciones el mismo día.
+-- Salida obligatoria (alias en orden): inventory_id, same_day_returns
+-- 11) Para cada tienda, clientes inactivos (active=0).
+-- Salida obligatoria (alias en orden): store_id, inactive_customers
+-- 12) Para cada tienda, clientes con apellido de >10 caracteres.
+-- Salida obligatoria (alias en orden): store_id, customers_lastname_gt10
+-- 13) Para cada ciudad, direcciones con postal_code no nulo.
+-- Salida obligatoria (alias en orden): city_id, city_name, addresses_with_postalcode
+-- 14) Para cada ciudad, direcciones con teléfono que empieza por '5'.
+-- Salida obligatoria (alias en orden): city_id, city_name, addresses_phone_5
+-- 15) Para cada categoría, contar películas (>=20).
+-- Salida obligatoria (alias en orden): category_id, category_name, films_in_category_20plus
+-- 16) Para cada categoría, contar películas con id par.
+-- Salida obligatoria (alias en orden): category_id, category_name, films_with_even_id
+-- 17) Para cada idioma, contar películas con título de longitud 10.
+-- Salida obligatoria (alias en orden): language_id, language_name, films_title_len_10
+-- 18) Para cada idioma, contar películas con 'THE' en título (mayúsculas).
+-- Salida obligatoria (alias en orden): language_id, language_name, films_with_the
+-- 19) Para cada cliente, alquileres nocturnos (22:00–06:00).
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, night_rentals
+-- 20) Para cada cliente, media de horas entre alquiler y devolución (1 decimal).
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, avg_hours_rented_1d
+-- 21) Para cada película, copias de inventario con id impar.
+-- Salida obligatoria (alias en orden): film_id, title, odd_inventory_copies
+-- 22) Para cada empleado, pagos procesados en domingo.
+-- Salida obligatoria (alias en orden): staff_id, first_name, last_name, sunday_payments
+-- 23) Para cada ciudad, direcciones con address2 no nulo.
+-- Salida obligatoria (alias en orden): city_id, city_name, addresses_with_address2
+-- 24) Para cada ciudad, direcciones cuyo address contiene un espacio.
+-- Salida obligatoria (alias en orden): city_id, city_name, addresses_with_space
+-- 25) Para cada cliente, alquileres en 2006 (>=12).
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, rentals_2006_12plus
+-- 26) Para cada cliente, alquileres entre semana (DAYOFWEEK 2–6).
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, weekday_rentals
+-- 27) Para cada empleado, pagos procesados en sábado.
+-- Salida obligatoria (alias en orden): staff_id, first_name, last_name, saturday_payments
+-- 28) Para cada categoría, contar películas con category_id impar.
+-- Salida obligatoria (alias en orden): category_id, category_name, films_with_odd_category_id
+-- 29) Para cada idioma, contar películas con replacement_cost redondeado (0 decimales) >= 25.
+-- Salida obligatoria (alias en orden): language_id, language_name, films_replacement_rounded_25plus
+-- 30) Para cada idioma, contar películas cuyo título termina en 'N'.
+-- Salida obligatoria (alias en orden): language_id, language_name, films_title_end_n
+-- ==============================================
+-- SECCIÓN F) 30 CONSULTAS (JOIN DE EXACTAMENTE 3 TABLAS)
+-- ==============================================
+-- 31) Para cada ciudad, clientes activos (active=1) residentes en ella.
+-- Salida obligatoria (alias en orden): city_id, city_name, active_customers_in_city
+-- 32) Para cada ciudad, empleados que residen en esa ciudad.
+-- Salida obligatoria (alias en orden): city_id, city_name, staff_in_city
+-- 33) Para cada categoría, películas con rating 'PG'.
+-- Salida obligatoria (alias en orden): category_id, category_name, films_pg_in_category
+-- 34) Para cada categoría, coste medio de reposición de películas con título > 12 caracteres.
+-- Salida obligatoria (alias en orden): category_id, category_name, avg_replacement_long_titles
+-- 35) Para cada cliente, alquileres en junio de 2005.
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, rentals_june_2005
+-- 36) Para cada película, alquileres en el primer trimestre de 2006.
+-- Salida obligatoria (alias en orden): film_id, title, rentals_q1_2006
+-- 37) Para cada empleado, clientes distintos a los que cobró en 2006.
+-- Salida obligatoria (alias en orden): staff_id, first_name, last_name, distinct_customers_2006
+-- 38) Para cada cliente, importe total pagado por mes de 2005.
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, payment_month, total_paid_month
+-- 39) Para cada película, actores con apellido que empieza por 'A'.
+-- Salida obligatoria (alias en orden): film_id, title, actors_lastname_start_a
+-- 40) Para cada categoría, número de películas con rating en ('G','PG-13').
+-- Salida obligatoria (alias en orden): category_id, category_name, films_g_pg13
+-- 41) Para cada cliente, importe total pagado en fines de semana (por fecha de pago).
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, weekend_amount
+-- 42) Para cada idioma, número de copias de inventario de películas en ese idioma.
+-- Salida obligatoria (alias en orden): language_id, language_name, inventory_items_language
+-- 43) Para cada tienda, número de inventarios de películas con rating 'NC-17'.
+-- Salida obligatoria (alias en orden): store_id, nc17_inventory_items
+-- 44) Para cada tienda, total cobrado en agosto de 2005.
+-- Salida obligatoria (alias en orden): store_id, total_amount_aug_2005
+-- 45) Para cada película, media de length considerando solo actores con apellido de >=6 letras.
+-- Salida obligatoria (alias en orden): film_id, title, avg_length_for_actors_lastname6plus
+-- 46) Para cada cliente, alquileres con retraso > 2 días.
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, late_returns_gt2
+-- 47) Para cada película, número de categorías a las que pertenece.
+-- Salida obligatoria (alias en orden): film_id, title, distinct_categories_for_film
+-- 48) Para cada actor, películas con rating 'G' en su filmografía.
+-- Salida obligatoria (alias en orden): actor_id, first_name, last_name, films_rating_g
+-- 49) Para cada tienda, clientes registrados con código postal no nulo (vía dirección de cliente).
+-- Salida obligatoria (alias en orden): store_id, customers_with_postalcode
+-- 50) Para cada categoría, películas cuyo título empieza por 'A'.
+-- Salida obligatoria (alias en orden): category_id, category_name, films_title_start_a
+-- 51) Para cada actor, películas con título de más de 15 caracteres.
+-- Salida obligatoria (alias en orden): actor_id, first_name, last_name, films_title_len_gt15
+-- 52) Para cada ciudad, clientes con apellidos de > 8 caracteres.
+-- Salida obligatoria (alias en orden): city_id, city_name, customers_lastname_gt8
+-- 53) Para cada cliente, alquileres entre 10:00 y 12:00.
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, rentals_10_12
+-- 54) Para cada categoría, media de length de películas con rating 'PG-13'.
+-- Salida obligatoria (alias en orden): category_id, category_name, avg_length_pg13
+WHERE f.rating = 'PG-13'
+-- 55) Para cada película, alquileres realizados en viernes (DAYOFWEEK=6).
+-- Salida obligatoria (alias en orden): film_id, title, friday_rentals
+-- 56) Para cada tienda, clientes por empleado (conteo de clientes asociados a la tienda de ese empleado).
+-- Salida obligatoria (alias en orden): staff_id, first_name, last_name, customers_in_staff_store
+-- 57) Para cada idioma, películas cuyo título termina en 'S'.
+-- Salida obligatoria (alias en orden): language_id, language_name, films_title_end_s
+-- 58) Para cada ciudad, clientes inactivos (active=0) residentes en ella.
+-- Salida obligatoria (alias en orden): city_id, city_name, inactive_customers_in_city
+-- 59) Para cada categoría, suma de rental_rate de sus películas.
+-- Salida obligatoria (alias en orden): category_id, category_name, sum_rental_rate
+-- 60) Para cada empleado, media de importes procesados en meses pares de 2005.
+-- Salida obligatoria (alias en orden): staff_id, first_name, last_name, avg_amount_even_months_2005
+-- ==============================================
+-- SECCIÓN G) 20 CONSULTAS (JOIN DE EXACTAMENTE 4 TABLAS)
+-- ==============================================
+-- 61) Para cada país, suma de importes de pagos en 2005.
+-- Salida obligatoria (alias en orden): country_id, country_name, total_amount_2005
+-- 62) Para cada país, clientes que realizaron alquiler en 2006 (distintos).
+-- Salida obligatoria (alias en orden): country_id, country_name, customers_with_rentals_2006
+-- 63) Para cada tienda, total cobrado por trimestre de 2006.
+-- Salida obligatoria (alias en orden): store_id, quarter_2006, total_amount_quarter
+-- 64) Para cada categoría, alquileres por tienda.
+-- Salida obligatoria (alias en orden): category_id, category_name, store_id, rentals_count
+-- 65) Para cada actor, clientes distintos que alquilaron sus películas.
+-- Salida obligatoria (alias en orden): actor_id, first_name, last_name, distinct_customers_for_actor
+-- 66) Para cada categoría, suma de replacement_cost de películas alquiladas.
+-- Salida obligatoria (alias en orden): category_id, category_name, total_replacement_rented
+-- 67) Para cada país, alquileres de películas con rating 'R'.
+-- Salida obligatoria (alias en orden): country_id, country_name, rentals_rating_r
+-- 68) Para cada tienda, categorías distintas alquiladas en 2005.
+-- Salida obligatoria (alias en orden): store_id, distinct_categories_rented_2005
+-- 69) Para cada país, máximo importe de un pago de sus clientes.
+-- Salida obligatoria (alias en orden): country_id, country_name, max_single_payment
+-- 70) Para cada actor, tiendas distintas en las que se alquilaron sus películas en 2005 y 2006.
+-- Salida obligatoria (alias en orden): actor_id, first_name, last_name, distinct_stores_2005_2006
+-- 71) Para cada tienda, media de length de películas alquiladas por mes.
+-- Salida obligatoria (alias en orden): store_id, rental_month, avg_length_by_month
+-- 72) Para cada categoría, alquileres iniciados entre 18:00 y 23:59.
+-- Salida obligatoria (alias en orden): category_id, category_name, evening_rentals
+-- 73) Para cada categoría, clientes distintos que alquilaron películas con 'LIFE' en el título.
+-- Salida obligatoria (alias en orden): category_id, category_name, distinct_customers_life
+-- 74) Para cada país, clientes con más de 20 alquileres (conteo sobre filas y filtro por HAVING).
+-- Salida obligatoria (alias en orden): country_id, country_name, customers_20plus_rentals
+-- 75) Para cada país, media de importe por pago en 2006 (2 decimales).
+-- Salida obligatoria (alias en orden): country_id, country_name, avg_payment_2d_2006
+-- 76) Para cada tienda, importes de pagos de clientes cuyo apellido empieza por 'S'.
+-- Salida obligatoria (alias en orden): store_id, total_amount_customers_lastname_s
+-- 77) Para cada idioma, clientes distintos que alquilaron películas de ese idioma.
+-- Salida obligatoria (alias en orden): language_id, language_name, distinct_customers_language
+-- 78) Para cada categoría, máximo de días de alquiler observado.
+-- Salida obligatoria (alias en orden): category_id, category_name, max_days_rented
+-- 79) Para cada país, películas distintas alquiladas por sus clientes.
+-- Salida obligatoria (alias en orden): country_id, country_name, distinct_films_rented
+-- 80) Para cada tienda, clientes que realizaron algún pago > 50 (distintos).
+-- Salida obligatoria (alias en orden): store_id, customers_with_payment_gt50
+-- ==============================================
+-- SECCIÓN H) 20 CONSULTAS EXTRA (DIFICULTAD +, <=4 JOINS)
+-- ==============================================
+-- 81) Para cada cliente, días entre primer y último pago de 2006 (clientes con >=8 pagos ese año).
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, days_between_first_last_payment_2006
+-- 82) Para cada actor, clientes distintos que alquilaron películas con título que comience por 'A' o 'B'.
+-- Salida obligatoria (alias en orden): actor_id, first_name, last_name, distinct_customers_titles_ab
+-- 83) Para cada categoría, alquileres devueltos el mismo día.
+-- Salida obligatoria (alias en orden): category_id, category_name, same_day_returns
+-- 84) Para cada tienda, media de importe de pagos de clientes con first_name de 4 letras.
+-- Salida obligatoria (alias en orden): store_id, avg_amount_firstname_len4
+-- 85) Para cada idioma, alquileres de películas con título de longitud par.
+-- Salida obligatoria (alias en orden): language_id, language_name, rentals_even_title_len
+-- 86) Para cada país, media de length de películas alquiladas por sus clientes en 2006.
+-- Salida obligatoria (alias en orden): country_id, country_name, avg_length_rented_2006
+-- 87) Para cada cliente, categorías distintas en las que alquiló durante 2006.
+-- Salida obligatoria (alias en orden): customer_id, first_name, last_name, distinct_categories_2006
+-- 88) Para cada empleado, meses distintos con pagos procesados (YYYY-MM).
+-- Salida obligatoria (alias en orden): staff_id, first_name, last_name, distinct_year_months
+-- 89) Para cada categoría, alquileres cuyo pago asociado (payment.amount) sea >= 5.
+-- Salida obligatoria (alias en orden): category_id, category_name, rentals_amount_ge_5
+-- 90) Para cada idioma, actores con apellido de longitud 5 en películas de ese idioma.
+-- Salida obligatoria (alias en orden): language_id, language_name, actors_lastname_len5
+-- 91) Para cada tienda, clientes distintos que alquilaron los lunes (DAYOFWEEK=2).
+-- Salida obligatoria (alias en orden): store_id, distinct_customers_monday
+-- 92) Para cada país, clientes con apellidos que terminan en 'EZ'.
+-- Salida obligatoria (alias en orden): country_id, country_name, customers_lastname_end_ez
+-- 93) Para cada categoría, alquileres de 2006 cuyo título tenga exactamente 2 palabras.
+-- Salida obligatoria (alias en orden): category_id, category_name, rentals_title_two_words_2006
+-- 94) Para cada tienda, media de replacement_cost de películas alquiladas por trimestre.
+-- Salida obligatoria (alias en orden): store_id, rental_quarter, avg_replacement_by_quarter
+-- 95) Para cada categoría, inventarios disponibles (filas en inventory) asociados a películas de esa categoría.
+-- Salida obligatoria (alias en orden): category_id, category_name, inventory_items_in_category
+-- 96) Para cada idioma, pagos asociados a alquileres de películas en ese idioma.
+-- Salida obligatoria (alias en orden): language_id, language_name, payments_for_language
+-- 97) Para cada actor, media de importe cobrado en pagos vinculados a alquileres de sus películas.
+-- Salida obligatoria (alias en orden): actor_id, first_name, last_name, avg_amount_for_actor
+-- 98) Para cada país, alquileres iniciados en horario laboral (09:00–17:00).
+-- Salida obligatoria (alias en orden): country_id, country_name, business_hour_rentals
+-- 99) Para cada tienda, clientes distintos que alquilaron películas con replacement_cost >= 25.
+-- Salida obligatoria (alias en orden): store_id, distinct_customers_replacement_25plus
+-- 100) Para cada idioma, número de actores distintos que participan en películas de ese idioma.
+-- Salida obligatoria (alias en orden): language_id, language_name, distinct_actors_in_language
