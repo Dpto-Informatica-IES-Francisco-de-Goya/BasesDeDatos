@@ -7,33 +7,34 @@ USE obras_musicales;
 
 -- DROP TABLE IF EXISTS compositor;
 CREATE TABLE compositor (
-    id_compositor SMALLINT UNSIGNED,
+    id_compositor SMALLINT UNSIGNED AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL,
-	año_nacimiento YEAR,
+	año_nacimiento SMALLINT,
     nacionalidad CHAR(4), -- Como código de pais: ES,FR,IT... ESTO ES UNA CHAPUZA.
     CONSTRAINT pk_compositor PRIMARY KEY (id_compositor)
 );
+
 CREATE TABLE director (
-    id_director SMALLINT UNSIGNED,
+    id_director SMALLINT UNSIGNED AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL, 
     -- nombre VARCHAR(50) NOT NULL UNIQUE, 
     -- unique no está en el modelo relacional, pero hemos pensado que hay que ponerlo
-    año_nacimiento YEAR,
+    año_nacimiento SMALLINT,
     nacionalidad CHAR(4), -- Como código de pais: ES,FR,IT... ESTO ES UNA CHAPUZA.
     CONSTRAINT pk_director PRIMARY KEY (id_director),
     CONSTRAINT uq_director_nombre UNIQUE(nombre), -- También se puede poner así. De una forma o la otra.
     CONSTRAINT chk_nombre_not_null CHECK (nombre IS NOT NULL) 
 );
 CREATE TABLE interprete (
-    id_interprete SMALLINT UNSIGNED,
+    id_interprete SMALLINT UNSIGNED AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL,
-    año_nacimiento YEAR,
+    año_nacimiento SMALLINT,
     tipo VARCHAR(45), -- Como código de pais: ES,FR,IT... ESTO ES UNA CHAPUZA.
     CONSTRAINT pk_interprete PRIMARY KEY (id_interprete)
 );
 
 CREATE TABLE obra (
-	id_obra SMALLINT UNSIGNED,
+	id_obra SMALLINT UNSIGNED AUTO_INCREMENT,
 	titulo VARCHAR(50) NOT NULL, -- ojo, que no estaba bien el relacional.
 	tipo VARCHAR(25),
     modo VARCHAR(25), -- probablemente sea un error pero necesitamos contexto que no tenemos
@@ -46,7 +47,7 @@ CREATE TABLE obra (
 );
 
 CREATE TABLE version (
-	id_version MEDIUMINT UNSIGNED, -- Como lleva un constraint de PK, no hace falta indicar NOT NULL ni UNIQUE.
+	id_version MEDIUMINT UNSIGNED AUTO_INCREMENT, -- Como lleva un constraint de PK, no hace falta indicar NOT NULL ni UNIQUE.
     id_obra  SMALLINT UNSIGNED NOT NULL,
     id_interprete  SMALLINT UNSIGNED NOT NULL,
     id_director  SMALLINT UNSIGNED,
