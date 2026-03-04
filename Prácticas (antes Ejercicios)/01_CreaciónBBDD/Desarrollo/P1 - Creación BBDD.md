@@ -1,4 +1,4 @@
-su# Práctica Creación BBDD
+# Práctica Creación BBDD
 
 Esta práctica evalúa los CE a-d del RA de creación de bases de datos.
 
