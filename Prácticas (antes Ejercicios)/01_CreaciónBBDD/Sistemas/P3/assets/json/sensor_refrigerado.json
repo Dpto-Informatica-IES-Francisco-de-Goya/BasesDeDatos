@@ -1,0 +1,12 @@
+{
+  "sensor_id": "REF-9920-X",
+  "metadata": { "firmware": "v2.4.1", "last_service": "2024-01-15" },
+  "readings": {
+    "temperature": -18.4,
+    "humidity": 12.5,
+    "compressor_status": "active",
+    "defrost_cycle": false,
+    "door_seal_integrity": 100
+  },
+  "alerts": []
+}
