@@ -38,3 +38,5 @@
 - Pedidos ordenados por total ASC.
 - Primeros 10 clientes por orden alfabético del nombre.
 - Top 5 productos más baratos en la categoría “Accesorios”.
+
+
