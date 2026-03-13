@@ -1,0 +1,296 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- PAQUETES DE CONFIGURACIÓN BÁSICA ---
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{float}
+\usepackage{lmodern} 
+
+% --- DEFINICIÓN DE COLORES CORPORATIVOS ---
+\definecolor{primary}{RGB}{15,118,110}   
+\definecolor{secondary}{RGB}{37,99,235} 
+\definecolor{muted}{RGB}{107,114,128}     
+\definecolor{bgcode}{RGB}{248,250,252}    
+\definecolor{frame}{RGB}{226,232,240}     
+
+% --- ESTILO DE SECCIONES ---
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{secondary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\color{secondary}}{\thesubsubsection}{0.6em}{}
+
+% --- CONFIGURACIÓN DE LISTINGS ---
+\lstdefinelanguage{SQLPlus}[]{SQL}{
+  morekeywords={IF,ELSE,END,DECLARE,BEGIN,EXCEPTION,WHEN,LOOP,ELSIF,THEN,RAISE,RETURN,ROLE,ACCOUNT,LOCK,UNLOCK,CASE,WHEN,THEN,ELSE,END,CAST,AS,STR_TO_DATE,IFNULL,COALESCE,ALTER,MODIFY,CHANGE,COLUMN,ADD,CONSTRAINT,CHECK,REGEXP},
+  sensitive=false
+}
+
+\lstset{
+  language=SQLPlus,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{secondary}\bfseries,
+  commentstyle=\color{muted}\itshape,
+  stringstyle=\color{primary},
+  columns=fullflexible,
+  backgroundcolor=\color{bgcode},
+  frame=single,
+  rulecolor=\color{frame},
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+  inputencoding = utf8,
+  extendedchars = true,
+  literate = 
+      {á}{{\'a}}1  {é}{{\'e}}1  {í}{{\'i}}1 {ó}{{\'o}}1  {ú}{{\'u}}1
+      {Á}{{\'A}}1  {É}{{\'E}}1  {Í}{{\'I}}1 {Ó}{{\'O}}1  {Ú}{{\'U}}1
+      {ñ}{{\~n}}1  {Ñ}{{\~N}}1  {¿}{{?`}}1  {¡}{{!`}}1
+}
+
+% --- CONFIGURACIÓN DE CAJAS DE TEXTO ---
+\tcbset{
+  colback=white,
+  colframe=primary,
+  coltitle=white,
+  colbacktitle=primary,
+  fonttitle=\bfseries,
+  arc=2mm,
+  boxrule=0.6pt
+}
+
+% --- DATOS DEL DOCUMENTO ---
+\title{\textbf{Guía de Teoría: Actualización de Bases de Datos (RA UPDATE)}}
+\author{Departamento de Informática}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introducción}
+Esta guía detalla las técnicas y comandos esenciales para la actualización, manipulación y saneamiento de datos en sistemas gestores de bases de datos. 
+%
+Se abordarán desde los escenarios básicos de inicialización hasta técnicas avanzadas de migración, gestión de colisiones, saneamiento profundo, auditoría y reestructuración del esquema.
+
+\section{PASO 0: El Escenario del Crimen (Script de Inicialización)}
+Para seguir esta guía, es necesario crear una base de datos de pruebas que contenga datos ``sucios'' y errores comunes de importación.
+
+\textbf{Instrucciones:} Ejecuta el script adjunto \texttt{00\_fugas\_setup.sql} en tu servidor local para preparar el entorno de trabajo. 
+%
+Este script genera tablas de producción, tablas de \textit{staging} y registros con inconsistencias deliberadas.
+
+\lstinputlisting[caption={Script de inicialización: \texttt{00\_fugas\_setup.sql}}]{src/00_fugas_setup.sql}
+
+\section{El Entorno de Trabajo y Seguridad}
+Para manipular grandes volúmenes de datos, es crucial controlar tanto la terminal como los clientes gráficos, conociendo sus mecanismos de seguridad.
+
+\subsection{Ejecución desde la Terminal y Modo Seguro}
+\begin{tcolorbox}[title=Tip de terminal vs GUI]
+El saneamiento masivo no debe hacerse ``a mano''. El \textbf{Modo Seguro} es una restricción del \textbf{cliente} (como MySQL Workbench), no del servidor. Por tanto, los scripts ejecutados directamente por terminal (\texttt{mysql < script.sql}) suelen ejecutarse sin estas restricciones, evitando bloqueos por falta de memoria RAM comunes en entornos gráficos al renderizar scripts de gran tamaño.
+\end{tcolorbox}
+
+\subsection{MySQL Workbench y la directiva \textit{Safe Updates}}
+Workbench lanza el \textbf{Error Code: 1175} si intentas un \texttt{UPDATE} sin una PK en el \texttt{WHERE}. Como ``forenses'', debemos sortearlo:
+
+\lstinputlisting[caption={Gestión de Safe Updates: \texttt{01\_safe\_updates.sql}}]{src/01_safe_updates.sql}
+
+\begin{tcolorbox}[title=Reflexión 0]
+¿Qué sentido tiene el modo seguro y por qué viene activado por defecto en los entornos de aprendizaje y clientes gráficos?
+\end{tcolorbox}
+
+\section{Integridad Referencial y Restricciones}
+Las tablas no son islas; están unidas por claves foráneas (FK) que evalúan reglas cada vez que ejecutamos DML.
+
+\begin{tcolorbox}[title=Recomendación]
+Para una comprensión profunda de las FKs, consulta la guía específica de \textbf{Integridad Referencial} disponible en la carpeta \texttt{/home/vicdejuan/BasesDeDatos/Teoria/UT4/01\_On\_delete\_or\_update/}.
+\end{tcolorbox}
+
+\subsection{Comportamientos ante UPDATE y DELETE}
+\begin{itemize}
+    \item \textbf{RESTRICT / NO ACTION:} El escudo principal. Bloquea la sentencia si existen registros dependientes.
+    \item \textbf{CASCADE:} El bisturí automático. 
+    \begin{itemize}
+        \item \texttt{ON DELETE CASCADE}: Borrar un padre fulmina automáticamente a sus hijos (Peligro de pérdida masiva).
+        \item \texttt{ON UPDATE CASCADE}: Si el ID principal cambia (ej. corregir un DNI mal metido), el cambio se propaga a todas las tablas dependientes.
+    \end{itemize}
+    \item \textbf{SET NULL:} Conservación de históricos. Si eliminamos un comercial, no borramos sus ventas (\texttt{CASCADE}), sino que las dejamos ``huérfanas'' pero intactas colocando \texttt{NULL} en su FK.
+\end{itemize}
+
+\subsection{Desactivación de Claves Foráneas para Ingesta}
+En migraciones, importamos tablas en órdenes aleatorios. La técnica estándar es suspender temporalmente la comprobación:
+
+\lstinputlisting[caption={Control de FKs: \texttt{02\_fk\_checks.sql}}]{src/02_fk_checks.sql}
+
+\begin{tcolorbox}[title=Reflexión 1]
+¿Cuál es el problema de eliminar el contenido de las tablas desactivando las claves foráneas (\textit{foreign keys})?
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=\textbf{ADVERTENCIA}]
+¡Ojo! Acabas de eliminar todos los datos de la base de datos. Antes de seguir con el resto de ejemplos, vuelve a cargar la parte del script de inserción.
+\end{tcolorbox}
+
+\section{Inserción Avanzada y Consolidación}
+La inserción fila a fila carece de utilidad en entornos de Big Data. Debemos dominar las inserciones masivas.
+
+\subsection{Motivación: ¿Cuándo necesitamos migrar datos?}
+\begin{itemize}
+    \item \textbf{Legacy Systems:} Pasar datos de una base antigua a una nueva estructura.
+    \item \textbf{Consolidación:} Unificar bases tras una fusión de empresas.
+    \item \textbf{ETL de staging:} Procesar datos de Excels externos antes de llevarlos a producción.
+\end{itemize}
+
+\subsection{Migración con SELECT y Gestión de Colisiones}
+La técnica \texttt{INSERT INTO ... SELECT} permite transformar datos al vuelo.
+
+\lstinputlisting[caption={Migración con SELECT: \texttt{03\_insert\_select.sql}}]{src/03_insert_select.sql}
+
+\begin{tcolorbox}[title=Punto Crítico: Restricciones UNIQUE]
+El motor evalúa las restricciones de \texttt{UNIQUE} para cada fila. Si hay una colisión, la sentencia fallará atómicamente a menos que usemos \texttt{IGNORE} o \texttt{ON DUPLICATE KEY UPDATE} (\textit{Upsert}).
+\end{tcolorbox}
+
+\lstinputlisting[caption={Estrategia Upsert: \texttt{04\_upsert.sql}}]{src/04_upsert.sql}
+
+\begin{tcolorbox}[title=Reflexión 2]
+¿Qué objetivo técnico perseguimos al combinar \texttt{TRIM()}, \texttt{UPPER()} y \texttt{CONCAT()} durante una importación masiva?
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Reflexión 3]
+¿Qué ventajas aporta realizar una consulta (\texttt{SELECT}) dentro de una sentencia de inserción (\texttt{INSERT}) en lugar de hacerlo en dos pasos separados?
+\end{tcolorbox}
+
+\section{UPDATE: Saneamiento Profundo}
+\subsection{Funciones de cadena y Normalización}
+Los datos heredados suelen tener espacios excesivos o formatos incorrectos. Usamos funciones nativas:
+
+\lstinputlisting[caption={Normalización de datos: \texttt{05\_phone\_norm.sql}}]{src/05_phone_norm.sql}
+
+\subsection{UPDATE con subconsultas y JOINs}
+Para corregir datos basándonos en otras tablas, podemos usar subconsultas o la sintaxis de JOIN múltiple de MySQL.
+
+\lstinputlisting[caption={Update con Subconsultas: \texttt{06\_update\_subquery.sql}}]{src/06_update_subquery.sql}
+\lstinputlisting[caption={Update con JOIN: \texttt{07\_update\_join.sql}}]{src/07_update_join.sql}
+
+\subsection{Lógica Condicional Compleja (\texttt{CASE})}
+\lstinputlisting[caption={Lógica condicional: \texttt{08\_case\_logic.sql}}]{src/08_case_logic.sql}
+
+\begin{tcolorbox}[title=Reflexión 4]
+¿Por qué es preferible usar un \texttt{CASE} dentro de un único \texttt{UPDATE} en lugar de ejecutar varios \texttt{UPDATE} con diferentes cláusulas \texttt{WHERE}?
+\end{tcolorbox}
+
+\subsection{El Problema de los \texttt{NULLs}}
+Concatenar con \texttt{NULL} devuelve \texttt{NULL}. Usamos \texttt{IFNULL()} o \texttt{COALESCE()} para evitarlo.
+
+\lstinputlisting[caption={Gestión de NULLs: \texttt{09\_null\_handling.sql}}]{src/09_null_handling.sql}
+
+\begin{tcolorbox}[title=Reflexión 5]
+Si intentamos concatenar el nombre 'Juan' con un teléfono que es \texttt{NULL}, ¿qué resultado obtenemos y cómo lo evitamos?
+\end{tcolorbox}
+
+\subsection{Saneamiento de Fechas y Tipos (\texttt{CAST})}
+\lstinputlisting[caption={Saneamiento de tipos: \texttt{10\_date\_saneamiento.sql}}]{src/10_date_saneamiento.sql}
+
+\section{Reestructuración Quirúrgica: Modificación del Esquema (DDL)}
+\subsection{Añadir y Eliminar Columnas}
+\lstinputlisting[caption={Modificación de columnas: \texttt{11\_modify\_columns.sql}}]{src/11_modify_columns.sql}
+
+\subsection{Modificar Tipos de Datos y Nombres}
+\lstinputlisting[caption={Ajuste de tipos de datos: \texttt{12\_modify\_types.sql}}]{src/12_modify_types.sql}
+
+\subsection{Imponer la Integridad: Unicidad y Obligatoriedad}
+\lstinputlisting[caption={Añadir Unique y Not Null: \texttt{13\_add\_constraints.sql}}]{src/13_add_constraints.sql}
+
+\begin{tcolorbox}[title=Reflexión 8]
+¿Por qué suele fallar un \texttt{ALTER TABLE ... MODIFY ... NOT NULL} en una base de datos que ya contiene datos? ¿Qué paso previo es obligatorio realizar?
+\end{tcolorbox}
+
+\subsection{Validación de Reglas de Negocio (\texttt{CHECK})}
+\lstinputlisting[caption={Restricciones de validación: \texttt{14\_add\_checks.sql}}]{src/14_add_checks.sql}
+
+\section{Optimización y Rendimiento}
+\subsection{SARGability: El peligro de las funciones en el WHERE}
+Usar funciones sobre columnas indexadas impide al motor realizar un \textit{Index Seek}.
+
+\lstinputlisting[caption={Rendimiento y SARGability: \texttt{15\_performance\_sarg.sql}}]{src/15_performance_sarg.sql}
+
+\begin{tcolorbox}[title=Reflexión 6]
+¿Qué diferencia de rendimiento existe entre \texttt{WHERE UPPER(email) = '...'} y \texttt{WHERE email = '...'} si la columna email está indexada?
+\end{tcolorbox}
+
+\section{Eliminación de Datos y Auditoría}
+\subsection{DELETE vs TRUNCATE: El Duelo de Gigantes}
+\begin{itemize}
+    \item \textbf{DELETE:} Operación DML fila a fila. Comprueba restricciones, dispara triggers y escribe cada fila en el log de transacciones. \textbf{Mantiene} el \texttt{AUTO\_INCREMENT}. Es muy lento en tablas masivas.
+    \item \textbf{TRUNCATE:} Operación DDL estructural. Destruye y recrea la tabla. Instantánea, no satura el log, pero \textbf{resetea} el \texttt{AUTO\_INCREMENT} y no activa triggers ni admite \texttt{WHERE}.
+\end{itemize}
+
+\lstinputlisting[caption={Borrado condicional: \texttt{16\_delete\_date.sql}}]{src/16_delete_date.sql}
+\lstinputlisting[caption={Vaciado estructural: \texttt{17\_truncate.sql}}]{src/17_truncate.sql}
+
+\subsection{Verificación Post-Intervención}
+\lstinputlisting[caption={Auditoría y Verificación: \texttt{18\_audit\_verify.sql}}]{src/18_audit_verify.sql}
+
+\begin{tcolorbox}[title=Reflexión 7]
+¿Por qué es vital usar \texttt{GROUP BY} y \texttt{HAVING} tras un proceso de limpieza de duplicados?
+\end{tcolorbox}
+
+\newpage
+\section{Respuestas a las Reflexiones e Investigación}
+
+\begin{tcolorbox}[title=Respuesta 0: El Escudo de Seguridad]
+Evita borrados o modificaciones accidentales masivas por errores tipográficos en clientes gráficos. \\
+\textbf{Pista de investigación:} Busca desastres reales como el de \textit{GitLab} en 2017.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 1: Integridad y Dependencias Circulares]
+Al desactivar FKs, el motor permite borrar registros que tienen dependencias activas, lo que puede dejar datos "huérfanos". 
+%
+Además, es la única forma de vaciar tablas con \textbf{dependencias circulares} (ej. un laboratorio dirigido por un investigador que a su vez pertenece a ese laboratorio). \\
+\textbf{Investiga:} Grafos de Dependencia y herramientas como \textit{Flyway}.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 2: ETL y Calidad de Búsqueda]
+\textbf{Limpieza:} \texttt{TRIM()} evita errores de duplicados por espacios invisibles. \\
+\textbf{Normalización:} \texttt{UPPER()} asegura consistencia en búsquedas posteriores, crítico si el origen de datos no está controlado.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 3: Atomicidad y Eficiencia]
+Evita mover datos hacia la aplicación cliente y garantiza que la transformación ocurra de forma atómica y rápida dentro del motor. \\
+\textbf{Investiga:} Operaciones Set-based.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 4: Eficiencia de Proceso]
+Reduce el tiempo de bloqueo de filas (\textit{Row Locks}) y escanea la tabla una sola vez. \\
+\textbf{Pista de investigación:} Investiga los \textbf{Bloqueos de Fila}.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 5: El vacío del NULL]
+Obtenemos \texttt{NULL}. Se evita usando \texttt{COALESCE(tel, '')}. \\
+\textbf{Pista de investigación:} Busca la \textbf{Lógica Tri-valuada} de SQL.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 6: SARGability]
+\texttt{UPPER(email)} obliga a un \textit{Full Table Scan}, mientras que la comparación directa permite un \textit{Index Seek}. \\
+\textbf{Pista de investigación:} Busca el término \textbf{SARGable queries}.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 7: Validación de Calidad]
+Permite confirmar que no han quedado registros duplicados. Es el control de calidad final. \\
+\textbf{Pista de investigación:} Investiga técnicas de \textbf{Data Profiling}.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 8: El cerrojo de la obligatoriedad]
+Falla si existen filas con valores \texttt{NULL}. El paso previo es sanear esos nulos mediante un \texttt{UPDATE} antes de aplicar la restricción.
+\end{tcolorbox}
+
+\end{document}
