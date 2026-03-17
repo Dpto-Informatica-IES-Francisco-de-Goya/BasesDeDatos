@@ -16,11 +16,12 @@ CREATE TABLE personal (
 
     -- Restricciones de Clave
     CONSTRAINT pk_personal PRIMARY KEY (id_empleado),
-    CONSTRAINT uq_personal_cod_interno UNIQUE (cod_interno),
-    CONSTRAINT uq_personal_num_colegiado UNIQUE (num_colegiado),
+    CONSTRAINT uq_personal_cod_interno UNIQUE (cod_interno), -- se puede declarar a nivel de columna
+    CONSTRAINT uq_personal_num_colegiado UNIQUE (num_colegiado), -- se puede declarar a nivel de columna
     
     -- Validaciones de formato y negocio
-    CONSTRAINT chk_personal_cod_formato CHECK (CHAR_LENGTH(cod_interno) = 6),
+    CONSTRAINT chk_personal_cod_formato CHECK (CHAR_LENGTH(cod_interno) = 6), -- CHAR_LENGTH es mejor que LENGTH. Consulta documentación.
+    -- CONSTRAINT chk_personal_cod_interno CHECK( cod_interno REGEXP '[0-9a-zA-Z]{6}'),
     -- Especialización encubierta
     CONSTRAINT chk_personal_especializacion CHECK (
         (puesto = 'VETERINARIO' AND num_colegiado IS NOT NULL AND zona IS NULL) OR 
@@ -28,8 +29,15 @@ CREATE TABLE personal (
     )
 );
 
--- Nota: La relación reflexiva (id_supervisor) se implementa al final con un ALTER TABLE.
+-- =========================================================================
+-- ALTER TABLE (Relación Reflexiva)
+-- =========================================================================
 
+-- Implementación de la FK de la relación reflexiva
+ALTER TABLE personal
+ADD CONSTRAINT fk_personal_personal FOREIGN KEY (id_supervisor) 
+    REFERENCES personal(id_empleado) ON DELETE RESTRICT ON UPDATE CASCADE;
+    
 -- =========================================================================
 -- 2. TABLA: habitats
 -- =========================================================================
@@ -37,7 +45,7 @@ CREATE TABLE habitats (
     id_habitat TINYINT UNSIGNED AUTO_INCREMENT,
     nombre VARCHAR(100) NOT NULL,
     clima ENUM('TROPICAL', 'ARIDO', 'POLAR', 'TEMPLADO') DEFAULT 'TEMPLADO',
-    area_m2 INT UNSIGNED NOT NULL,
+    area_m2 DECIMAL(6,2) NOT NULL,
 
     -- Restricciones de Clave
     CONSTRAINT pk_habitats PRIMARY KEY (id_habitat),
@@ -52,7 +60,7 @@ CREATE TABLE habitats (
 -- =========================================================================
 CREATE TABLE animales (
     id_animal SMALLINT UNSIGNED AUTO_INCREMENT,
-    chip VARCHAR(15) NOT NULL,
+    chip CHAR(15) NOT NULL,
     alias VARCHAR(100) NOT NULL,
     -- Tipo SET para selección múltiple de características 
     etiquetas SET('PELIGROSO', 'NOCTURNO', 'CRIA', 'CUARENTENA'),
@@ -89,10 +97,3 @@ CREATE TABLE protocolos_medicos (
         
 );
 
--- =========================================================================
--- 5. ALTER TABLES (Relaciones Reflexivas)
--- =========================================================================
--- Implementación de la FK de la relación reflexiva
-ALTER TABLE personal
-ADD CONSTRAINT fk_personal_personal FOREIGN KEY (id_supervisor) 
-    REFERENCES personal(id_empleado) ON DELETE RESTRICT ON UPDATE CASCADE;
