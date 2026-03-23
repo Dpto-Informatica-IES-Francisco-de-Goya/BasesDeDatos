@@ -1,0 +1,131 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- PAQUETES DE CONFIGURACIÓN BÁSICA ---
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{float}
+\usepackage{lmodern} 
+\usepackage{eurosym} 
+
+% --- DEFINICIÓN DE COLORES CORPORATIVOS ---
+\definecolor{primary}{RGB}{15,118,110}   
+\definecolor{secondary}{RGB}{37,99,235} 
+\definecolor{muted}{RGB}{107,114,128}     
+\definecolor{bgcode}{RGB}{248,250,252}    
+\definecolor{frame}{RGB}{226,232,240}     
+
+% --- ESTILO DE SECCIONES ---
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{secondary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\color{secondary}}{\thesubsubsection}{0.6em}{}
+
+% --- CONFIGURACIÓN DE LISTINGS ---
+\lstdefinelanguage{SQLPlus}[]{SQL}{
+  morekeywords={IF,ELSE,END,DECLARE,BEGIN,EXCEPTION,WHEN,LOOP,ELSIF,THEN,RAISE,RETURN,ROLE,ACCOUNT,LOCK,UNLOCK,CASE,WHEN,THEN,ELSE,END,CAST,AS,STR_TO_DATE,IFNULL,COALESCE,ON,DUPLICATE,KEY,UPDATE,TRUNCATE},
+  sensitive=false
+}
+
+\lstset{
+  language=SQLPlus,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{secondary}\bfseries,
+  commentstyle=\color{muted}\itshape,
+  stringstyle=\color{primary},
+  columns=fullflexible,
+  backgroundcolor=\color{bgcode},
+  frame=single,
+  rulecolor=\color{frame},
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+  inputencoding = utf8,
+  extendedchars = true,
+  literate = 
+      {á}{{\'a}}1  {é}{{\'e}}1  {í}{{\'i}}1 {ó}{{\'o}}1  {ú}{{\'u}}1
+      {Á}{{\'A}}1  {É}{{\'E}}1  {Í}{{\'I}}1 {Ó}{{\'O}}1  {Ú}{{\'U}}1
+      {ñ}{{\~n}}1  {Ñ}{{\~N}}1  {¿}{{?`}}1  {¡}{{!`}}1 {€}{{\euro}}1
+}
+
+% --- CONFIGURACIÓN DE CAJAS DE TEXTO ---
+\tcbset{
+  colback=white,
+  colframe=primary,
+  coltitle=white,
+  colbacktitle=primary,
+  fonttitle=\bfseries,
+  arc=2mm,
+  boxrule=0.6pt
+}
+
+% --- DATOS DEL DOCUMENTO ---
+\title{\textbf{UT5: Desafío Extremo - Saneamiento de Big Data (Logística 4.0)}}
+\author{Departamento de Informática}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Introducción}
+La corporación \textit{Logística Global 4.0} ha migrado sus sistemas desde hojas Excel dispersas a una base de datos centralizada. El resultado es catastrófico: \textbf{100.000 registros} cargados con inconsistencias masivas, formatos de fecha incompatibles, importes "sucios" y fallos de integridad referencial.
+
+\section*{Descripción General del Problema}
+Tras una migración masiva desde sistemas heredados y hojas de cálculo fragmentadas, la base de datos de \textit{Logística Global 4.0} se encuentra en un estado de "caos técnico". Con más de \textbf{100.000 registros} cargados, la información es inconsistente, redundante y carece de integridad referencial. 
+
+Este escenario representa un reto de saneamiento profesional donde el error no es una opción: \textbf{el proceso de carga inicial toma aproximadamente 15 minutos}.
+%
+Se recomienda encarecidamente trabajar sobre tablas intermedias de \textit{staging} y transacciones antes de aplicar cambios definitivos.
+
+
+\section{Evaluación}
+Este escenario es el que se utilizará en el examen. 
+%
+El examen consistirá en arreglar algunos de los problemas que tiene esta base de datos. 
+%
+Se disopndrá de ella en su estado inicial. 
+%
+Estará permitida la utilización de apuntes, códigos SQL y cualquier material que pueda ser consultable offline. 
+%
+Los materiales consultados se entregarán (sin que sean calificables) junto con el examen.
+
+
+\section{Recomendación para el estudio}
+El objetivo final sería elaborar un \textbf{Script de Limpieza Total} que transforme la base de datos "sucia" en un sistema relacional óptimo, siguiendo estos requisitos:
+
+\begin{enumerate}
+    \item \textbf{Documentación Exhaustiva:} Sería bueno redactar una memoria detallada que registre cada decisión tomada. ¿Qué columnas se han eliminado por ser redundantes? ¿Cómo se han resuelto los conflictos entre las columnas espejo de geolocalización? ¿Qué lógica se ha usado para unificar los formatos de fecha?
+    \item \textbf{Script de Limpieza End-to-End:} Un único archivo \texttt{.sql} que, al ejecutarse, realice todo el proceso: desde la creación de tablas de paso hasta el blindaje final con \texttt{CONSTRAINTS}. Importante que tenga muchos comentarios.
+    \item \textbf{Justificación Técnica:} Para cada bloque de limpieza (Identidad, Fechas, Financiero, Integridad), explica por qué elegiste limpieza directa o tablas intermedias.
+\end{enumerate}
+
+\section{Fase de Blindaje Final}
+Una vez que los datos sucios hayan sido neutralizados, es obligatorio blindar la base de datos para evitar futuras corrupciones. 
+
+Se recomienda implementar, justificando tus decisiones de diseño:
+
+\begin{itemize}
+    \item \textbf{Integridad Referencial:} Establecer todas las \texttt{FOREIGN KEY} que sean necesarias. No debe quedar ni un solo registro huérfano.
+    \item \textbf{Restricciones de Dominio:} Aplicar \texttt{CHECK} para validar formatos (NIF, Matrículas, Emails) y rangos de valores (salarios, pesos).
+    \item \textbf{Unicidad:} Asegurar que no existan duplicados mediante \texttt{UNIQUE constraints} en campos clave como \texttt{tracking\_number} o \texttt{cif\_nif}.
+    \item \textbf{Obligatoriedad:} Determina qué campos deben ser obligatorios e impleméntalo. 
+\end{itemize}
+
+\begin{tcolorbox}[colback=red!5,colframe=red!75!black,title=ADVERTENCIA CRÍTICA]
+El script de carga genera 100k registros y tarda 15 minutos. 
+
+Si corrompes los datos sin tener una copia de seguridad o una estrategia de \textit{rollback}, es un suplicio restaurar el estado inicial de la BBDD. ¡Trabaja con cautela!
+\end{tcolorbox}
+
+\end{document}
