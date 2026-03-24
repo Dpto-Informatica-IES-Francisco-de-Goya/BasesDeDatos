@@ -1,0 +1,149 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- PAQUETES DE CONFIGURACIÓN BÁSICA ---
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{float}
+\usepackage{lmodern} 
+\usepackage{eurosym} 
+
+% --- DEFINICIÓN DE COLORES CORPORATIVOS ---
+\definecolor{primary}{RGB}{15,118,110}   
+\definecolor{secondary}{RGB}{37,99,235} 
+\definecolor{muted}{RGB}{107,114,128}     
+\definecolor{bgcode}{RGB}{248,250,252}    
+\definecolor{frame}{RGB}{226,232,240}     
+
+% --- ESTILO DE SECCIONES ---
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{secondary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\color{secondary}}{\thesubsubsection}{0.6em}{}
+
+% --- CONFIGURACIÓN DE LISTINGS ---
+\lstdefinelanguage{SQLPlus}[]{SQL}{
+  morekeywords={IF,ELSE,END,DECLARE,BEGIN,EXCEPTION,WHEN,LOOP,ELSIF,THEN,RAISE,RETURN,ROLE,ACCOUNT,LOCK,UNLOCK,CASE,WHEN,THEN,ELSE,END,CAST,AS,STR_TO_DATE,IFNULL,COALESCE,ON,DUPLICATE,KEY,UPDATE,TRUNCATE},
+  sensitive=false
+}
+
+\lstset{
+  language=SQLPlus,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{secondary}\bfseries,
+  commentstyle=\color{muted}\itshape,
+  stringstyle=\color{primary},
+  columns=fullflexible,
+  backgroundcolor=\color{bgcode},
+  frame=single,
+  rulecolor=\color{frame},
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+  inputencoding = utf8,
+  extendedchars = true,
+  literate = 
+      {á}{{\'a}}1  {é}{{\'e}}1  {í}{{\'i}}1 {ó}{{\'o}}1  {ú}{{\'u}}1
+      {Á}{{\'A}}1  {É}{{\'E}}1  {Í}{{\'I}}1 {Ó}{{\'O}}1  {Ú}{{\'U}}1
+      {ñ}{{\~n}}1  {Ñ}{{\~N}}1  {¿}{{?`}}1  {¡}{{!`}}1 {€}{{\euro}}1
+}
+
+% --- CONFIGURACIÓN DE CAJAS DE TEXTO ---
+\tcbset{
+  colback=white,
+  colframe=primary,
+  coltitle=white,
+  colbacktitle=primary,
+  fonttitle=\bfseries,
+  arc=2mm,
+  boxrule=0.6pt
+}
+
+\title{\textbf{Práctica Avanzada: Saneamiento y Reestructuración (GHA Analytics)}}
+\author{Departamento de Informática}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introducción}
+\textbf{Escenario:} La multinacional \textit{Global Health \& Insurance Analytics} (GHA) ha adquirido una clínica regional cuya base de datos es un desastre técnico. Tu misión es liderar el proceso de limpieza y blindaje del sistema antes de conectarlo a la red central.
+
+\section{Fase 0: Preparación del Entorno}
+Ejecuta el script \texttt{00\_setup\_gha.sql}. Contiene datos corruptos, duplicados y múltiples violaciones de integridad que deberás resolver.
+
+\section{Escenario 1: Blindaje Estructural (6 Puntos)}
+En esta fase, debes aplicar las restricciones de diseño solicitadas. La corrección será automatizada, por lo que el nombre de las restricciones y los tipos de datos deben ser exactos.
+
+\begin{enumerate}
+    \item \textbf{Normalización de Identidad (Pacientes):}
+    \begin{itemize}
+        \item Elimina duplicados exactos en \texttt{pacientes} (mismo NIF y nombre), manteniendo el ID más bajo.
+        \item Asegura que el NIF no tenga espacios y cumpla el formato de 8 números y una letra (\textit{Regex}). Los que no cumplan, deben ser corregidos o eliminados.
+        \item Convierte la columna \texttt{nif} en \texttt{UNIQUE} y \texttt{NOT NULL}.
+    \end{itemize}
+    
+    \item \textbf{Consistencia de Colegiados (Médicos):}
+    \begin{itemize}
+        \item Los números de colegiado deben tener el formato \texttt{COL-XX-YYYY} (donde XX es la provincia y YYYY el número). Estandariza los existentes.
+        \item Aplica una restricción \texttt{CHECK} para validar este formato.
+    \end{itemize}
+    
+    \item \textbf{Integridad Referencial:}
+    \begin{itemize}
+        \item Los médicos con especialidades inexistentes deben asignarse a la especialidad 'Medicina General'.
+        \item Añade las \texttt{FOREIGN KEY} correspondientes en \texttt{medicos} y \texttt{visitas}.
+    \end{itemize}
+
+    \item \textbf{Normalización y División de Tablas:}
+    \begin{itemize}
+        \item Extrae la información de seguros de la tabla \texttt{pacientes} a una nueva tabla independiente llamada \texttt{seguros\_pacientes}. 
+        \item La nueva tabla debe contener el \texttt{paciente\_id}, el \texttt{num\_poliza} y una nueva columna \texttt{estado\_poliza} con el valor por defecto 'ACTIVA'.
+        \item Asegura la integridad referencial entre ambas tablas.
+    \end{itemize}
+
+    \item \textbf{Columnas Calculadas y Blindaje:}
+    \begin{itemize}
+        \item Añade a la tabla \texttt{visitas} una columna llamada \texttt{copago\_estimado} de tipo \texttt{DECIMAL(10,2)}.
+        \item El valor de esta columna debe calcularse como el 20\% del importe (tras haber saneado la columna \texttt{importe\_sucio}).
+        \item \textbf{Blindaje Final:} Una vez saneados los datos, establece como obligatorios (\texttt{NOT NULL}) los campos \texttt{num\_poliza} (en su nueva tabla) y \texttt{copago\_estimado}. Ningún registro debe quedar sin estos valores.
+    \end{itemize}
+
+    \item \textbf{Ingesta de Datos Externos:}
+    \begin{itemize}
+        \item Los registros contenidos en la tabla de \textit{staging} \texttt{raw\_import\_visitas} deben ser procesados e importados a sus tablas correspondientes (\texttt{pacientes} y \texttt{visitas}).
+        \item Debes desglosar el campo \texttt{raw\_data}, limpiar los formatos y asegurar que no se creen duplicados si el paciente ya existe.
+    \end{itemize}
+\end{enumerate}
+
+\section{Escenario 2: Saneamiento Profundo y Memoria (4 Puntos)}
+Termina de arreglar todo lo que consideres necesario basándote en la guía de teoría. Debes entregar una \textbf{Memoria Técnica} resumiendo cada cambio realizado y su justificación.
+
+\begin{tcolorbox}[title=Retos sugeridos para el Escenario 2]
+\begin{itemize}
+    \item \textbf{Gestión de NULLs:} ¿Qué hacer con los pacientes sin email o sin póliza? Usa \texttt{COALESCE} para informes de facturación.
+    \item \textbf{Saneamiento de Fechas:} Convierte las fechas de visita (VARCHAR) a tipo \texttt{DATETIME} real. ¡Cuidado con los formatos mezclados!
+    \item \textbf{Limpieza Financiera:} Normaliza los importes (quitar €, \$, EUR) y realiza un \texttt{CAST} a \texttt{DECIMAL}.
+    \item \textbf{Optimización:} Identifica consultas lentas basándote en el principio de \textit{SARGability}.
+\end{itemize}
+\end{tcolorbox}
+
+\section*{Instrucciones de Entrega}
+\begin{itemize}
+    \item \textbf{Script\_Solucion.sql:} Un único archivo con todas las sentencias ordenadas.
+    \item \textbf{Memoria\_Tecnica.pdf:} Documentación de los cambios del Escenario 2.
+\end{itemize}
+
+\end{document}
