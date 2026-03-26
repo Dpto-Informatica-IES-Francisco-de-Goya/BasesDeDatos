@@ -332,7 +332,7 @@ SET SQL_SAFE_UPDATES = 1;
 								GROUP BY email
 								HAVING COUNT(id) > 1));*/
 
--- SOLUCIÓN BUENA BUENÍSIMA
+-- SOLUCIÓN BUENA BUENÍSIMA. CLÁSICO DE ELIMINAR DUPLICADOS.
 select * from pedidos;
 select 
 	p.id as pedido_id,
@@ -346,11 +346,106 @@ select
 	JOIN clientes c2 ON c1.email = c2.email;
     
 -- Reasignación de pedidos.
+SET SQL_SAFE_UPDATES = 0;
+START TRANSACTION;
 UPDATE pedidos p 
 	JOIN clientes c1 ON p.cliente_id = c1.id
 	JOIN clientes c2 ON c1.email = c2.email 
-SET p.cliente_id = c2.id WHERE c1.id > c2.id ;
+SET p.cliente_id = c2.id WHERE c1.id > c2.id;
 
+-- COMPROBAMOS:
+select 
+	p.id as pedido_id,
+    p.cliente_id,
+	c1.id as c1_id, 
+    c1.email,
+    c2.id as c2_id,
+    c2.email
+    FROM pedidos p 
+	JOIN clientes c1 ON p.cliente_id = c1.id
+	JOIN clientes c2 ON c1.email = c2.email;
+    
+-- TODO OK.
+SELECT * FROM clientes;
 -- Eliminación de duplicados.
 DELETE c1 FROM clientes c1 INNER JOIN clientes c2
 	ON c1.email = c2.email WHERE c1.id > c2.id;
+-- ROLLBACK;
+SET SQL_SAFE_UPDATES = 1;
+COMMIT;
+
+
+-- 2. Blindaje: Añade las restricciones de FOREIGN KEY a productos y pedidos.
+
+ALTER TABLE pedidos
+ADD CONSTRAINT fk_pedidos_clientes foreign key (cliente_id) REFERENCES clientes(id)
+ON UPDATE cascade ON DELETE RESTRICT;
+SELECT * FROM pedidos WHERE cliente_id NOT IN (select id from clientes);
+-- este constraint ha fallado porque hay pedidos que los han hecho clientes que no existen.
+-- CONCLUSIÓN: No se puede aplicar un constraint sin antes haber limpiado los datos. Limpia los datos (2.3.2) y funcionará
+
+ALTER TABLE productos
+ADD CONSTRAINT fk_productos_categorias FOREIGN KEY(categoria_id) REFERENCES categorias(id)
+ON DELETE RESTRICT ON UPDATE CASCADE;
+-- COMPROBAMOS: Saca el diagrama database->reverse
+
+-- 2.5.2. Consolidación de Precios: Crea precio_final y públalo usando COALESCE entre precio_oferta y precio.
+select * from productos;
+ALTER TABLE productos
+ADD COLUMN precio_final DECIMAL(10,2)
+AFTER precio_oferta;
+select * from productos;
+SET SQL_SAFE_UPDATES = 0;
+UPDATE productos
+-- SET precio_final = 1ª opción: precio_oferta. Si es nulo, entonces 2ª opción: precio. Si es nulo, 3ª opción: 99999999.99
+-- SET precio_final = CASE WHEN ... THEN
+SET precio_final = COALESCE(precio_oferta, precio, 99999999.99);
+SET SQL_SAFE_UPDATES = 1;
+select * from productos;
+
+
+-- CASE WHEN THEN.
+
+SELECT * FROM pedidos;
+
+
+start transaction;
+SET SQL_SAFE_UPDATES = 0;
+UPDATE pedidos 
+	SET fecha_texto = STR_TO_DATE(fecha_texto,'%d/%m/%Y')
+	WHERE fecha_texto LIKE '%/%/____' ; -- este filtro es fundamental.
+UPDATE pedidos 
+	SET fecha_texto = STR_TO_DATE(fecha_texto,'%d-%m-%Y')
+	WHERE fecha_texto LIKE '%-%-____' ; -- este filtro es fundamental.
+UPDATE pedidos 
+	SET fecha_texto = STR_TO_DATE(fecha_texto,'%Y.%m.%d')
+	WHERE fecha_texto LIKE '____.%.%' ; -- este filtro es fundamental.
+SET SQL_SAFE_UPDATES = 1;
+select * from pedidos;
+ROLLBACK; -- ESTA SOLUCIÓN ES INEFICIENTE
+
+
+start transaction;
+SET SQL_SAFE_UPDATES = 0;
+UPDATE pedidos 
+	SET fecha_texto = CASE
+			WHEN fecha_texto LIKE '%/%/____' THEN STR_TO_DATE(fecha_texto,'%d/%m/%Y')
+            WHEN fecha_texto LIKE '%-%-____' THEN STR_TO_DATE(fecha_texto,'%d-%m-%Y')
+            WHEN fecha_texto LIKE '____.%.%' THEN STR_TO_DATE(fecha_texto,'%Y.%m.%d')
+            ELSE fecha_texto
+    END;
+SET SQL_SAFE_UPDATES = 1;
+ROLLBACK; -- ESTA SOLUCIÓN ES INEFICIENTE
+
+start transaction;
+SET SQL_SAFE_UPDATES = 0;
+UPDATE pedidos 
+	SET fecha_texto = CASE
+			WHEN fecha_texto LIKE '%/%/____' THEN STR_TO_DATE(fecha_texto,'%d/%m/%Y')
+            WHEN fecha_texto LIKE '%-%-____' THEN STR_TO_DATE(fecha_texto,'%d-%m-%Y')
+            WHEN fecha_texto LIKE '____.%.%' THEN STR_TO_DATE(fecha_texto,'%Y.%m.%d')
+            ELSE fecha_texto
+		END
+	WHERE fecha_texto LIKE '%/%/____' OR fecha_texto LIKE '%-%-____' OR fecha_texto LIKE '____.%.%';
+SET SQL_SAFE_UPDATES = 1;
+COMMIT; -- ESTA SOLUCIÓN ES EFICIENTE
