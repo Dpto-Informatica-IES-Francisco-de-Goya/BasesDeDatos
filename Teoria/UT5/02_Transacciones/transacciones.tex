@@ -1,0 +1,305 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{float}
+\usepackage{lmodern}
+
+% Colores
+\definecolor{primary}{RGB}{15,118,110}
+\definecolor{secondary}{RGB}{37,99,235}
+\definecolor{muted}{RGB}{107,114,128}
+\definecolor{bgcode}{RGB}{248,250,252}
+\definecolor{frame}{RGB}{226,232,240}
+
+% Estilo de secciones
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{secondary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\bfseries\color{secondary}}{\thesubsubsection}{0.6em}{}
+
+% Listings (SQL)
+\lstdefinelanguage{SQLPlus}[]{SQL}{
+  morekeywords={IF,ELSE,END,DECLARE,BEGIN,EXCEPTION,WHEN,LOOP,ELSIF,THEN,RAISE,RETURN,START,TRANSACTION,COMMIT,ROLLBACK,SAVEPOINT,SET,SESSION,ISOLATION,LEVEL,SERIALIZABLE,READ,UNCOMMITTED,COMMITTED,REPEATABLE},
+  sensitive=false
+}
+\lstset{
+  language=SQLPlus,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{secondary}\bfseries,
+  commentstyle=\color{muted}\itshape,
+  stringstyle=\color{primary},
+  columns=fullflexible,
+  backgroundcolor=\color{bgcode},
+  frame=single,
+  rulecolor=\color{frame},
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+    inputencoding = utf8,
+    extendedchars = true,
+    literate      =
+      {á}{{\'a}}1  {é}{{\'e}}1  {í}{{\'i}}1 {ó}{{\'o}}1  {ú}{{\'u}}1
+      {Á}{{\'A}}1  {É}{{\'E}}1  {Í}{{\'I}}1 {Ó}{{\'O}}1  {Ú}{{\'U}}1
+      {ñ}{{\~n}}1  {Ñ}{{\~N}}1  {¿}{{?`}}1  {¡}{{!`}}1
+}
+
+% Caja de aviso
+\tcbset{
+  colback=white,
+  colframe=primary,
+  coltitle=white,
+  colbacktitle=primary,
+  fonttitle=\bfseries,
+  arc=2mm,
+  boxrule=0.6pt
+}
+
+\title{\textbf{Guía Práctica: Transacciones en SQL}\\ \large Control de Integridad y Concurrencia}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+Una \textbf{transacción} es una unidad lógica de trabajo que comprende una o más sentencias SQL. Para que una base de datos sea considerada fiable, debe cumplir las propiedades \textbf{ACID}:
+\begin{itemize}
+    \item \textbf{Atomicidad:} Todo o nada. Si una parte falla, falla toda la transacción.
+    \item \textbf{Consistencia:} La base de datos pasa de un estado válido a otro estado válido.
+    \item \textbf{Aislamiento (Isolation):} Las transacciones no se interfieren entre sí.
+    \item \textbf{Durabilidad:} Una vez confirmado (COMMIT), el cambio es permanente.
+\end{itemize}
+
+\section{Entorno de Pruebas}
+Para ejecutar los ejemplos de esta guía, trabajaremos con la base de datos \texttt{fp\_transacciones}. Este esquema simula un entorno empresarial y educativo real con los siguientes componentes:
+
+\begin{itemize}
+    \item \textbf{Gestión Académica (\texttt{alumnos}):} Registro de estudiantes con sus estados y notas.
+    \item \textbf{Inventario (\texttt{almacen}):} Control de stock de productos tecnológicos.
+    \item \textbf{Facturación (\texttt{facturas}, \texttt{factura\_detalle}):} Relación maestro-detalle para simular ventas y pedidos.
+    \item \textbf{Recursos Humanos (\texttt{departamentos}, \texttt{empleados}):} Estructura jerárquica con salarios y departamentos.
+    \item \textbf{Seguridad y Auditoría (\texttt{usuarios}, \texttt{historial\_conexiones}, \texttt{auditoria\_precios}):} Tablas para registrar quién accede y qué cambios críticos se realizan.
+\end{itemize}
+
+Primero, prepara el entorno ejecutando el siguiente script:
+
+\lstinputlisting{src/00_setup.sql}
+
+\section{Nivel 1: Sintaxis Básica y DML Simple}
+En MySQL/MariaDB, por defecto, cada sentencia se ejecuta en modo \textit{autocommit}. Para agrupar varias sentencias en una transacción, debemos usar \texttt{START TRANSACTION}.
+
+\subsection{01. Alta segura de un registro}
+El uso de \texttt{COMMIT} hace que los cambios sean persistentes.
+\lstinputlisting{src/01_alta_segura.sql}
+
+\begin{tcolorbox}[title=Reflexión 1]
+¿Por qué es fundamental ejecutar un \texttt{SELECT} antes del \texttt{COMMIT} en una transacción manual?
+\end{tcolorbox}
+
+\subsection{02. El botón de pánico: ROLLBACK}
+Si detectamos un error antes de confirmar, \texttt{ROLLBACK} deshace todos los cambios desde el inicio de la transacción.
+\lstinputlisting{src/02_rollback_panico.sql}
+
+\begin{tcolorbox}[title=Reflexión 2]
+En el ejemplo 02, si no ejecutáramos \texttt{ROLLBACK} ni \texttt{COMMIT} y cerráramos la terminal, ¿qué ocurriría con el registro del alumno?
+\end{tcolorbox}
+
+\subsection{03. Actualización controlada}
+Las transacciones permiten verificar los cambios antes de hacerlos públicos.
+\lstinputlisting{src/03_update_controlado.sql}
+
+\begin{tcolorbox}[title=Reflexión 3]
+¿Qué sucede si el \texttt{WHERE} de un \texttt{UPDATE} no coincide con ninguna fila? ¿Se considera un error que aborte la transacción?
+\end{tcolorbox}
+
+\subsection{04. Prevención de desastres}
+Las transacciones son nuestra red de seguridad al ejecutar \texttt{UPDATE} o \texttt{DELETE} masivos.
+\lstinputlisting{src/04_prevencion_desastres.sql}
+
+\begin{tcolorbox}[title=Reflexión 4]
+Si olvidas el \texttt{WHERE} en un \texttt{UPDATE}, ¿cómo ayuda la transacción a recuperar la información?
+\end{tcolorbox}
+
+\subsection{05. Simulación de borrado (Soft-delete)}
+El borrado lógico es una alternativa segura al borrado físico de registros.
+\lstinputlisting{src/05_soft_delete.sql}
+
+\begin{tcolorbox}[title=Reflexión 5]
+¿Por qué es preferible el "borrado lógico" (\textit{soft-delete}) en sistemas que requieren trazabilidad e histórico?
+\end{tcolorbox}
+
+\section{Nivel 2: Lógica Transaccional y Relaciones}
+
+\subsection{06. Transferencia de valores}
+Clásico ejemplo de \textbf{atomicidad:} si el primer \texttt{UPDATE} funciona pero el segundo falla, el \texttt{ROLLBACK} asegura que no se pierda stock por el camino. 
+\lstinputlisting{src/06_transferencia_stock.sql}
+
+\begin{tcolorbox}[title=Reflexión 6]
+Si el segundo \texttt{UPDATE} falla por una restricción \texttt{CHECK} (ej. stock negativo), ¿se guarda el primer \texttt{UPDATE} automáticamente?
+\end{tcolorbox}
+
+\subsection{07. Alta Maestro-Detalle}
+Garantiza que no existan facturas sin sus correspondientes líneas de detalle.
+\lstinputlisting{src/07_maestro_detalle.sql}
+
+\begin{tcolorbox}[title=Reflexión 7]
+¿Qué riesgo correríamos si insertáramos la factura y sus detalles en sentencias separadas sin una transacción?
+\end{tcolorbox}
+
+\subsection{08. Baja en Cascada Manual}
+Cuando no tenemos configurado el borrado automático, debemos gestionar nosotros la limpieza de tablas hijas.
+\lstinputlisting{src/08_baja_cascada_manual.sql}
+
+\begin{tcolorbox}[title=Reflexión 8]
+¿Por qué es vital usar una transacción al realizar un borrado manual en cascada de varias tablas relacionadas?
+\end{tcolorbox}
+
+\subsection{09. Auditoría y Logs}
+Asegura que cada cambio importante en los datos quede registrado en una tabla de auditoría en la misma operación atómica.
+\lstinputlisting{src/09_auditoria_log.sql}
+
+\begin{tcolorbox}[title=Reflexión 9]
+¿Qué ocurriría si el registro de auditoría fallara pero el cambio principal tuviera éxito en una transacción?
+\end{tcolorbox}
+
+\section{Conceptos Críticos y Peligros}
+
+\subsection{10. El Peligro del DDL (Commit Implícito)}
+\begin{tcolorbox}[title=¡Atención!]
+Las sentencias DDL (\texttt{CREATE}, \texttt{DROP}, \texttt{ALTER}, \texttt{TRUNCATE}) provocan un \textbf{COMMIT implícito}. No se pueden deshacer con un ROLLBACK.
+\end{tcolorbox}
+\lstinputlisting{src/10_peligro_ddl.sql}
+
+\begin{tcolorbox}[title=Reflexión 10]
+¿Por qué el motor de base de datos fuerza un \texttt{COMMIT} al ejecutar un \texttt{TRUNCATE} o un \texttt{ALTER TABLE}?
+\end{tcolorbox}
+
+\subsection{11. Falsas Transacciones Anidadas}
+MySQL no soporta transacciones anidadas. Ejecutar un segundo \texttt{START TRANSACTION} cierra automáticamente el anterior.
+\lstinputlisting{src/11_falsas_anidadas.sql}
+
+\begin{tcolorbox}[title=Reflexión 11]
+¿Qué técnica se debe usar en MySQL si realmente necesitamos puntos de retorno parciales dentro de una misma transacción?
+\end{tcolorbox}
+
+\section{Niveles de Aislamiento y Concurrencia}
+En un entorno de producción real, el servidor de base de datos no es un sistema aislado. Cientos o miles de usuarios acceden simultáneamente.
+
+\begin{tcolorbox}[title=El Reto de la Concurrencia]
+Cuando dos o más transacciones intentan modificar o leer los mismos datos al mismo tiempo, surgen conflictos. El \textbf{Aislamiento} gestiona estas colisiones.
+\end{tcolorbox}
+
+\subsection{El Balance: Velocidad vs. Seguridad}
+No existe el "nivel perfecto". La gestión implica elegir un punto en una balanza:
+\begin{itemize}
+    \item \textbf{Máxima Seguridad (SERIALIZABLE):} Evita cualquier anomalía, pero es lento por los bloqueos.
+    \item \textbf{Máxima Velocidad (READ UNCOMMITTED):} Extremadamente rápido, pero permite "Lecturas Sucias".
+\end{itemize}
+
+\subsection{Los 4 Niveles de Aislamiento}
+\begin{enumerate}
+    \item \textbf{READ UNCOMMITTED:} Permite leer cambios no confirmados (\textit{Lecturas Sucias}).
+    \item \textbf{READ COMMITTED:} Solo lee datos confirmados. Evita lecturas sucias, pero permite \textit{Lecturas No Repetibles}.
+    \item \textbf{REPEATABLE READ:} Garantiza que los datos no cambien durante tu transacción. Usa \textit{Snapshots}.
+    \item \textbf{SERIALIZABLE:} El aislamiento total. Bloquea rangos de filas para evitar \textit{Lecturas Fantasma}.
+\end{enumerate}
+
+\begin{tcolorbox}[title=Duelo de Motores: Valores por Defecto]
+\textbf{MySQL (InnoDB): \texttt{REPEATABLE READ}} (Prioriza consistencia de lectura mediante MVCC). \\
+\textbf{Oracle y PostgreSQL: \texttt{READ COMMITTED}} (Priorizan concurrencia y rendimiento).
+\end{tcolorbox}
+
+\subsection{12. Lectura Sucia (Dirty Read)}
+Ocurre en el nivel \texttt{READ UNCOMMITTED}. Una transacción lee datos que otra aún no ha confirmado.
+\lstinputlisting{src/12_dirty_read.sql}
+
+\begin{tcolorbox}[title=Reflexión 12]
+¿Cuál es el riesgo real de que un sistema contable permita lecturas sucias durante el cierre del mes?
+\end{tcolorbox}
+
+\subsection{13. Lectura Repetible (Repeatable Read)}
+Es el nivel por defecto en InnoDB. Garantiza consistencia de lectura durante toda la transacción.
+\lstinputlisting{src/13_repeatable_read.sql}
+
+\begin{tcolorbox}[title=Reflexión 13]
+Si \texttt{REPEATABLE READ} es más seguro para la consistencia, ¿qué ganamos al bajar el aislamiento a \texttt{READ COMMITTED}?
+\end{tcolorbox}
+
+\subsection{14. Deadlock (Abrazo Mortal)}
+Situación donde dos procesos se bloquean mutuamente esperando recursos que el otro tiene.
+\lstinputlisting{src/14_deadlock.sql}
+
+\subsection{15. SERIALIZABLE}
+El nivel más estricto. Convierte todas las lecturas en bloqueos para evitar incluso las "lecturas fantasma".
+\lstinputlisting{src/15_serializable.sql}
+
+\newpage
+\section{Respuestas a las Reflexiones e Investigación}
+
+\begin{tcolorbox}[title=Respuesta 1: Verificación Humana]
+Para verificar que los cambios que vamos a confirmar son exactamente los deseados. En una transacción manual, el \texttt{SELECT} nos permite actuar como "auditores" antes de dar el paso irreversible del \texttt{COMMIT}.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 2: El Rollback Implícito]
+Se perdería. Si la conexión se corta o el cliente se cierra sin un \texttt{COMMIT} explícito, el servidor realiza un \texttt{ROLLBACK} automático por seguridad para mantener la integridad.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 3: El estado de la ejecución]
+No se considera un error. SQL ejecutará la sentencia, informará de que "0 filas fueron afectadas" y la transacción continuará con éxito. La transacción solo abortaría ante errores de sintaxis, violaciones de integridad o desconexiones.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 4: Red de seguridad]
+Permite revisar el desastre localmente y usar \texttt{ROLLBACK} para volver al estado inicial como si nada hubiera pasado. Sin transacción, el cambio sería inmediato y definitivo.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 5: Trazabilidad]
+Porque permite mantener el histórico para auditorías, permite "deshacer" el borrado simplemente cambiando el estado y evita la rotura de integridad referencial en tablas que guardan históricos antiguos.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 6: Atomicidad]
+No. Aunque la sentencia del primer \texttt{UPDATE} haya sido correcta, el fallo de cualquier sentencia posterior dentro de la misma transacción (o el \texttt{ROLLBACK} manual) invalida todo el bloque. \textbf{Todo o nada.}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 7: Datos Huérfanos]
+Podríamos acabar con una factura en la tabla \texttt{facturas} pero, si el sistema falla antes de insertar los detalles, tendríamos una factura vacía, rompiendo la lógica de negocio.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 8: Consistencia Relacional]
+Si borramos el padre pero falla el borrado de los hijos (o viceversa), dejaríamos la base de datos en un estado inconsistente con registros "huérfanos" o referencias a registros que ya no existen.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 9: Integridad del Log]
+Al estar en la misma transacción, si el insert en la auditoría falla, todo el proceso (incluyendo el cambio principal) se desharía. Así garantizamos que no haya cambios sin su correspondiente rastro en el log.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 10: Cambios Estructurales]
+Porque las sentencias DDL modifican el diccionario de datos (la estructura física de los archivos en disco). Gestionar un rollback de un cambio de estructura mientras otros usuarios acceden es extremadamente complejo y costoso.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 11: Savepoints]
+Se deben utilizar los \texttt{SAVEPOINT nombre\_punto}, que permiten hacer \texttt{ROLLBACK TO SAVEPOINT} sin abortar la transacción completa.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 12: Información Volátil]
+Se podrían generar informes financieros basados en datos que fueron cancelados o corregidos segundos después, provocando descuadres legales o bancarios graves.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Respuesta 13: Rendimiento vs Concurrencia]
+Ganamos \textbf{concurrencia}. Los niveles altos requieren mantener más versiones de los datos en memoria o poner más bloqueos, lo que puede ralentizar el sistema ante miles de usuarios simultáneos.
+\end{tcolorbox}
+
+\end{document}
