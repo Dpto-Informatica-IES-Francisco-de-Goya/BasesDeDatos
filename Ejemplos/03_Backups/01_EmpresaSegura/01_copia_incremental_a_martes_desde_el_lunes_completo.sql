@@ -1,0 +1,48 @@
+# The proper term is pseudo_replica_mode, but we use this compatibility alias
+# to make the statement usable on server versions 8.0.24 and older.
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=1*/;
+/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;
+DELIMITER /*!*/;
+# at 4
+#260414 13:33:16 server id 1  end_log_pos 126 CRC32 0xf72ab467 	Start: binlog v 4, server v 8.0.43-0ubuntu0.24.04.1 created 260414 13:33:16
+# at 126
+#260414 13:33:16 server id 1  end_log_pos 157 CRC32 0xa8c545a7 	Previous-GTIDs
+# [empty]
+# at 157
+#260414 13:37:22 server id 1  end_log_pos 236 CRC32 0x636f2c0c 	Anonymous_GTID	last_committed=0	sequence_number=1	rbr_only=yes	original_committed_timestamp=1776166642156880	immediate_commit_timestamp=1776166642156880	transaction_length=336
+/*!50718 SET TRANSACTION ISOLATION LEVEL READ COMMITTED*//*!*/;
+# original_commit_timestamp=1776166642156880 (2026-04-14 13:37:22.156880 CEST)
+# immediate_commit_timestamp=1776166642156880 (2026-04-14 13:37:22.156880 CEST)
+/*!80001 SET @@session.original_commit_timestamp=1776166642156880*//*!*/;
+/*!80014 SET @@session.original_server_version=80043*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80043*//*!*/;
+SET @@SESSION.GTID_NEXT= 'ANONYMOUS'/*!*/;
+# at 236
+#260414 13:37:22 server id 1  end_log_pos 323 CRC32 0xc6e60c8a 	Query	thread_id=59	exec_time=0	error_code=0
+SET TIMESTAMP=1776166642/*!*/;
+SET @@session.pseudo_thread_id=59/*!*/;
+SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0, @@session.unique_checks=1, @@session.autocommit=1/*!*/;
+SET @@session.sql_mode=1168113696/*!*/;
+SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;
+/*!\C utf8mb4 *//*!*/;
+SET @@session.character_set_client=255,@@session.collation_connection=255,@@session.collation_server=255/*!*/;
+SET @@session.lc_time_names=0/*!*/;
+SET @@session.collation_database=DEFAULT/*!*/;
+/*!80011 SET @@session.default_collation_for_utf8mb4=255*//*!*/;
+BEGIN
+/*!*/;
+# at 323
+#260414 13:37:22 server id 1  end_log_pos 406 CRC32 0x9d78a380 	Table_map: `empresa_segura`.`empleados` mapped to number 155
+# has_generated_invisible_primary_key=0
+# at 406
+#260414 13:37:22 server id 1  end_log_pos 462 CRC32 0x2d57dc05 	Write_rows: table id 155 flags: STMT_END_F
+# at 462
+#260414 13:37:22 server id 1  end_log_pos 493 CRC32 0xa99cbdd0 	Xid = 1838
+COMMIT/*!*/;
+# at 493
+#260414 13:39:06 server id 1  end_log_pos 537 CRC32 0x81da858a 	Rotate to binlog.000300  pos: 4
+SET @@SESSION.GTID_NEXT= 'AUTOMATIC' /* added by mysqlbinlog */ /*!*/;
+DELIMITER ;
+# End of log file
+/*!50003 SET COMPLETION_TYPE=@OLD_COMPLETION_TYPE*/;
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=0*/;
