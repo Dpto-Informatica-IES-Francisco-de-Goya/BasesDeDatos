@@ -1,0 +1,7 @@
+DELIMITER //
+CREATE TRIGGER no_borrar_actores BEFORE DELETE ON actor
+FOR EACH ROW
+BEGIN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Prohibido borrar actores';
+END  //
+DELIMITER ;

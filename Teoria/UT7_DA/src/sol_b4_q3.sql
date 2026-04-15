@@ -1,0 +1,6 @@
+DELIMITER //
+CREATE TRIGGER cust_upper BEFORE UPDATE ON customer FOR EACH ROW
+BEGIN
+    SET NEW.first_name = UPPER(NEW.first_name);
+END  //
+DELIMITER ;
