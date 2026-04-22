@@ -1,0 +1,170 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\newtcolorbox{objetivo}{
+  colback=primary!5,
+  colframe=primary,
+  fonttitle=\bfseries,
+  title=Objetivo de la Tarea,
+  arc=2mm
+}
+
+\newtcolorbox{criterio}{
+  colback=accent!10,
+  colframe=accent!80!black,
+  fonttitle=\bfseries,
+  title=Criterio de Evaluación,
+  arc=2mm
+}
+
+% --- DATOS DEL DOCUMENTO ---
+\title{\textbf{Práctica UT8: Persistencia Políglota en \enquote{GloboTour}}}
+\author{Víctor de Juan}
+\date{Curso 2025-2026}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{Introducción: ¿Por qué NoSQL?}
+Tradicionalmente, hemos utilizado bases de datos relacionales (SQL) para todo. Sin embargo, en aplicaciones modernas como \textbf{GloboTour}, nos enfrentamos a desafíos que el modelo relacional no siempre puede resolver de forma eficiente:
+\begin{itemize}
+    \item Datos sin esquema fijo (como descripciones de hoteles muy variadas).
+    \item Necesidad de respuesta en microsegundos (sesiones de usuario).
+    \item Volumen masivo de escrituras (logs de búsqueda).
+    \item Relaciones complejas y profundas (redes sociales y recomendaciones).
+\end{itemize}
+
+En esta práctica implementaremos una arquitectura de \textbf{Persistencia Políglota}, donde utilizaremos el SGBD más adecuado para cada tarea específica.
+
+\section{Guía Docente: El Ecosistema NoSQL de \enquote{GloboTour}}
+
+Esta guía describe el flujo narrativo para explicar la UT8 utilizando el proyecto \enquote{GloboTour} como caso de estudio real.
+
+\subsection{El Problema Inicial}
+
+GloboTour empezó con MySQL, pero al crecer a nivel mundial, la base de datos relacional se convirtió en un cuello de botella. 
+
+Vamos a resolver 4 problemas críticos usando 4 paradigmas NoSQL.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+
+
+\subsection{Infraestructura con Docker}
+Para desplegar este ecosistema sin instalar cuatro servidores distintos (uno para cada paradigma NoSQL) en tu equipo, utilizaremos \textbf{Docker}. 
+
+\begin{tcolorbox}[title=¿Qué es Docker?]
+Docker permite ejecutar aplicaciones en \textbf{contenedores} aislados. Cada base de datos correrá en su propio entorno, con sus propias dependencias, pero compartiendo el núcleo del sistema operativo, lo que lo hace ligero y portable.
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[title=Gestión de Recursos de Hardware]
+Monitoriza el uso de RAM. Levantar los 4 simultáneos puede superar los \texttt{16 GB de RAM}. Si tu equipo es limitado, **no los levantes todos a la vez**: levanta uno, haz las pruebas, y haz un \texttt{docker compose stop} antes de pasar al siguiente.
+\end{tcolorbox}
+
+
+\subsection{Módulo 1: Velocidad Extrema (Redis)}
+
+\textbf{Problema}: El login y el carrito de la compra van lentos. Hacer un SELECT a MySQL cada vez que un usuario navega es ineficiente.
+
+\begin{objetivo}
+Implementar el motor de alto rendimiento para sesiones, métricas y rankings.
+\end{objetivo}
+
+\textbf{Recomendación: } Ver el vídeo de fireship: \href{https://www.youtube.com/watch?v=G1rOthIU-uo}{Redis in 100 seconds}
+
+
+
+\begin{itemize}
+    \item \textbf{Concepto a explicar}: Bases de datos en memoria y latencia.
+    \item \textbf{Demostración}:
+    \begin{enumerate}
+        \item Levantar Docker de Redis.
+        \item Mostrar cómo un token de sesión \texttt{SESSION\_ID} desaparece solo (TTL).
+        \item Mostrar cómo crear un Ranking de las experiencias más vendidas en tiempo real.
+    \end{enumerate}
+\end{itemize}
+
+\begin{lstlisting}[language=bash]
+cd redis && docker compose up -d
+\end{lstlisting}
+
+\subsection{Módulo 2: Flexibilidad de Datos (MongoDB)}
+\begin{objetivo}
+Crear un catálogo de experiencias donde cada documento tenga sus propios campos (alérgenos para comida, altura para saltos, etc.).
+\end{objetivo}
+\textbf{Problema}: Tenemos experiencias muy distintas (Vuelos, Cenas, Cursos). En SQL tenemos una tabla con 50 columnas y muchos NULLs.
+
+\begin{itemize}
+    \item \textbf{Concepto a explicar}: Esquema flexible (Schema-less) y Polimorfismo.
+    \item \textbf{Demostración}:
+    \begin{enumerate}
+        \item Levantar Docker de MongoDB.
+        \item Mostrar el JSON de una \enquote{Cata de Vinos} vs un \enquote{Buceo}.
+        \item Explicar que no hay que \enquote{pedir permiso} al DBA para añadir un campo nuevo.
+    \end{enumerate}
+\end{itemize}
+
+\textbf{Recomendación: } Ver el vídeo de fireship: \href{https://www.youtube.com/watch?v=-bt_y4Loofg}{Mongodb in 100 seconds}
+
+\begin{lstlisting}[language=bash]
+# Para levantar cada servicio
+cd mongodb && docker compose up -d
+\end{lstlisting}
+
+\subsection{Módulo 3: Escritura Masiva y Logs (Cassandra)}
+
+\textbf{Problema}: Queremos guardar cada búsqueda de cada usuario para Marketing. MySQL se bloquea con tantas inserciones.
+
+\begin{objetivo}
+Almacenar millones de búsquedas diarias optimizando la lectura por usuario.
+\end{objetivo}
+
+\begin{itemize}
+    \item \textbf{Concepto a explicar}: Escalabilidad horizontal y Query-First Design.
+    \item \textbf{Demostración}:
+    \begin{enumerate}
+        \item Levantar Docker de Cassandra.
+        \item Explicar por qué NO hay JOINs: la velocidad de lectura es prioritaria.
+        \item Mostrar cómo los datos se ordenan físicamente en el disco para ser leídos rápido.
+    \end{enumerate}
+\end{itemize}
+
+\textbf{Recomendación: } Ver el vídeo de fireship: \href{https://www.youtube.com/watch?v=ziq7FUKpCS8}{Cassandra in 100 seconds}
+
+\begin{lstlisting}[language=bash]
+# Para levantar cada servicio
+cd cassandra && docker compose up -d
+\end{lstlisting}
+
+\subsection{Módulo 4: Recomendaciones Sociales (Neo4j) }
+
+\textbf{Problema}: Queremos recomendar guías basados en \enquote{amigos de mis amigos}. En SQL esto requiere 5-6 JOINs recursivos que matan el
+servidor.
+
+\begin{objetivo}
+Recomendar guías turísticos basándose en los gustos de los amigos del usuario.
+\end{objetivo}
+
+\begin{itemize}
+    \item \textbf{Concepto a explicar}: Relaciones de primer nivel y grafos.
+    \item \textbf{Demostración}:
+    \begin{enumerate}
+        \item Visualizar la red de contactos.
+        \item Ver cómo el motor \enquote{salta} de nodo en nodo instantáneamente.
+    \end{enumerate}
+\end{itemize}
+
+
+\textbf{Recomendación: } Ver el vídeo de fireship: \href{https://www.youtube.com/watch?v=T6L9EoBy8Zk}{Ńeo4j in 100 seconds}
+
+\begin{lstlisting}[language=bash]
+# Para levantar cada servicio
+cd neo4j && docker compose up -d
+\end{lstlisting}
+
+
+\end{document}

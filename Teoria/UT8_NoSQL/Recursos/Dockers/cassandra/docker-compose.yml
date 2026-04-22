@@ -1,0 +1,25 @@
+services:
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra-server
+    ports:
+      - "9042:9042"
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+      - ./src:/src
+    restart: no
+
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:latest
+    container_name: cloudbeaver
+    ports:
+      - "8978:8978"
+    volumes:
+      - cloudbeaver_data:/opt/cloudbeaver/workspace
+    depends_on:
+      - cassandra
+    restart: no
+
+volumes:
+  cassandra_data:
+  cloudbeaver_data:

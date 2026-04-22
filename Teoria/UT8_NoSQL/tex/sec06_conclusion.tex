@@ -1,0 +1,55 @@
+\section{6. Conclusión y Futuro}
+
+\begin{frame}{6.1 Persistencia Políglota: El mundo real}
+    ¿Cuál es la mejor base de datos? \textbf{Ninguna y todas a la vez.}
+    
+    \begin{itemize}
+        \item En una empresa moderna, se usa la base de datos adecuada para cada parte de la App.
+        \item \textbf{SQL:} Para la pasarela de pagos y transacciones bancarias (ACID).
+        \item \textbf{Redis:} Para las sesiones de usuario y caché de la web.
+        \item \textbf{MongoDB:} Para el catálogo de productos y el perfil del usuario.
+        \item \textbf{Neo4j:} Para el sistema de recomendaciones (``A otros usuarios también les gustó...'').
+    \end{itemize}
+    \begin{alertblock}{No seas fanático}
+        Un buen arquitecto de software no se casa con una tecnología. Elige la herramienta que mejor resuelva el problema del cliente.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{6.2 Matriz de Selección (RA7-CE.b)}
+    \begin{table}[]
+    \centering
+    \tiny
+    \begin{tabular}{@{}llll@{}}
+    \toprule
+    \textbf{Tipo} & \textbf{¿Cuándo usarla?} & \textbf{Punto Fuerte} & \textbf{Escalado} \\ \midrule
+    \textbf{Relacional} & Datos estructurados & Integridad (ACID) & Vertical \\
+    \textbf{Clave-Valor} & Caché, Sesiones & Latencia mínima & Horizontal \\
+    \textbf{Documental} & Apps Web, Catálogos & Flexibilidad & Horizontal \\
+    \textbf{Columnares} & Big Data, Logs & Escritura masiva & Horizontal \\
+    \textbf{Grafos} & Relaciones complejas & Conectividad & Complejo \\ \bottomrule
+    \end{tabular}
+    \end{table}
+    \note{Resumir que NoSQL no vino a matar a SQL, sino a solucionar lo que SQL no podía hacer bien.}
+\end{frame}
+
+\begin{frame}{6.3 Resumen del RA7: ¿Qué hemos aprendido?}
+    Al finalizar este tema, debes ser capaz de:
+    \begin{enumerate}
+        \item \textbf{Diferenciar} los modelos NoSQL del modelo relacional.
+        \item \textbf{Identificar} qué tipo de base de datos conviene según el caso de uso.
+        \item \textbf{Entender} el impacto de la red y la distribución (Teorema CAP).
+        \item \textbf{Modelar} datos usando agregados y redundancia controlada.
+    \end{enumerate}
+    \begin{exampleblock}{Próximo paso: La Práctica}
+        Instalaremos un cluster de MongoDB y aprenderemos a realizar consultas complejas y pipelines de agregación.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{6.4 Reflexión Final}
+    ``Las bases de datos relacionales te dicen cómo deben ser tus datos. Las bases de datos NoSQL te preguntan qué quieres hacer con ellos.''
+    
+    \vspace{0.8cm}
+    \begin{center}
+        \Large \textbf{¿Preguntas?}
+    \end{center}
+\end{frame}

@@ -1,0 +1,84 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\title{\textbf{Laboratorio Avanzado de Patrones NoSQL: Cassandra}}
+\author{Departamento de Informática}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{Introducción al Laboratorio}\label{intro}
+En este laboratorio exploraremos los patrones de diseño que hacen que gigantes como Netflix o Instagram usen Cassandra. No se trata solo de guardar datos, sino de modelarlos para que la lectura sea instantánea independientemente del volumen.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Patrón 1: Series Temporales (Telemetría IoT)}\label{iot}
+\textbf{Escenario:} Queremos guardar la temperatura de los sensores de los hoteles de GloboTour cada minuto.
+
+\begin{tcolorbox}[title=Diseño de la Tabla]
+\begin{lstlisting}[language=CQL]
+CREATE TABLE sensor_readings (
+    hotel_id uuid,
+    sensor_id text,
+    day date,
+    reading_time timestamp,
+    value float,
+    PRIMARY KEY ((hotel_id, day), reading_time)
+) WITH CLUSTERING ORDER BY (reading_time DESC);
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Análisis del Patrón:}
+\begin{itemize}
+    \item \textbf{Composite Partition Key \texttt{(hotel\_id, day)}}: Agrupamos las lecturas por hotel \textbf{y por día}. Esto evita que una partición crezca demasiado con el paso de los años, manteniendo el rendimiento constante.
+    \item \textbf{Uso Práctico:} Permite responder a \enquote{Dame todas las temperaturas de hoy del Hotel X} de forma ultra-eficiente.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Patrón 2: Contadores Atómicos (Votos y Likes)}\label{counters}
+\textbf{Escenario:} Necesitamos contar cuántas veces se ha visualizado cada oferta de viaje sin que las escrituras masivas bloqueen la tabla.
+
+\begin{tcolorbox}[title=Uso de la tabla \texttt{offer\_stats}]
+\begin{lstlisting}[language=CQL]
+-- Nota: Las tablas de contadores solo pueden tener contadores y la PK.
+UPDATE offer_stats 
+SET views = views + 1 
+WHERE offer_id = 'OFERTA-PARIS-2024';
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Análisis del Patrón:}
+Cassandra gestiona los contadores de forma especial para evitar \enquote{Race Conditions} sin necesidad de bloqueos de fila de SQL.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Patrón 3: Datos con Caducidad (TTL)}\label{ttl}
+\textbf{Escenario:} Marketing lanza ofertas \enquote{Flash} que solo duran 2 horas. No queremos un proceso que borre datos viejos (que es lento); queremos que los datos \textbf{mueran solos}.
+
+\begin{tcolorbox}[title=Inserción con TTL]
+\begin{lstlisting}[language=CQL]
+INSERT INTO flash_offers (offer_id, discount) 
+VALUES ('REBAJA-10', 0.15) 
+USING TTL 7200; -- Expira en 2 horas (7200 seg)
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Laboratorio de Depuración: ¿Por qué falla mi CQL?}\label{debug}
+
+\begin{itemize}
+    \item \textbf{Error de Filtrado:} \texttt{SELECT * FROM sensor\_readings WHERE value > 25;} $\rightarrow$ \textbf{FALLARÁ}. Cassandra no sabe en qué nodo está ese valor sin la clave de partición.
+    \item \textbf{Error de Ordenación:} \texttt{SELECT * FROM sensor\_readings ORDER BY value DESC;} $\rightarrow$ \textbf{FALLARÁ}. Solo puedes ordenar por las \textit{Clustering Columns} definidas en el esquema.
+\end{itemize}
+
+\begin{tcolorbox}[title=La Regla de Oro, colframe=orange!75!black]
+En Cassandra, si no puedes responder a una pregunta con tu tabla actual, \textbf{crea otra tabla}. El disco es barato, el tiempo de tus usuarios no.
+\end{tcolorbox}
+
+\end{document}

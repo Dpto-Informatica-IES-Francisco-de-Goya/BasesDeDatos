@@ -1,0 +1,72 @@
+\section{5b. Bases de Datos Documentales}
+
+\begin{frame}{5.1 Concepto: El documento autodescriptivo}
+    A diferencia de SQL, aquí no guardamos ``filas'', guardamos \textbf{Documentos} (normalmente JSON o BSON).
+    \begin{itemize}
+        \item \textbf{Autodescriptivo:} Cada documento lleva sus propias ``columnas'' (llaves) dentro.
+        \item \textbf{Jerárquico:} Puedes meter listas y otros objetos dentro de un documento.
+        \item \textbf{SGBD Referente:} \textbf{MongoDB}.
+    \end{itemize}
+    \begin{exampleblock}{La analogía del Archivador}
+        SQL es una hoja de Excel rígida. NoSQL Documental es una carpeta con folios: cada folio puede tener una estructura distinta, pero todos están guardados en el mismo cajón.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{5.2 Esquema Flexible (Schema-less)}
+    ¿Qué significa realmente que no hay esquema?
+    \begin{itemize}
+        \item \textbf{Polimorfismo:} En la colección \texttt{alumnos}, un alumno puede tener \texttt{telefono} y otro puede tener un array \texttt{telefonos: [``casa'', ``movil'']}. A la base de datos le da igual.
+        \item \textbf{Evolución sin dolor:} Si tu App necesita un campo nuevo, lo añades en el código y listo. No hay que hacer un \texttt{ALTER TABLE} que bloquee la base de datos durante horas.
+    \end{itemize}
+    \begin{alertblock}{La responsabilidad es del programador}
+        Como la base de datos no valida el esquema, es tu código el que debe asegurarse de que los datos tienen sentido.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{5.3 Modelado: ¿Embeber o Referenciar?}
+    Esta es la pregunta del millón en NoSQL Documental:
+    \begin{itemize}
+        \item \textbf{Embeber (Embedding):} Metes los datos hijos dentro del padre.
+        \begin{itemize}
+            \item \textit{Cuándo:} Relaciones 1:1 o 1:pocos (ej: direcciones de un usuario).
+            \item \textit{Ventaja:} Lees todo de un golpe (Sin JOINs).
+        \end{itemize}
+        \item \textbf{Referenciar (Linking):} Guardas el ID del hijo.
+        \begin{itemize}
+            \item \textit{Cuándo:} Relaciones 1:Muchos que crecen sin parar (ej: comentarios de un post viral).
+            \item \textit{Ventaja:} Evitas que el documento supere el límite de tamaño (16MB en Mongo).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{5.4 Indexación y Potencia de Consulta}
+    Aunque sea NoSQL, puedes buscar de forma muy avanzada:
+    \begin{itemize}
+        \item \textbf{Índices secundarios:} Puedes crear un índice sobre el email, la edad o incluso sobre un campo que está dentro de una lista.
+        \item \textbf{Agregaciones:} Puedes filtrar, agrupar y calcular medias como en SQL, pero usando un ``pipeline'' (tubería) de etapas.
+    \end{itemize}
+    \begin{exampleblock}{Consultas Ad-hoc}
+        A diferencia de Clave-Valor, aquí puedes decir: ``Dame todos los usuarios de Madrid que tengan más de 20 años y les guste el Rock''.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]{5.5 Ejemplo Práctico (MongoDB Shell)}
+    \begin{lstlisting}[language=SQL]
+// Insertar un profesor con sus modulos embebidos
+db.profesores.insertOne({
+  nombre: "Vicente",
+  especialidad: "Informatica",
+  modulos: [
+    { nombre: "Bases de Datos", horas: 6 },
+    { nombre: "Sostenibilidad", horas: 3 }
+  ],
+  activo: true
+})
+
+// Buscar profesores que den mas de 5 horas de Bases de Datos
+db.profesores.find({
+  "modulos.nombre": "Bases de Datos",
+  "modulos.horas": { $gt: 5 }
+})
+    \end{lstlisting}
+\end{frame}

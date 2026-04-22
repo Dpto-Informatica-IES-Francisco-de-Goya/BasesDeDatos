@@ -1,0 +1,64 @@
+\section{5a. Bases de Datos de Clave-Valor}
+
+\begin{frame}{5.1 Concepto: El diccionario persistente}
+    Es el modelo más sencillo y rápido que existe.
+    \begin{itemize}
+        \item \textbf{Estructura:} Un par \texttt{Llave} $\rightarrow$ \texttt{Valor}.
+        \item \textbf{Opacidad:} Para la base de datos, el valor es una ``caja negra'' (BLOB). No sabe qué hay dentro, solo lo guarda y lo devuelve.
+        \item \textbf{Analogía:} Es como las taquillas de un gimnasio. El número de taquilla es la \textbf{Llave} y lo que guardas dentro es el \textbf{Valor}. El gimnasio no sabe si guardas una mochila o unos zapatos.
+    \end{itemize}
+    \begin{exampleblock}{SGBD Referente: Redis}
+        Es ultra-rápido porque guarda los datos en la memoria RAM, no en el disco duro.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{5.2 Arquitectura: ¿Cómo escala?}
+    ¿Cómo puede un cluster de 100 servidores saber dónde está una llave?
+    \begin{itemize}
+        \item \textbf{Hashing Consistente:} El sistema aplica una función matemática a la llave (Hash) para obtener un número.
+        \item \textbf{El Anillo:} Ese número corresponde a un servidor específico en el cluster.
+    \end{itemize}
+    \begin{alertblock}{Velocidad O(1)}
+        No importa si tienes 10 registros o 10 billones; el tiempo para encontrar una llave es siempre el mismo porque vas directo al servidor que la tiene.
+    \end{alertblock}
+    \note{Mencionar que aquí no hay JOINs ni escaneos de tabla. Es ``dame esto'' o ``guarda aquello''.}
+\end{frame}
+
+\begin{frame}{5.3 Casos de Uso: ¿Cuándo usarlas?}
+    No sirven para todo, pero en lo suyo son imbatibles:
+    \begin{itemize}
+        \item \textbf{Gestión de Sesiones:} Guardar si el usuario ``Pepe'' está logueado en la web.
+        \item \textbf{Carritos de compra volátiles:} Datos que cambian mucho y se borran pronto.
+        \item \textbf{Caché de base de datos:} Si una consulta SQL tarda 2 segundos, guardas el resultado en Redis y la próxima vez tardará 1 milisegundo.
+    \end{itemize}
+    \begin{exampleblock}{Ejemplo real: Twitter}
+        Usa Redis para guardar el 'Timeline' de los usuarios famosos y servirlo al instante a millones de personas.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{5.4 Características: TTL y Tipos de Datos}
+    Redis añade ``superpoderes'' al modelo básico:
+    \begin{itemize}
+        \item \textbf{TTL (Time To Live):} Puedes decirle: ``Guarda esta sesión, pero bórrala automáticamente en 30 minutos''. Es ideal para autolimpieza.
+        \item \textbf{No solo Strings:} El valor puede ser una \textbf{Lista} (para colas de tareas), un \textbf{Set} (para etiquetas únicas) o un \textbf{Hash} (para mini-objetos).
+    \end{itemize}
+    \note{El TTL ahorra muchísimo código de mantenimiento. En SQL tendrías que hacer un 'DELETE FROM sesiones WHERE fecha < ...' cada hora.}
+\end{frame}
+
+\begin{frame}[fragile]{5.5 Ejemplo Práctico (Redis CLI)}
+    Imagina que estamos en la terminal de Redis:
+    \begin{lstlisting}[language=SQL]
+# Guardar un token de usuario que expira en 1 hora (3600 seg)
+SET session:user:45 "token_a78fb2" EX 3600
+
+# Recuperar el token
+GET session:user:45
+
+# Usar una lista para una cola de mensajes (mensajeria)
+LPUSH notificaciones:user:45 "Has recibido un mensaje"
+LPUSH notificaciones:user:45 "Tu pedido ha salido"
+
+# Sacar el ultimo mensaje (LIFO)
+LPOP notificaciones:user:45
+    \end{lstlisting}
+\end{frame}

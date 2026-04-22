@@ -1,0 +1,39 @@
+\section{4. CAP y PACELC}
+
+\begin{frame}{4.1 Teorema CAP: La dura realidad}
+  Imagina que tienes dos servidores (A y B) sincronizados. De repente, se corta el cable entre ellos (\textbf{Partición}). Un usuario quiere escribir un dato en A. ¿Qué haces?
+  
+  \begin{itemize}
+    \item \textbf{Opción 1: Consistencia (C).} Bloqueas el servidor A y dices ``No puedo escribir hasta que vuelva la red''. El usuario se enfada porque el sistema no funciona, pero los datos son correctos.
+    \item \textbf{Opción 2: Disponibilidad (A).} Dejas que el usuario escriba en A. El sistema funciona, pero el servidor B tiene datos viejos. Los datos no son iguales en todo el cluster.
+  \end{itemize}
+  
+  \begin{exampleblock}{La elección obligatoria}
+    Como la red (\textbf{P}) fallará algún día, tienes que elegir: ¿Prefieres que tu sistema sea \textbf{CP} (siempre correcto pero a veces caído) o \textbf{AP} (siempre funcionando pero a veces con datos viejos)?
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{4.2 PACELC: ¿Y si la red NO falla?}
+    El teorema CAP solo nos preocupa cuando hay problemas. El profesor Daniel Abadi dijo: ``¿Y qué pasa el 99\% del tiempo cuando la red funciona bien?''.
+    
+    \begin{itemize}
+        \item \textbf{PAC:} Si hay \textbf{P}artición, eliges entre \textbf{A}vailability o \textbf{C}onsistency.
+        \item \textbf{ELC:} \textbf{E}lse (si no hay fallo), eliges entre \textbf{L}atency o \textbf{C}onsistency.
+    \end{itemize}
+    
+    \begin{alertblock}{El precio de la perfección}
+        Incluso con la red perfecta, si quieres que el Nodo B tenga el dato \textit{al mismo milisegundo} que el Nodo A, tienes que hacer esperar al usuario mientras el mensaje viaja. Esa espera es la \textbf{Latencia (L)}.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{4.3 El modelo BASE: El hermano relajado de ACID}
+    En SQL usamos ACID (Consistencia absoluta). En NoSQL usamos \textbf{BASE}:
+    
+    \begin{itemize}
+        \item \textbf{BA (Basically Available):} El sistema parece que siempre funciona.
+        \item \textbf{S (Soft state):} El estado de los datos puede cambiar con el tiempo sin que el usuario haga nada (porque los nodos se están sincronizando de fondo).
+        \item \textbf{E (Eventual consistency):} Al final, si dejas de escribir, todos los nodos tendrán lo mismo. Pero ``al final'' puede ser dentro de 200ms.
+    \end{itemize}
+    
+    \note{Ejemplo para clase: Los 'likes' de una foto de Instagram. Si tú ves 100 y tu amigo ve 102, no pasa nada. Al cabo de un rato, ambos veréis 105. Es consistencia eventual.}
+\end{frame}

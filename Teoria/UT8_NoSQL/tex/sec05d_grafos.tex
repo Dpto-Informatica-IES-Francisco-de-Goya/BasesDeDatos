@@ -1,0 +1,60 @@
+\section{5d. Bases de Datos de Grafos}
+
+\begin{frame}{5.1 Concepto: La relación es lo primero}
+    En todas las BBDD anteriores, la relación era un ID guardado en algún sitio. Aquí la relación es un objeto con nombre y propiedades.
+    \begin{itemize}
+        \item \textbf{Nodos (Vértices):} Las entidades (ej: Persona, Ciudad, Producto).
+        \item \textbf{Relaciones (Aristas):} Las conexiones (ej: CONOCE\_A, VIVE\_EN, COMPRÓ).
+        \item \textbf{Propiedades:} Atributos de ambos (ej: Maria tiene 20 años, Maria conoce a Juan desde 2010).
+        \item \textbf{SGBD Referente:} \textbf{Neo4j}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{5.2 Adyacencia sin índices (Index-free Adjacency)}
+    ¿Por qué son tan rápidos buscando relaciones?
+    \begin{itemize}
+        \item \textbf{Punteros físicos:} Cada nodo tiene grabada la dirección de memoria de sus vecinos.
+        \item \textbf{Sin búsquedas:} Para ir de ``Juan'' a sus ``Amigos'', el disco no busca en una tabla; simplemente salta a las direcciones de memoria que ya conoce.
+    \end{itemize}
+    \begin{exampleblock}{La analogía del laberinto}
+        SQL es como un laberinto donde en cada esquina tienes que mirar un mapa (Índice). Grafos es como un laberinto donde hay un hilo de Ariadna que te lleva directo a la salida.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{5.3 ¿Cuándo usarlas? (Conectividad)}
+    Si tu pregunta empieza por ``¿Cómo están conectados...?'', usa Grafos.
+    \begin{itemize}
+        \item \textbf{Redes Sociales:} Amigos de amigos, gente que quizás conozcas.
+        \item \textbf{Detección de Fraude:} ¿Hay un grupo de personas enviándose dinero en círculo para blanquearlo?
+        \item \textbf{Recomendaciones:} ``Gente que compró este libro y vive en tu ciudad también compró este otro''.
+        \item \textbf{Logística:} Calcular la ruta más rápida entre dos puntos.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{5.4 Lenguaje de Consulta: Cypher}
+    Es el lenguaje de Neo4j. Es muy intuitivo porque usa ``dibujos'' hechos con texto (ASCII Art).
+    \begin{itemize}
+        \item Los nodos van entre paréntesis: \texttt{(p:Persona)}
+        \item Las relaciones van entre corchetes con flechas: \texttt{-[:CONOCE]->}
+        \item Los filtros son declarativos, como en SQL.
+    \end{itemize}
+    \begin{exampleblock}{Ejemplo de patrón}
+        \texttt{(juan)-[:AMIGO\_DE]->(maria)}
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]{5.5 Ejemplo Práctico (Cypher)}
+    Imagina que queremos buscar recomendaciones de amigos:
+    \begin{lstlisting}[language=SQL]
+// Crear Maria y Juan y su relacion
+CREATE (p1:Persona {nombre: "Maria"})
+CREATE (p2:Persona {nombre: "Juan"})
+CREATE (p1)-[:CONOCE {desde: 2020}]->(p2)
+
+// Buscar "Amigos de mis amigos" que no sean mis amigos directos
+MATCH (yo:Persona {nombre: "Juan"})-[:AMIGO_DE]->(amigo)-[:AMIGO_DE]->(fof)
+WHERE NOT (yo)-[:AMIGO_DE]->(fof)
+RETURN fof.nombre
+    \end{lstlisting}
+    \note{Fijaos lo fácil que es representar 'dos saltos' en la red con la flecha encadenada. En SQL esto sería un JOIN de la tabla amistades consigo misma.}
+\end{frame}

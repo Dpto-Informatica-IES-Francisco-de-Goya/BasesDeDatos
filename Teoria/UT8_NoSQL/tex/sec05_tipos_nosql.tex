@@ -1,0 +1,88 @@
+\section{5. Tipos de BBDD NoSQL}
+
+% --- CLAVE-VALOR (5) ---
+\begin{frame}{5.1.1 Clave-Valor: Concepto}
+    \begin{itemize}
+        \item \textbf{Modelo:} Map<Key, Value>. Opacidad total del valor.
+        \item \textbf{SGBD:} \textbf{Redis}.
+    \end{itemize}
+\end{frame}
+\begin{frame}{5.1.2 Arquitectura Hash}
+    \textbf{Hashing Consistente:} Reparte claves en un anillo de nodos para escalado infinito.
+\end{frame}
+\begin{frame}{5.1.3 Casos de Uso}
+    Sesiones web, carritos volátiles, caché de base de datos.
+\end{frame}
+\begin{frame}{5.1.4 Características: TTL}
+    \textbf{Time To Live:} Los datos caducan solos. Ideal para sesiones efímeras.
+\end{frame}
+\begin{frame}[fragile]{5.1.5 Ejemplo Redis}
+    \begin{lstlisting}[language=SQL]
+SET user:101 "{\"name\": \"Juan\"}" EX 3600
+GET user:101
+    \end{lstlisting}
+\end{frame}
+
+% --- DOCUMENTAL (5) ---
+\begin{frame}{5.2.1 Documentales: El Agregado JSON}
+    \begin{itemize}
+        \item \textbf{Modelo:} Colecciones de JSON/BSON autodescriptivos.
+        \item \textbf{SGBD:} \textbf{MongoDB}.
+    \end{itemize}
+\end{frame}
+\begin{frame}{5.2.2 Esquema Flexible}
+    Diferentes estructuras en la misma colección. Polimorfismo total.
+\end{frame}
+\begin{frame}{5.2.3 Modelado: Embeber vs Referenciar}
+    Decisión de diseño clave: ¿Datos juntos (lectura rápida) o separados (evitar duplicidad)?
+\end{frame}
+\begin{frame}{5.2.4 Indexación Profunda}
+    Índices sobre campos anidados y arrays. Agregación Pipeline.
+\end{frame}
+\begin{frame}[fragile]{5.2.5 Ejemplo MongoDB}
+    \begin{lstlisting}[language=SQL]
+db.pedidos.find({ "items.tags": "gaming" })
+    \end{lstlisting}
+\end{frame}
+
+% --- COLUMNAR (5) ---
+\begin{frame}{5.3.1 Familias de Columnas: Concepto}
+    \begin{itemize}
+        \item \textbf{Modelo:} Mapa de mapas inmensamente ancho y disperso.
+        \item \textbf{SGBD:} \textbf{Cassandra}.
+    \end{itemize}
+\end{frame}
+\begin{frame}{5.3.2 Escritura: LSM-Trees}
+    Escritura secuencial (Log-structured). No borran, añaden. Velocidad máxima.
+\end{frame}
+\begin{frame}{5.3.3 Estructura: RowKey}
+    Datos agrupados físicamente por columnas, no por filas. Eficiencia en analítica.
+\end{frame}
+\begin{frame}{5.3.4 Modelado: Query-First}
+    Diseñamos las tablas según la consulta. Desnormalización extrema.
+\end{frame}
+\begin{frame}[fragile]{5.3.5 Ejemplo Visual}
+    \texttt{user\_1 -> \{ info: \{name: ``Ana''\}, stats: \{login: 45\} \}}
+\end{frame}
+
+% --- GRAFO (5) ---
+\begin{frame}{5.4.1 Grafos: Relación Prioritaria}
+    \begin{itemize}
+        \item \textbf{Modelo:} Nodos y Relaciones con propiedades.
+        \item \textbf{SGBD:} \textbf{Neo4j}.
+    \end{itemize}
+\end{frame}
+\begin{frame}{5.4.2 Index-free Adjacency}
+    Relaciones son punteros físicos, no cálculos lógicos. No hay JOINs.
+\end{frame}
+\begin{frame}{5.4.3 Casos de Uso}
+    Fraude bancario, redes sociales, motores de recomendación.
+\end{frame}
+\begin{frame}{5.4.4 Lenguaje Cypher}
+    Declarativo y visual. Usa ``ASCII Art'' para representar patrones.
+\end{frame}
+\begin{frame}[fragile]{5.4.5 Ejemplo Cypher}
+    \begin{lstlisting}[language=SQL]
+MATCH (p:Persona)-[:AMIGO_DE*2]->(fof) RETURN fof
+    \end{lstlisting}
+\end{frame}

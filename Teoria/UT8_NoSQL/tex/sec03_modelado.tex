@@ -1,0 +1,48 @@
+\section{3. El Agregado y el Modelado}
+
+\begin{frame}{3.1 ¿Qué es un Agregado? (RA7-CE.c)}
+  \textbf{Definición Profunda:} Es un grupo de objetos relacionados que queremos tratar como una \textbf{unidad indivisible}. 
+  
+  \begin{itemize}
+    \item \textbf{SQL (La Despensa):} Tienes los huevos en un sitio, la harina en otro y la leche en la nevera. Para hacer una tarta (objeto), tienes que ir a buscarlos y mezclarlos (JOIN).
+    \item \textbf{NoSQL (La Tarta ya hecha):} Guardas la tarta completa en una caja. Si quieres tarta, coges la caja y ya está. No pierdes tiempo buscando ingredientes.
+  \end{itemize}
+  
+  \begin{exampleblock}{La unidad de Atomicidad}
+    En NoSQL, la base de datos te garantiza que o se guarda el ``documento'' entero o no se guarda nada. No hay términos medios.
+  \end{exampleblock}
+  \note{Explicar que el agregado es el 'límite' de la transacción. En NoSQL no solemos tener transacciones entre documentos, por eso metemos todo lo importante dentro de uno solo.}
+\end{frame}
+
+\begin{frame}[fragile]{3.2 Ejemplo Real: El Carrito de la Compra}
+  ¿Cómo vería un carrito una App de móvil?
+  \begin{itemize}
+    \item \textbf{En SQL:} Necesitarías la tabla \texttt{CARRITOS}, la tabla \texttt{LINEAS\_CARRITO} y la tabla \texttt{PRODUCTOS}. Tres consultas o un triple JOIN.
+    \item \textbf{En NoSQL:} Es un único ``Agregado'' JSON.
+  \end{itemize}
+  \begin{lstlisting}[language=SQL]
+{
+  "cart_id": "ABC-123",
+  "items": [
+    { "id": "P01", "nombre": "Teclado", "precio": 85, "tags": ["gaming", "rgb"] },
+    { "id": "P99", "nombre": "Cable", "precio": 12 }
+  ],
+  "total": 97,
+  "ultima_modificacion": "2024-04-16T10:00:00Z"
+}
+  \end{lstlisting}
+  \note{Fijaos en los 'tags'. En SQL eso sería OTRA tabla más. Aquí, el teclado ``lleva sus etiquetas puestas''.}
+\end{frame}
+
+\begin{frame}{3.3 Redundancia Controlada: El Snapshot}
+  ¿Por qué repetimos el nombre y el precio en el carrito si ya están en el catálogo? 
+  
+  \begin{enumerate}
+    \item \textbf{Velocidad (Performance):} Si el usuario abre el carrito 100 veces, le ahorramos a la base de datos 100 JOINs. Leer es casi instantáneo.
+    \item \textbf{Consistencia Histórica (Snapshot):} Si mañana el teclado sube de 85€ a 100€, el carrito que el usuario llenó hoy \textbf{debe} mantener los 85€. Si solo tuviéramos un ID al producto, el precio cambiaría ``mágicamente'' en el carrito del cliente.
+  \end{enumerate}
+  
+  \begin{alertblock}{La Redundancia es tu amiga}
+    En NoSQL preferimos gastar un poco más de disco (que es barato) para comprar tiempo de CPU (que es caro) y coherencia en los datos.
+  \end{alertblock}
+\end{frame}

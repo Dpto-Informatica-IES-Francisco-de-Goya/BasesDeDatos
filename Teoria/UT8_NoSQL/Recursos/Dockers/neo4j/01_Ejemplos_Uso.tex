@@ -1,0 +1,142 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\usepackage{longtable}
+\usepackage{calc}
+
+% Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\title{\textbf{Neo4j en GloboTour: El Poder de las Relaciones}}
+\author{Departamento de Informática}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{Neo4j en GloboTour: El Poder de las Relaciones}\label{neo4j-en-globotour-el-poder-de-las-relaciones}
+
+En \textbf{GloboTour}, queremos lanzar \enquote{SocialTour}: un sistema que te recomienda guías turísticos basándose en lo que han puntuado tus amigos.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Conceptos Fundamentales (Teoría para Clase)}\label{conceptos-fundamentales-teoruxeda-para-clase}
+
+\begin{itemize}
+    \item \textbf{Nodos (Círculos)}: Entidades. Ej: \texttt{(u:Usuario {nombre: 'Ana'})}.
+    \item \textbf{Relaciones (Flechas)}: Conexiones. Ej: \texttt{-[:SIGUE]->}.
+    \item \textbf{Traversal (Recorrido)}: El proceso de saltar de un nodo a otro siguiendo flechas. Es lo que hace a Neo4j miles de veces más rápido que SQL para redes sociales.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{El Lenguaje Cypher: Arte ASCII}\label{el-lenguaje-cypher-arte-ascii}
+
+Para buscar un patrón, lo \enquote{dibujamos}:
+\begin{itemize}
+    \item \texttt{(a:Usuario {nombre: 'Ana'})} $\rightarrow$ El nodo de Ana.
+    \item \texttt{-[:SIGUE]->} $\rightarrow$ Una flecha de tipo SIGUE.
+    \item \texttt{(b:Usuario)} $\rightarrow$ El nodo destino.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Consultas Paso a Paso (Basadas en el Escenario)}\label{consultas-paso-a-paso-basadas-en-el-escenario}
+
+\subsubsection{Primer Nivel: Amigos Directos}\label{a.-primer-nivel-amigos-directos}
+
+\emph{\enquote{¿A quién sigue Víctor directamente?}}
+
+\begin{lstlisting}
+MATCH (u:Usuario {nombre: 'Víctor'})-[:SIGUE]->(amigo)
+RETURN amigo.nombre
+\end{lstlisting}
+
+\textbf{Resultado esperado}: Ana y Juan.
+
+\subsubsection{Segundo Nivel: Amigos de mis Amigos (Distancia 2)}\label{b.-segundo-nivel-amigos-de-mis-amigos-distancia-2}
+
+\emph{\enquote{¿Quiénes son los conocidos de mis amigos que yo no sigo directamente?}}
+
+\begin{lstlisting}
+MATCH (u:Usuario {nombre: 'Víctor'})-[:SIGUE]->(amigo)-[:SIGUE]->(amigo_de_amigo)
+WHERE NOT (u)-[:SIGUE]->(amigo_de_amigo)
+RETURN amigo_de_amigo.nombre
+\end{lstlisting}
+
+\textbf{Resultado esperado}: Pedro (vía Ana) y Sofía (vía Juan).
+
+\subsubsection{Saltos Variables (Cualquier distancia)}\label{c.-saltos-variables-cualquier-distancia}
+
+\emph{\enquote{¿A quién conoce Víctor en su red extendida (hasta 3 saltos)?}}
+
+\begin{lstlisting}
+MATCH (u:Usuario {nombre: 'Víctor'})-[:SIGUE*1..3]->(conocido)
+RETURN DISTINCT conocido.nombre
+\end{lstlisting}
+
+\textbf{Resultado esperado}: Ana, Juan, Pedro, Sofía y Elena.
+
+\subsubsection{Recomendación de Guías (La \enquote{Chicha} del Grafo)}\label{d.-recomendaciuxf3n-de-guuxedas-la-chicha-del-grafo}
+
+\emph{\enquote{Busca guías puntuados con 5 estrellas por personas a las que yo sigo}}
+
+\begin{lstlisting}
+MATCH (yo:Usuario {nombre: 'Víctor'})-[:SIGUE]->(amigo)-[v:VALORO]->(g:Guia)
+WHERE v.estrellas = 5
+RETURN g.nombre AS Recomendación, amigo.nombre AS Recomendado_Por
+\end{lstlisting}
+
+\textbf{Resultado esperado}: Carlos (Recomendado por Ana). Marie no sale porque Juan le dio 4 estrellas.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Visualización Interactiva}\label{visualizaciuxf3n-interactiva}
+
+En \url{http://localhost:7474} puedes usar el potente \textbf{Neo4j Browser}:
+\begin{enumerate}
+    \item Escribe \texttt{MATCH (n) RETURN n} y pulsa Play.
+    \item Verás los nodos de colores. \textbf{Haz doble clic} en un nodo para expandir sus relaciones.
+    \item Pasa el ratón sobre las flechas para ver sus propiedades (como las estrellas).
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Desafíos de Aprendizaje}\label{desafios}
+
+\begin{enumerate}
+    \item \textbf{Exploración}: ¿Quiénes son los seguidores de Elena? Escribe una consulta que invierta la dirección de la flecha.
+    \item \textbf{Caminos}: Encuentra el camino más corto entre Víctor y Elena.
+    \item \textbf{Ampliación Avanzada}: Una vez dominados los recorridos básicos, dirígete al \textbf{02-Laboratorio\_Algoritmos.tex} para aprender patrones de recomendación y análisis de influencia.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Solucionario de Desafíos}\label{solucionario-neo4j}
+
+\begin{tcolorbox}[title=Solución Desafío 1: Invertir flechas]
+Para buscar seguidores (flecha hacia la izquierda), simplemente invertimos el dibujo del patrón:
+\begin{lstlisting}
+MATCH (seguidor)-[:SIGUE]->(e:Usuario {nombre: 'Elena'})
+RETURN seguidor.nombre
+\end{lstlisting}
+\textbf{Resultado}: Pedro y Sofía.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Solución Desafío 2: Caminos Cortos]
+Usamos la función \texttt{shortestPath} para encontrar la ruta mínima entre dos nodos:
+\begin{lstlisting}
+MATCH p=shortestPath(
+  (v:Usuario {nombre: 'Víctor'})-[:SIGUE*..10]->(e:Usuario {nombre: 'Elena'})
+)
+RETURN p
+\end{lstlisting}
+\textbf{Explicación}: Verás que hay dos caminos de longitud 3 (vía Juan-Sofía o vía Ana-Pedro). Neo4j te devolverá uno de ellos.
+\end{tcolorbox}
+
+\end{document}

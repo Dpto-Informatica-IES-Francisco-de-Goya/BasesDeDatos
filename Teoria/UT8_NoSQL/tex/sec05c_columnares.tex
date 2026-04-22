@@ -1,0 +1,62 @@
+\section{5c. Bases de Datos de Familias de Columnas}
+
+\begin{frame}{5.1 Concepto: El Mapa de Mapas}
+    No pienses en tablas de Excel. Piensa en un \textbf{Mapa de Mapas} ordenado por una llave.
+    \begin{itemize}
+        \item \textbf{RowKey (Clave de Partición):} Es la llave que decide en qué servidor del cluster se guarda el dato físicamente.
+        \item \textbf{Columna (Column):} Un par \texttt{Nombre: Valor} con marca de tiempo.
+        \item \textbf{SGBD Referente:} \textbf{Apache Cassandra}.
+    \end{itemize}
+    \begin{exampleblock}{Diferencia con SQL}
+        En SQL, una fila es una unidad física. En Cassandra, la fila es solo una agrupación lógica de columnas bajo una misma clave.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{5.2 ¿Cómo guardan los datos? (LSM-Trees)}
+    ¿Por qué Cassandra escribe más rápido que cualquier SQL?
+    \begin{itemize}
+        \item \textbf{Escritura Secuencial:} No ``busca'' el dato en el disco para editarlo (eso es lento). Simplemente escribe la nueva versión al final de un archivo de log.
+        \item \textbf{Memtable:} Los datos se guardan en RAM y se vuelcan a disco en bloque.
+    \end{itemize}
+    \begin{alertblock}{No hay borrados reales}
+        Si borras un dato, se escribe una marca llamada ``Tombstone'' (lápida). El dato se borrará físicamente más tarde durante una limpieza automática (Compaction).
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{5.3 Tablas Dispersas (Sparse Tables)}
+    En SQL, si una tabla tiene 100 columnas y solo rellenas 2, el resto son NULLs que ocupan sitio o lógica.
+    \begin{itemize}
+        \item \textbf{Sin NULLs:} En una BBDD de columnas, si una fila no tiene el dato ``Email'', la columna ``Email'' simplemente \textbf{no existe} para esa fila. No ocupa ni un bit.
+        \item \textbf{Familias de Columnas:} Agrupamos columnas que suelen leerse juntas (ej: ``Datos Personales'' separada de ``Estadísticas de Uso'').
+    \end{itemize}
+    \note{Esto permite que el disco solo lea los trozos de archivo que contienen las columnas que has pedido, ignorando el resto.}
+\end{frame}
+
+\begin{frame}{5.4 Modelado: Query-First (Diseño por consulta)}
+    ¡Aquí la normalización está prohibida!
+    \begin{itemize}
+        \item \textbf{Primero la pregunta, luego la tabla:} No diseñas tablas para guardar datos, diseñas tablas para responder preguntas.
+        \item \textbf{Desnormalización total:} Si necesitas ver los usuarios por Ciudad y también por Edad, creas \textbf{dos tablas} con los mismos datos repetidos, optimizadas para cada búsqueda.
+    \end{itemize}
+    \begin{exampleblock}{La regla de oro}
+        Un \texttt{SELECT} nunca debe requerir un \texttt{JOIN}. Si necesitas datos de dos sitios, guárdalos ya juntos.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]{5.5 Ejemplo Visual de Almacenamiento}
+    Imagina una tabla de usuarios en Cassandra:
+    \begin{table}[]
+    \tiny
+    \begin{tabular}{lll}
+    \toprule
+    \textbf{RowKey (ID)} & \textbf{Family: Perfil} & \textbf{Family: Actividad} \\ \midrule
+    user\_1 & \{nombre: ``Ana'', edad: 20\} & \{login: ``2024-04-16''\} \\
+    user\_2 & \{nombre: ``Luis''\} & \{login: ``2024-04-15'', ip: ``10.0.0.1''\} \\
+    \bottomrule
+    \end{tabular}
+    \end{table}
+    \begin{itemize}
+        \item \textbf{Dato Clave:} Luis no tiene campo 'edad'. Luis tiene un campo 'ip' que Ana no tiene.
+        \item \textbf{Físico:} El disco guarda la familia ``Perfil'' en un archivo y ``Actividad'' en otro. Si solo quieres nombres, el disco no toca los datos de actividad.
+    \end{itemize}
+\end{frame}

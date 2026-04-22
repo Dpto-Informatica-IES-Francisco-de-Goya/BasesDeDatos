@@ -1,0 +1,64 @@
+\section{1. Motivación: ¿Por qué NoSQL?}
+
+\begin{frame}{El contexto: La era del SQL (1970 - 2000)}
+    Durante décadas, las bases de datos relacionales (MySQL, Oracle, SQL Server) fueron la única opción.
+    \begin{itemize}
+        \item \textbf{Foco:} Ahorrar espacio en disco (que era muy caro).
+        \item \textbf{Técnica:} Normalización (dividir datos en muchas tablas para no repetir nada).
+        \item \textbf{Garantía:} ACID (Consistencia absoluta).
+    \end{itemize}
+    \begin{exampleblock}{¿Qué cambió?}
+        La llegada de la Web 2.0 y el Big Data. El problema ya no es el espacio en disco, sino la \textbf{velocidad} y el \textbf{volumen} de los datos.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Caso 1: Redes Sociales (Complejidad)}
+  \textbf{El problema:} El coste de los JOINs.
+  \begin{itemize}
+    \item En SQL, para saber qué le gusta a los amigos de ``Juan'', el motor debe cruzar la tabla \texttt{Usuarios}, \texttt{Amistades} y \texttt{Likes}.
+    \item Cada \texttt{JOIN} es una operación matemática costosa.
+    \item \textbf{Recursividad:} ``¿Qué recomiendan los amigos de mis amigos?''. En SQL esto requiere consultas anidadas que bloquean el servidor.
+  \end{itemize}
+  \begin{alertblock}{Rendimiento Exponencial}
+    En SQL, cuanta más relación hay entre los datos, más lenta es la consulta. NoSQL (Grafos) soluciona esto con punteros físicos entre nodos.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Caso 2: Esquemas Rígidos y EAV}
+  \textbf{El problema:} ¿Qué pasa si cada fila tiene columnas distintas?
+  En SQL usamos el modelo \textbf{EAV (Entity-Attribute-Value)} para simular flexibilidad:
+  \begin{lstlisting}[language=SQL]
+-- Para sacar un producto con 3 atributos:
+SELECT p.nombre, a1.valor as color, a2.valor as talla
+FROM Productos p
+JOIN Atributos a1 ON p.id = a1.p_id AND a1.attr = 'Color'
+JOIN Atributos a2 ON p.id = a2.p_id AND a2.attr = 'Talla';
+  \end{lstlisting}
+  \begin{itemize}
+    \item \textbf{Efecto:} El código se vuelve una ``sopa de JOINs'' ilegible.
+    \item \textbf{NoSQL:} Simplemente guardamos un JSON con los campos que necesitemos para esa fila concreta.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Caso 3: Escrituras Masivas (IoT/Logs)}
+  \textbf{El problema:} Los bloqueos (Locks).
+  \begin{itemize}
+    \item SQL es ``celoso''. Para asegurar que nadie lea un dato mientras se escribe, bloquea filas o tablas enteras.
+    \item Si tienes 10.000 sensores enviando datos por segundo, la base de datos pasa más tiempo gestionando bloqueos que escribiendo.
+  \end{itemize}
+  \begin{exampleblock}{Escritura secuencial}
+    Sistemas como Cassandra no ``editan'' datos, solo ``añaden'' al final de un archivo. Es como escribir en una libreta sin borrar nunca; es mucho más rápido.
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Caso 4: Escalado Global (Latencia)}
+  \textbf{El problema:} La física y la velocidad de la luz.
+  \begin{itemize}
+    \item Un paquete de red tarda unos 200ms en ir y volver de Madrid a Tokio.
+    \item En SQL (ACID), una transacción no termina hasta que todos los nodos confirman.
+    \item \textbf{Resultado:} Tu aplicación en Madrid va lenta porque el servidor de Tokio tarda en contestar.
+  \end{itemize}
+  \begin{alertblock}{Disponibilidad NoSQL}
+    NoSQL permite que el servidor de Madrid conteste ``OK'' de inmediato y ya se sincronizará con Tokio unos milisegundos después.
+  \end{alertblock}
+\end{frame}

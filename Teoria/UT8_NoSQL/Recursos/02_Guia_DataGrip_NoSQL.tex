@@ -1,0 +1,128 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+% --- DATOS DEL DOCUMENTO ---
+\title{\textbf{Guía de Conexión: DataGrip y Ecosistemas NoSQL en GloboTour}}
+\author{Departamento de Informática}
+\date{Abril 2026}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{¿Qué es Docker y para qué sirve?}
+Docker es una plataforma que permite empaquetar, distribuir y ejecutar aplicaciones dentro de \textbf{contenedores}. Un contenedor es una unidad estándar de software que incluye todo lo necesario para que una aplicación funcione: código, dependencias, librerías y configuración.
+
+\subsection{Ventajas de usar Docker en Bases de Datos}
+Para un administrador de bases de datos o desarrollador, Docker ofrece beneficios críticos:
+\begin{itemize}
+    \item \textbf{Aislamiento:} Puedes ejecutar varios SGBD (como MongoDB y Redis) en la misma máquina sin que sus dependencias entren en conflicto.
+    \item \textbf{Portabilidad:} El entorno es idéntico en tu ordenador personal, en el aula o en un servidor de producción. Si funciona en el contenedor, funciona en cualquier parte.
+    \item \textbf{Limpieza:} No necesitas instalar los servicios directamente en tu sistema operativo. Cuando terminas la práctica, borras el contenedor y tu equipo queda limpio.
+    \item \textbf{Rapidez de despliegue:} Con un solo comando puedes levantar una arquitectura compleja que, de forma manual, tardaría horas en configurarse.
+\end{itemize}
+
+\section*{Introducción al Entorno GloboTour}
+DataGrip es un entorno de desarrollo integrado (IDE) de JetBrains diseñado específicamente para la gestión de bases de datos. A diferencia de otras herramientas que son específicas para un motor, DataGrip permite gestionar múltiples motores desde una única interfaz.
+
+En esta práctica, simularemos la arquitectura de datos de la plataforma \textbf{GloboTour}. Conectaremos DataGrip a los servicios \textbf{MongoDB}, \textbf{Redis} y \textbf{Cassandra} desplegados mediante Docker, analizando el rol que cumple cada uno en un proyecto de alta concurrencia.
+
+\begin{tcolorbox}[title=Requisito Previo: Gestión de Recursos]
+Asegúrate de tener los contenedores en ejecución. Si tu equipo tiene **menos de 16 GB de RAM**, no levantes todos los servicios a la vez. Levanta solo el que vayas a usar y apágalo al terminar:
+\begin{lstlisting}[language=bash]
+# Para empezar a trabajar con uno
+docker compose up -d mongodb
+# Para liberar memoria antes de pasar al siguiente
+docker compose stop mongodb
+\end{lstlisting}
+\end{tcolorbox}
+
+\section{Conexión a MongoDB (El Catálogo Flexible)}
+En GloboTour, MongoDB se utiliza para almacenar el \textbf{Catálogo Polimórfico de Experiencias}, dado que una cata de vinos y un salto en paracaídas requieren campos muy distintos.
+
+\subsection{Alternativa: Mongo Express}
+Si prefieres una interfaz web ligera, puedes acceder a través de tu navegador en \url{http://localhost:8081} (User: \texttt{admin} / Pass: \texttt{pass}).
+
+\subsection{Pasos para la configuración en DataGrip}
+\begin{enumerate}
+    \item Abre DataGrip y pulsa en el icono \textbf{+} (New) $\rightarrow$ \textbf{Data Source} $\rightarrow$ \textbf{MongoDB}.
+    \item En la pestaña \textbf{General}, introduce los siguientes datos:
+    \begin{itemize}
+        \item \textbf{Host:} \texttt{localhost}
+        \item \textbf{Port:} \texttt{27017}
+        \item \textbf{User/Password:} Déjalos vacíos.
+    \end{itemize}
+    \item Descarga los \textit{driver files} si el IDE te lo solicita en la parte inferior.
+    \item Pulsa en \textbf{Test Connection} y, si aparece el check verde, haz clic en \textbf{OK}.
+    \item En el panel izquierdo de DataGrip, busca la base de datos \texttt{globotour} y expande la colección \texttt{experiencias} para explorar los documentos JSON.
+\end{enumerate}
+
+\section{Conexión a Redis (Aceleración y Tiempo Real)}
+Redis es nuestra capa de aceleración en memoria. Lo usaremos para gestionar la \textbf{caducidad de sesiones} de los usuarios, los \textbf{contadores de métricas} en tiempo real y los \textbf{rankings de popularidad}.
+
+\subsection{Alternativa: RedisInsight}
+Puedes usar la potente interfaz oficial en \url{http://localhost:5540}. Recuerda que para añadir la base de datos desde el navegador, el host debe ser \texttt{redis-server}.
+
+\subsection{Pasos para la configuración en DataGrip}
+\begin{enumerate}
+    \item Pulsa en \textbf{+} $\rightarrow$ \textbf{Data Source} $\rightarrow$ \textbf{Redis}.
+    \item Configuración de red:
+    \begin{itemize}
+        \item \textbf{Host:} \texttt{localhost}
+        \item \textbf{Port:} \texttt{6379}
+    \end{itemize}
+    \item Descarga los drivers si se solicita y pulsa en \textbf{OK}.
+    \item \textbf{Nota Visual:} Redis organiza los datos por bases de datos numéricas. Trabajarás principalmente en la \textbf{DB 0}.
+\end{enumerate}
+
+\begin{tcolorbox}[title=Consejo de Productividad: Jerarquía Visual]
+En la práctica de GloboTour, usamos el carácter \enquote{:} en las llaves (ej: \texttt{session:user:101} o \texttt{experiencias:top\_ventas}). DataGrip interpretará estos dos puntos como carpetas, generando una estructura jerárquica que te facilitará la navegación visual.
+\end{tcolorbox}
+
+\section{Conexión a Apache Cassandra (Registro de Búsquedas)}
+Usamos Cassandra para almacenar \textbf{millones de registros de búsqueda diarios}. Al ser de tipo columnar y altamente distribuida, permite escrituras masivas sin bloquear la base de datos principal, siguiendo un diseño orientado a las consultas (\textit{Query-First Design}).
+
+\subsection{Alternativa: CloudBeaver}
+Puedes usar el gestor profesional CloudBeaver en \url{http://localhost:8978}. Al conectar, usa el host \texttt{cassandra-server}.
+
+\subsection{Pasos para la configuración en DataGrip}
+\begin{enumerate}
+    \item Pulsa en \textbf{+} $\rightarrow$ \textbf{Data Source} $\rightarrow$ \textbf{Cassandra}.
+    \item Configuración:
+    \begin{itemize}
+        \item \textbf{Host:} \texttt{localhost}
+        \item \textbf{Port:} \texttt{9042}
+    \end{itemize}
+    \item Asegúrate de descargar o actualizar los drivers para soportar correctamente las sentencias CQL.
+    \item Pulsa en \textbf{Test Connection}. Ten en cuenta que Cassandra suele tardar un poco más en arrancar que los otros contenedores; si falla a la primera, espera unos segundos e inténtalo de nuevo.
+    \item Aquí gestionarás, por ejemplo, la creación de la tabla \texttt{busquedas\_por\_fecha} diseñando adecuadamente las \textit{Partition Keys}.
+\end{enumerate}
+
+\section{Conexión a Neo4j (La Red de Recomendaciones)}
+Neo4j es nuestra base de datos de \textbf{Grafos}. La usamos para encontrar relaciones complejas (amigos de amigos, rutas sugeridas) que en SQL requerirían procesos muy lentos.
+
+\subsection{Alternativa: Neo4j Browser}
+Neo4j incluye una consola interactiva muy potente para visualizar grafos en \url{http://localhost:7474}.
+
+\subsection{Pasos para la configuración en DataGrip}
+\begin{enumerate}
+    \item Pulsa en \textbf{+} $\rightarrow$ \textbf{Data Source} $\rightarrow$ \textbf{Neo4j}.
+    \item Configuración:
+    \begin{itemize}
+        \item \textbf{Host:} \texttt{localhost}
+        \item \textbf{Port:} \texttt{7687} (Protocolo Bolt)
+        \item \textbf{User/Password:} \texttt{neo4j} / \texttt{password123}
+    \end{itemize}
+    \item Pulsa en \textbf{Test Connection}. DataGrip te permitirá escribir consultas en lenguaje \textbf{Cypher} y ver el resultado de forma gráfica o tabular.
+\end{enumerate}
+
+\section{Ventajas de usar DataGrip en NoSQL}
+\begin{itemize}
+    \item \textbf{Consola unificada:} Te permite escribir sentencias CQL, comandos de Redis o pipelines de agregación de Mongo desde una sola herramienta.
+    \item \textbf{Exploración visual:} Puedes editar BSON/JSON directamente en la rejilla sin escribir tediosos comandos de actualización.
+    \item \textbf{Exportación rápida:} Facilita la exportación de los datos analizados a CSV o JSON para incluirlos en el informe final de la práctica.
+\end{itemize}
+
+\end{document}

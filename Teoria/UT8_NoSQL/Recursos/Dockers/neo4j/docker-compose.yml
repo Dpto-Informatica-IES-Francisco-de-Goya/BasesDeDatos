@@ -1,0 +1,18 @@
+services:
+  neo4j:
+    image: neo4j:latest
+    container_name: neo4j-server
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - ./src:/var/lib/neo4j/import
+    environment:
+      - NEO4J_AUTH=neo4j/password123
+    restart: no
+
+volumes:
+  neo4j_data:
+  neo4j_logs:

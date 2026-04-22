@@ -1,0 +1,477 @@
+[
+  {
+    "nombre": "Vuelo en Globo Segovia",
+    "tipo": "Aventura",
+    "precio": 150,
+    "detalles": {
+      "altura_max": 1000,
+      "duracion": "1h"
+    },
+    "tags": [
+      "aire",
+      "vistas"
+    ]
+  },
+  {
+    "nombre": "Cata de Vinos Ribera",
+    "tipo": "Gastronom\u00eda",
+    "precio": 45,
+    "menu": [
+      "Tinto",
+      "Blanco",
+      "Quesos"
+    ],
+    "bodega": "Protos"
+  },
+  {
+    "nombre": "Buceo en Cabo de Gata",
+    "tipo": "Aventura",
+    "precio": 80,
+    "detalles": {
+      "profundidad": 15,
+      "equipo_incluido": true
+    },
+    "tags": [
+      "agua",
+      "naturaleza"
+    ]
+  },
+  {
+    "nombre": "Escape Room Medieval",
+    "tipo": "Ocio",
+    "precio": 25,
+    "dificultad": "Alta",
+    "max_personas": 6
+  },
+  {
+    "nombre": "Ruta 4x4 Pirineos",
+    "tipo": "Aventura",
+    "precio": 120,
+    "vehiculo": "Jeep Wrangler",
+    "tags": [
+      "motor",
+      "monta\u00f1a"
+    ]
+  },
+  {
+    "nombre": "Experiencia Ocio 1",
+    "tipo": "Ocio",
+    "precio": 170,
+    "tags": [
+      "agua",
+      "relax",
+      "aire"
+    ]
+  },
+  {
+    "nombre": "Experiencia Gastronom\u00eda 2",
+    "tipo": "Gastronom\u00eda",
+    "precio": 146,
+    "tags": [
+      "familiar",
+      "adrenalina",
+      "vistas"
+    ],
+    "bebida_incluida": true
+  },
+  {
+    "nombre": "Experiencia Ocio 3",
+    "tipo": "Ocio",
+    "precio": 101,
+    "tags": [
+      "agua",
+      "aire",
+      "relax"
+    ]
+  },
+  {
+    "nombre": "Experiencia Aventura 4",
+    "tipo": "Aventura",
+    "precio": 121,
+    "tags": [
+      "monta\u00f1a",
+      "historia",
+      "agua"
+    ],
+    "dificultad": "Alta"
+  },
+  {
+    "nombre": "Experiencia Gastronom\u00eda 5",
+    "tipo": "Gastronom\u00eda",
+    "precio": 249,
+    "tags": [
+      "adrenalina",
+      "motor"
+    ],
+    "bebida_incluida": true
+  },
+  {
+    "nombre": "Experiencia Aventura 6",
+    "tipo": "Aventura",
+    "precio": 117,
+    "tags": [
+      "parejas",
+      "historia",
+      "relax"
+    ],
+    "dificultad": "Media"
+  },
+  {
+    "nombre": "Experiencia Cultura 7",
+    "tipo": "Cultura",
+    "precio": 170,
+    "tags": [
+      "historia"
+    ],
+    "guia_idioma": "Franc\u00e9s",
+    "monumento": true
+  },
+  {
+    "nombre": "Experiencia Ocio 8",
+    "tipo": "Ocio",
+    "precio": 236,
+    "tags": [
+      "monta\u00f1a",
+      "vistas"
+    ]
+  },
+  {
+    "nombre": "Experiencia Cultura 9",
+    "tipo": "Cultura",
+    "precio": 233,
+    "tags": [
+      "vistas"
+    ],
+    "guia_idioma": "Ingl\u00e9s",
+    "monumento": true
+  },
+  {
+    "nombre": "Experiencia Aventura 10",
+    "tipo": "Aventura",
+    "precio": 201,
+    "tags": [
+      "historia",
+      "parejas",
+      "aire"
+    ],
+    "dificultad": "Alta"
+  },
+  {
+    "nombre": "Experiencia Aventura 11",
+    "tipo": "Aventura",
+    "precio": 215,
+    "tags": [
+      "familiar",
+      "motor",
+      "relax"
+    ],
+    "dificultad": "Baja"
+  },
+  {
+    "nombre": "Experiencia Ocio 12",
+    "tipo": "Ocio",
+    "precio": 209,
+    "tags": [
+      "motor",
+      "aire"
+    ]
+  },
+  {
+    "nombre": "Experiencia Bienestar 13",
+    "tipo": "Bienestar",
+    "precio": 101,
+    "tags": [
+      "parejas",
+      "aire"
+    ],
+    "spa_incluido": true,
+    "duracion_min": 60
+  },
+  {
+    "nombre": "Experiencia Aventura 14",
+    "tipo": "Aventura",
+    "precio": 54,
+    "tags": [
+      "motor"
+    ],
+    "dificultad": "Alta"
+  },
+  {
+    "nombre": "Experiencia Cultura 15",
+    "tipo": "Cultura",
+    "precio": 48,
+    "tags": [
+      "monta\u00f1a"
+    ],
+    "guia_idioma": "Espa\u00f1ol",
+    "monumento": true
+  },
+  {
+    "nombre": "Experiencia Gastronom\u00eda 16",
+    "tipo": "Gastronom\u00eda",
+    "precio": 207,
+    "tags": [
+      "historia",
+      "parejas"
+    ],
+    "bebida_incluida": true
+  },
+  {
+    "nombre": "Experiencia Ocio 17",
+    "tipo": "Ocio",
+    "precio": 212,
+    "tags": [
+      "motor",
+      "agua",
+      "parejas"
+    ]
+  },
+  {
+    "nombre": "Experiencia Bienestar 18",
+    "tipo": "Bienestar",
+    "precio": 76,
+    "tags": [
+      "vistas"
+    ],
+    "spa_incluido": true,
+    "duracion_min": 60
+  },
+  {
+    "nombre": "Experiencia Gastronom\u00eda 19",
+    "tipo": "Gastronom\u00eda",
+    "precio": 152,
+    "tags": [
+      "familiar",
+      "adrenalina"
+    ],
+    "bebida_incluida": true
+  },
+  {
+    "nombre": "Experiencia Aventura 20",
+    "tipo": "Aventura",
+    "precio": 173,
+    "tags": [
+      "motor"
+    ],
+    "dificultad": "Baja"
+  },
+  {
+    "nombre": "Experiencia Cultura 21",
+    "tipo": "Cultura",
+    "precio": 224,
+    "tags": [
+      "monta\u00f1a",
+      "aire"
+    ],
+    "guia_idioma": "Ingl\u00e9s",
+    "monumento": true
+  },
+  {
+    "nombre": "Experiencia Bienestar 22",
+    "tipo": "Bienestar",
+    "precio": 64,
+    "tags": [
+      "parejas",
+      "vistas",
+      "historia"
+    ],
+    "spa_incluido": true,
+    "duracion_min": 60
+  },
+  {
+    "nombre": "Experiencia Cultura 23",
+    "tipo": "Cultura",
+    "precio": 31,
+    "tags": [
+      "aire",
+      "monta\u00f1a",
+      "historia"
+    ],
+    "guia_idioma": "Espa\u00f1ol",
+    "monumento": true
+  },
+  {
+    "nombre": "Experiencia Cultura 24",
+    "tipo": "Cultura",
+    "precio": 171,
+    "tags": [
+      "monta\u00f1a",
+      "motor",
+      "parejas"
+    ],
+    "guia_idioma": "Ingl\u00e9s",
+    "monumento": true
+  },
+  {
+    "nombre": "Experiencia Aventura 25",
+    "tipo": "Aventura",
+    "precio": 231,
+    "tags": [
+      "adrenalina",
+      "familiar",
+      "relax"
+    ],
+    "dificultad": "Media"
+  },
+  {
+    "nombre": "Experiencia Ocio 26",
+    "tipo": "Ocio",
+    "precio": 107,
+    "tags": [
+      "aire",
+      "relax"
+    ]
+  },
+  {
+    "nombre": "Experiencia Cultura 27",
+    "tipo": "Cultura",
+    "precio": 111,
+    "tags": [
+      "monta\u00f1a"
+    ],
+    "guia_idioma": "Franc\u00e9s",
+    "monumento": true
+  },
+  {
+    "nombre": "Experiencia Cultura 28",
+    "tipo": "Cultura",
+    "precio": 177,
+    "tags": [
+      "familiar",
+      "motor",
+      "aire"
+    ],
+    "guia_idioma": "Ingl\u00e9s",
+    "monumento": true
+  },
+  {
+    "nombre": "Experiencia Bienestar 29",
+    "tipo": "Bienestar",
+    "precio": 21,
+    "tags": [
+      "aire",
+      "historia",
+      "monta\u00f1a"
+    ],
+    "spa_incluido": true,
+    "duracion_min": 60
+  },
+  {
+    "nombre": "Experiencia Cultura 30",
+    "tipo": "Cultura",
+    "precio": 168,
+    "tags": [
+      "familiar",
+      "vistas",
+      "monta\u00f1a"
+    ],
+    "guia_idioma": "Ingl\u00e9s",
+    "monumento": true
+  },
+  {
+    "nombre": "Experiencia Aventura 31",
+    "tipo": "Aventura",
+    "precio": 237,
+    "tags": [
+      "parejas",
+      "adrenalina",
+      "vistas"
+    ],
+    "dificultad": "Baja"
+  },
+  {
+    "nombre": "Experiencia Bienestar 32",
+    "tipo": "Bienestar",
+    "precio": 229,
+    "tags": [
+      "vistas",
+      "motor",
+      "monta\u00f1a"
+    ],
+    "spa_incluido": true,
+    "duracion_min": 60
+  },
+  {
+    "nombre": "Experiencia Bienestar 33",
+    "tipo": "Bienestar",
+    "precio": 96,
+    "tags": [
+      "monta\u00f1a",
+      "relax",
+      "adrenalina"
+    ],
+    "spa_incluido": true,
+    "duracion_min": 60
+  },
+  {
+    "nombre": "Experiencia Cultura 34",
+    "tipo": "Cultura",
+    "precio": 222,
+    "tags": [
+      "familiar",
+      "historia",
+      "vistas"
+    ],
+    "guia_idioma": "Ingl\u00e9s",
+    "monumento": true
+  },
+  {
+    "nombre": "Experiencia Bienestar 35",
+    "tipo": "Bienestar",
+    "precio": 168,
+    "tags": [
+      "motor",
+      "vistas",
+      "adrenalina"
+    ],
+    "spa_incluido": true,
+    "duracion_min": 60
+  },
+  {
+    "nombre": "Experiencia Bienestar 36",
+    "tipo": "Bienestar",
+    "precio": 85,
+    "tags": [
+      "vistas"
+    ],
+    "spa_incluido": true,
+    "duracion_min": 60
+  },
+  {
+    "nombre": "Experiencia Aventura 37",
+    "tipo": "Aventura",
+    "precio": 250,
+    "tags": [
+      "familiar",
+      "parejas"
+    ],
+    "dificultad": "Media"
+  },
+  {
+    "nombre": "Experiencia Ocio 38",
+    "tipo": "Ocio",
+    "precio": 43,
+    "tags": [
+      "monta\u00f1a"
+    ]
+  },
+  {
+    "nombre": "Experiencia Ocio 39",
+    "tipo": "Ocio",
+    "precio": 154,
+    "tags": [
+      "agua"
+    ]
+  },
+  {
+    "nombre": "Experiencia Bienestar 40",
+    "tipo": "Bienestar",
+    "precio": 33,
+    "tags": [
+      "motor",
+      "adrenalina"
+    ],
+    "spa_incluido": true,
+    "duracion_min": 60
+  }
+]

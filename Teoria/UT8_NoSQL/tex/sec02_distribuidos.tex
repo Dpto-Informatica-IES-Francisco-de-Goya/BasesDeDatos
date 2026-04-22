@@ -1,0 +1,81 @@
+\section{2. Sistemas Distribuidos}
+
+\begin{frame}{2.1 ¿Qué es un Sistema Distribuido?}
+    \textbf{Definición simple:} Es un grupo de ordenadores que trabajan juntos para que el usuario crea que está usando uno solo.
+    
+    \begin{itemize}
+        \item \textbf{Nodo:} Cada servidor individual del sistema.
+        \item \textbf{Cluster:} El conjunto de todos los nodos.
+        \item \textbf{Red:} El ``pegamento'' que los une mediante mensajes (JSON, binario, etc.).
+    \end{itemize}
+    
+    \begin{center}
+    \begin{tikzpicture}[scale=0.6]
+        \node (user) [cloud] {Cliente (App)};
+        \node (n1) [node, below left=of user] {Nodo 1};
+        \node (n2) [node, below=of user] {Nodo 2};
+        \node (n3) [node, below right=of user] {Nodo 3};
+        \draw [arrow] (user) -- (n1);
+        \draw [arrow] (user) -- (n2);
+        \draw [arrow] (user) -- (n3);
+        \draw [dashed, myblue, <->] (n1) -- (n2);
+        \draw [dashed, myblue, <->] (n2) -- (n3);
+    \end{tikzpicture}
+    \end{center}
+    \note{En SQL solemos tener un servidor central (Monolito). En NoSQL, el cluster es la unidad básica.}
+\end{frame}
+
+\begin{frame}{2.2 Escalabilidad: Vertical vs Horizontal}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Vertical (Scaling UP)}
+            \begin{itemize}
+                \item Comprar más RAM o CPU para el mismo servidor.
+                \item \textbf{Problema:} Es carísimo y tiene un límite físico.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Horizontal (Scaling OUT)}
+            \begin{itemize}
+                \item Añadir más servidores baratos al grupo.
+                \item \textbf{Ventaja:} Es la base de NoSQL y de la nube (Cloud).
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \begin{exampleblock}{La analogía del transporte}
+        Vertical es comprar un camión más grande. Horizontal es contratar a 10 mensajeros en moto.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{2.3 Conceptos de Red: Latencia y Partición}
+    Para entender NoSQL hay que entender qué falla en la red:
+    \begin{itemize}
+        \item \textbf{Latencia:} El tiempo que tarda un mensaje en viajar. Nunca es cero.
+        \item \textbf{Partición de Red:} Cuando dos nodos no pueden hablar entre sí (se rompe el cable, falla el switch).
+    \end{itemize}
+    \begin{alertblock}{La importancia del fallo}
+        En un sistema de un solo servidor (SQL clásico), si el servidor falla, todo para. En un sistema distribuido, si un nodo falla, el resto debe seguir trabajando.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{2.4 Roles en el Cluster}
+    No todos los nodos hacen lo mismo:
+    \begin{itemize}
+        \item \textbf{Primario / Maestro:} El que manda. Suele recibir las escrituras.
+        \item \textbf{Secundario / Réplica:} Copia los datos del maestro. Sirve para lecturas rápidas o por si el maestro muere.
+        \item \textbf{Árbitro:} Un nodo que no tiene datos, solo sirve para votar quién es el nuevo maestro si el actual falla.
+    \end{itemize}
+    \note{Esto es lo que verán los alumnos cuando configuren un 'Replica Set' en MongoDB.}
+\end{frame}
+
+\begin{frame}{2.5 Transparencia del Sistema}
+    Un buen sistema distribuido debe ser transparente:
+    \begin{itemize}
+        \item \textbf{De ubicación:} Al programador le da igual en qué servidor esté el dato.
+        \item \textbf{De fallo:} Si un nodo se desconecta, la aplicación ni se entera (el sistema redirige el tráfico).
+        \item \textbf{De replicación:} El programador escribe una vez, el sistema lo copia a varios servidores.
+    \end{itemize}
+    \begin{exampleblock}{Ejemplo práctico}
+        En MongoDB, tú haces un \texttt{db.users.insert()}. No sabes si el dato se ha guardado en el servidor de Madrid o de París, ni cuántas copias se han hecho. El SGBD lo gestiona por ti.
+    \end{exampleblock}
+\end{frame}

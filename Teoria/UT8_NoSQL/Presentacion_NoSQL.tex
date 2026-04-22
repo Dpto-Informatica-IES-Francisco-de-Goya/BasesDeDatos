@@ -1,0 +1,48 @@
+\documentclass{beamer}
+\usepackage{goyabeamer}
+
+% ==========================================
+% CONFIGURACIÓN ESTÉTICA (Estilo Metropolis)
+% ==========================================
+
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning, shadows}
+
+% Estilos TikZ para diagramas profesionales (nanobanana-style)
+\tikzset{
+    node/.style={circle, minimum width=0.8cm, minimum height=0.8cm, text centered, draw=myblue, fill=mygreen!20, font=\tiny, drop shadow},
+    arrow/.style={thick,->,>=stealth, myblue},
+    cloud/.style={draw, ellipse, fill=mygray, node distance=2.5cm, minimum height=2em}
+}
+
+% ==========================================
+% PORTADA
+% ==========================================
+\title{Bases de Datos No Relacionales (RA7)}
+\subtitle{Sistemas Distribuidos y Ecosistema NoSQL}
+\author{Gestión de Bases de Datos}
+\date{\today}
+\institute{FP Madrid - DAM / DAW}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+% --- INCLUSIÓN DE SECCIONES ---
+\input{tex/sec01_motivacion.tex}
+\input{tex/sec02_distribuidos.tex}
+\input{tex/sec03_modelado.tex}
+\input{tex/sec04_cap_pacelc.tex}
+
+% Sección 5 subdividida
+\input{tex/sec05a_clave_valor.tex}
+\input{tex/sec05b_documentales.tex}
+\input{tex/sec05c_columnares.tex}
+\input{tex/sec05d_grafos.tex}
+
+\input{tex/sec06_conclusion.tex}
+
+\end{document}

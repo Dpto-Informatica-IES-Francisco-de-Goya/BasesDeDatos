@@ -1,0 +1,153 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+% Desactivar el carácter activo de la comilla doble de babel-spanish
+
+\newtcolorbox{objetivo}{
+  colback=primary!5,
+  colframe=primary,
+  fonttitle=\bfseries,
+  title=Objetivo del Proyecto,
+  arc=2mm
+}
+
+\newtcolorbox{criterio}{
+  colback=accent!10,
+  colframe=accent!80!black,
+  fonttitle=\bfseries,
+  title=Criterios de Evaluación (RA7),
+  arc=2mm
+}
+
+% --- DATOS DEL DOCUMENTO ---
+\title{\textbf{Proyecto de Evaluación: Arquitectura Políglota en \enquote{EcoDrive}}}
+\author{Víctor de Juan}
+\date{Curso 2025-2026}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{Contexto del Proyecto: EcoDrive}
+La startup \textbf{\enquote{EcoDrive}} es una plataforma de movilidad urbana sostenible que ofrece alquiler de patinetes eléctricos, bicicletas y coches compartidos. Debido a su rápida expansión por toda Europa, el equipo de ingeniería se ha dado cuenta de que una única base de datos relacional tradicional ya no es capaz de soportar la diversidad y el volumen de sus datos.
+
+Han decidido migrar a una arquitectura de \textbf{Persistencia Políglota}, apoyándose en tecnologías NoSQL. Tu misión como Arquitecto de Datos es diseñar, justificar e implementar los cuatro subsistemas críticos de la empresa.
+
+\begin{criterio}
+\begin{itemize}
+    \item \textbf{CE.a:} Se han identificado las características de los sistemas NoSQL.
+    \item \textbf{CE.b:} Se han evaluado los tipos de bases de datos NoSQL y su adecuación al caso de uso.
+    \item \textbf{CE.c:} Se han identificado los elementos (agregados, claves, nodos, tipos de datos) utilizados en estas bases de datos.
+    \item \textbf{CE.d:} Se ha gestionado la información utilizando comandos específicos.
+    \item \textbf{CE.e:} Se han utilizado herramientas gráficas para la gestión de las bases de datos.
+\end{itemize}
+\end{criterio}
+
+\section{Fase 1: Análisis y Toma de Decisiones}
+A continuación, se describen los cuatro servicios que necesita EcoDrive. \textbf{Tu primera tarea es decidir qué tipo de base de datos NoSQL (Clave-Valor, Documental, Columnar o de Grafos) es la ideal para cada servicio y justificar tu elección.} Tienes a tu disposición Redis, MongoDB, Apache Cassandra y Neo4j en tu entorno Docker.
+
+\subsection*{Servicio A: Catálogo de Vehículos y Mantenimiento}
+El catálogo contiene vehículos con características técnicas radicalmente distintas (un patinete tiene un límite de peso, una bicicleta tiene marchas y un coche tiene tipo de combustible). Además, se deben guardar historiales de reparación sin un esquema rígido, ya que las piezas a reparar varían constantemente.
+
+\subsection*{Servicio B: Telemetría y Sensores IoT (Internet of Things)}
+Cada vehículo emite un \enquote{ping} cada 5 segundos indicando su ubicación exacta, velocidad y consumo de batería. Se generan millones de registros diarios. El equipo de Análisis de Datos necesita consultar rápidamente todo el historial de un vehículo concreto para detectar anomalías en la batería, por lo que las escrituras masivas sin bloqueos son críticas.
+
+\textit{\textbf{Pista de Diseño:} En este motor, el orden de los campos en la clave primaria determina cómo se reparten los datos en el clúster y cómo se ordenan en el disco. Consulta el \textbf{Anexo A1} para decidir qué campo garantiza que los datos de un mismo vehículo estén físicamente juntos.}
+
+\subsection*{Servicio C: Sesiones Activas y Caché de Batería}
+La aplicación móvil necesita saber de forma casi instantánea qué vehículos están libres en un radio cercano y cuánta batería les queda. También se gestionan los tokens de sesión temporal de los usuarios que están actualmente realizando un viaje. Todo debe responder en microsegundos y los datos de sesión deben borrarse solos al terminar el viaje.
+
+\subsection*{Servicio D: Red Social de \enquote{Carpooling}}
+EcoDrive quiere implementar un sistema para compartir coche. Necesitan recomendar compañeros de viaje basándose en si son \enquote{amigos}, \enquote{amigos de amigos}, o si suelen hacer rutas con puntos de origen y destino conectados.
+
+\section{Fase 2: Generación y Auditoría de Datos con IA}
+Una vez asignado un SGBD a cada servicio, deberás poblar las bases de datos. Sin embargo, en este módulo la IA suele cometer errores de \enquote{sesgo relacional}. Tu misión no es solo generar código, sino auditarlo.
+
+\begin{itemize}
+    \item Utiliza una IA (ChatGPT, Gemini, Claude...) para generar un \textbf{script de carga de datos inicial} para cada motor.
+    \item \textbf{Auditoría Crítica:} Revisa minuciosamente las propuestas de la IA buscando los siguientes \enquote{Antipatrones NoSQL}:
+    \begin{itemize}
+        \item \textbf{Normalización Encubierta (Mongo/Cassandra):} La IA tiende a separar datos en colecciones distintas y sugerir \enquote{joins manuales} por ID. Debes corregirlo usando \textbf{Agregados} (incrustar documentos) si los datos se leen siempre juntos.
+        \item \textbf{Diseño de Claves Erróneo (Cassandra):} Comprueba que la \textit{Partition Key} no sea un ID secuencial genérico, sino un campo que permita distribuir los datos (ej. \texttt{vehicle\_id}).
+        \item \textbf{Uso Pobre de Estructuras (Redis):} Evita que la IA use solo el tipo \texttt{SET/GET} (Strings) para todo. Audita si un \texttt{HASH} o un \texttt{SORTED SET} sería más eficiente para el caso de uso.
+        \item \textbf{Nodos-Tabla (Neo4j):} Asegúrate de que las relaciones tengan sentido semántico y dirección, y que no esté tratando los nodos como si fueran simples filas de una tabla SQL.
+    \end{itemize}
+    \item En tu memoria, es \textbf{obligatorio} documentar al menos \textbf{dos correcciones técnicas} que hayas realizado sobre el código original de la IA, justificando por qué el cambio mejora la arquitectura del sistema.
+\end{itemize}
+
+\section{Fase 3: Implementación y Consultas}
+Con los datos cargados, deberás ejecutar las siguientes operaciones en cada sistema.
+
+\subsection*{Para el Sistema elegido en el Servicio A (Catálogo)}
+\begin{enumerate}
+    \item Inserta al menos 3 vehículos diferentes, aprovechando la flexibilidad del esquema.
+    \item Realiza una consulta que filtre los vehículos por un atributo que solo exista en uno de los tipos (ej. busca solo los que tengan \enquote{tipo de combustible}).
+\end{enumerate}
+
+\subsection*{Para el Sistema elegido en el Servicio B (Telemetría)}
+\begin{enumerate}
+    \item Crea la estructura de tabla necesaria pensando primero en la consulta (\textit{Query-First Design}). Define correctamente la \textit{Partition Key}.
+    \item Inserta 5 registros de telemetría para un mismo vehículo en distintas horas.
+    \item Realiza una consulta para obtener el historial completo de telemetría de un vehículo específico.
+\end{enumerate}
+
+\subsection*{Para el Sistema elegido en el Servicio C (Sesiones/Caché)}
+\begin{enumerate}
+    \item Crea un registro de sesión de viaje que expire automáticamente en 60 segundos.
+    \item Crea una estructura que guarde el nivel de batería actual de 3 vehículos distintos, y simula el consumo decrementando el valor de uno de ellos.
+    \item \textbf{Restricción de Nomenclatura:} Es obligatorio seguir la convención de jerarquía visual mediante dos puntos (ej: \texttt{sesion:token:ABC} o \texttt{vehiculo:id:bateria}), tal como se aplicó en el entorno GloboTour.
+\end{enumerate}
+
+\subsection*{Para el Sistema elegido en el Servicio D (Red Social)}
+\begin{enumerate}
+    \item Inserta nodos y relaciones que simulen a 3 usuarios y 2 rutas/destinos.
+    \item Realiza una consulta que encuentre a los usuarios que viajan a un mismo destino y además son amigos entre sí.
+\end{enumerate}
+
+\section{Entregables}
+Deberás redactar una \textbf{Memoria Técnica en formato PDF} que contenga:
+\begin{enumerate}
+    \item \textbf{Justificación Arquitectónica (CE.a, CE.b, CE.c):} Una tabla o listado explicando qué SGBD has elegido para cada Servicio. Debes identificar explícitamente los \textbf{elementos} de diseño: ¿Qué campos has incrustado en Mongo? ¿Qué tipo de datos de Redis has usado? ¿Cuál es tu \textit{Partition Key} en Cassandra? ¿Qué etiquetas y relaciones usas en Neo4j?
+    \item \textbf{Análisis de Auditoría (CE.a, CE.c):} Bitácora de los cambios realizados sobre las propuestas de la IA, justificando técnicamente cada corrección basada en los principios del \textbf{anexo}.
+    \item \textbf{Scripts de Carga y Consultas (CE.d):} El código final (scripts de inserción y consultas de la Fase 3) utilizado en cada motor tras tu auditoría.
+    \item \textbf{Ejecución y Visualización (CE.e):} Capturas de pantalla demostrando la correcta ejecución de las consultas solicitadas en la Fase 3. Puedes usar tanto la consola de \textbf{DataGrip} como las interfaces visuales de cada contenedor (\textbf{RedisInsight, Mongo Express o Neo4j Browser}) donde se vea claramente el código introducido y el resultado devuelto.
+\end{enumerate}
+
+\appendix
+\section*{Anexo: Guía Maestra de Auditoría y Modelado NoSQL}
+
+\subsection*{A1. El cambio de mentalidad en Cassandra: La Partition Key}
+En SQL, una \texttt{PRIMARY KEY} sirve para identificar una fila. En Cassandra, el diseño es \textbf{físico} y busca repartir el trabajo entre muchos servidores.
+
+\begin{itemize}
+    \item \textbf{Partition Key (El \enquote{Dónde}):} Es el campo que Cassandra usa para decidir en qué servidor guarda el dato.
+    \begin{itemize}
+        \item \textbf{Alta Cardinalidad (Deseable):} Necesitamos un campo que tenga muchos valores distintos posibles (ej. \texttt{vehicle\_id} o \texttt{user\_id}). Al haber miles de IDs diferentes, Cassandra puede repartir los datos de forma equilibrada por todo el clúster.
+        \item \textbf{Baja Cardinalidad (Antipatrón):} Si usas un campo con pocos valores posibles (ej. \texttt{tipo\_vehiculo} o \texttt{estado\_bateria}), Cassandra mandará todos los \enquote{Coches} al mismo servidor y todas las \enquote{Bicis} a otro. Si tienes 1 millón de coches, ese servidor explotará mientras los demás están vacíos. Esto se llama \textbf{Hotspot}.
+    \end{itemize}
+    \item \textbf{Clustering Column (El \enquote{Orden}):} Decide el orden físico dentro del servidor. Si quieres consultar el historial de un vehículo de más reciente a más antiguo, el \texttt{timestamp} debe ser tu \textit{Clustering Column}.
+    \item \textbf{Query-First:} No diseñes tablas para \enquote{guardar cosas}, diséñalas para \enquote{responder preguntas}. Si necesitas dos formas de buscar, crea dos tablas con los mismos datos.
+\end{itemize}
+
+\subsection*{A2. MongoDB: ¿Incrustar o Referenciar? (RA7-CE.c)}
+\begin{itemize}
+    \item \textbf{Incrustar (Embedding):} Metes los datos relacionados dentro del mismo JSON. Es la opción por defecto. Úsalo si los datos se leen siempre juntos (ej. las piezas de un motor dentro del documento del coche).
+    \item \textbf{Referenciar (Linking):} Guardas solo el ID. Úsalo solo si el dato \enquote{hijo} crece sin parar (millones de logs) o si se comparte entre muchos padres y cambia constantemente.
+\end{itemize}
+
+\subsection*{A3. Redis: Más allá del Texto (Key-Value avanzado)}
+\begin{itemize}
+    \item \textbf{HASHES:} No guardes un objeto como un JSON gigante. Usa \texttt{HSET}. Permite editar solo un campo (ej. bajar la batería un 1\%) sin tener que reescribir todo el coche en memoria.
+    \item \textbf{TTL (Time To Live):} Fundamental para sesiones. Si la IA no usa \texttt{EXPIRE}, la memoria se llenará de sesiones de usuarios que ya se fueron hace días.
+\end{itemize}
+
+\subsection*{A4. Neo4j: Las Relaciones son Ciudadanos de Primera}
+\begin{itemize}
+    \item \textbf{Semántica:} Las relaciones deben tener dirección y nombre. No es lo mismo \texttt{(User)-[:VIAJA\_EN]->(Coche)} que \texttt{(Coche)-[:PERTENECE\_A]->(User)}.
+    \item \textbf{Propiedades en Bordes:} Puedes guardar datos en la propia flecha (ej. la \texttt{distancia} de una ruta o la \texttt{fecha} de una amistad).
+\end{itemize}
+
+\end{document}
+

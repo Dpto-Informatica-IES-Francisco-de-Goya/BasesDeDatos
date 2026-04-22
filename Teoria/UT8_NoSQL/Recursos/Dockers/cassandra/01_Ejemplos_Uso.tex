@@ -1,0 +1,282 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\usepackage{longtable}
+\usepackage{calc}
+
+% Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\title{\textbf{Cassandra vs SQL: El cambio de mentalidad (Query-First)}}
+\author{Departamento de Informática}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{Cassandra vs SQL: El cambio de mentalidad (Query-First)}\label{cassandra-vs-sql-el-cambio-de-mentalidad-query-first}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Contexto de Negocio: Registro de Búsquedas (GloboTour)}\label{contexto-de-negocio-registro-de-buxfasquedas-globotour}
+
+En la plataforma \textbf{GloboTour}, miles de usuarios realizan búsquedas de destinos cada segundo. Guardar esto en una base de datos relacional (como MySQL) bloquearía las tablas debido al alto volumen de escritura.
+
+Usamos \textbf{Cassandra} para este módulo de \enquote{Logs de Búsqueda} porque:
+\begin{enumerate}
+    \item \textbf{Escalabilidad}: Podemos añadir servidores fácilmente si el tráfico sube.
+    \item \textbf{Escritura ultra-rápida}: Cassandra está diseñada para insertar millones de registros sin despeinarse.
+    \item \textbf{Consulta específica}: El equipo de Marketing necesita ver rápidamente el historial de un usuario para ofrecerle ofertas personalizadas.
+\end{enumerate}
+
+\subsubsection{El Modelo de Datos Creado}
+
+La tabla \texttt{user\_search\_logs} está diseñada para responder a: \textbf{\enquote{¿Qué ha buscado el usuario X recientemente?}}
+
+\begin{itemize}
+    \item \textbf{Partition Key (\texttt{user\_id})}: Agrupa todas las búsquedas de un usuario en el mismo nodo.
+    \item \textbf{Clustering Key (\texttt{search\_time})}: Ordena esas búsquedas automáticamente de la más reciente a la más antigua.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{1. La Gran Diferencia: ¿Dónde están mis JOINs?}\label{la-gran-diferencia-duxf3nde-estuxe1n-mis-joins}
+
+En SQL normalizamos para evitar duplicar datos. En Cassandra \textbf{la duplicación es tu amiga} para ganar velocidad.
+
+\subsubsection{El problema del JOIN}
+
+\begin{itemize}
+    \item \textbf{SQL}: Tienes una tabla \texttt{usuarios} y una tabla \texttt{busquedas}. Para saber qué búsquedas hizo \enquote{Víctor}, haces un \texttt{JOIN}.
+    \item \textbf{Cassandra}: \textbf{NO existen los JOINs}. Cruzar datos entre nodos en un cluster de 100 servidores sería lentísimo.
+\end{itemize}
+
+\subsubsection{La solución: Desnormalización (Duplicar info)}
+
+Si quieres mostrar el nombre del usuario junto a su búsqueda, \textbf{guardas el nombre del usuario dentro de la tabla de búsquedas}, aunque se repita 1000 veces.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Comparativa de Modelado (Caso GloboTour)}\label{comparativa-de-modelado-caso-globotour}
+
+Imagina que queremos saber: 1. \enquote{Todas las búsquedas del usuario X}. 2. \enquote{Todas las búsquedas que se han hecho al destino \enquote{París}}.
+
+\subsubsection{En SQL (Relacional)}
+
+Tendrías una sola tabla y harías:
+
+\begin{lstlisting}[language=SQL]
+SELECT * FROM busquedas WHERE usuario_id = 'user1'; -- Indice en usuario_id
+SELECT * FROM busquedas WHERE destino = 'Paris';   -- Indice en destino
+\end{lstlisting}
+
+\subsubsection{En Cassandra (Columnar)}
+
+Necesitas \textbf{DOS TABLAS} para los mismos datos:
+
+\paragraph{Tabla A: Optimizada para buscar por USUARIO}
+
+\begin{lstlisting}[language=CQL]
+CREATE TABLE busquedas_por_usuario (
+    usuario_id text,
+    fecha timestamp,
+    destino text,
+    nombre_usuario text,  -- DATO DUPLICADO (Desnormalizado)
+    PRIMARY KEY (usuario_id, fecha)
+) WITH CLUSTERING ORDER BY (fecha DESC);
+\end{lstlisting}
+
+\paragraph{Tabla B: Optimizada para buscar por DESTINO}
+
+\begin{lstlisting}[language=CQL]
+CREATE TABLE busquedas_por_destino (
+    destino text,
+    fecha timestamp,
+    usuario_id text,
+    PRIMARY KEY (destino, fecha)
+);
+\end{lstlisting}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{¿Qué pasa si necesito un JOIN \enquote{sí o sí}?}\label{quuxe9-pasa-si-necesito-un-join-suxed-o-suxed}
+
+Si te encuentras en una situación donde necesitas datos de dos tablas, tienes tres caminos en Cassandra:
+
+\begin{enumerate}
+    \item \textbf{Duplicar la información (Recomendado)}: Añade las columnas que necesites de la Tabla B en la Tabla A en el momento de la inserción. (Espacio en disco barato vs Tiempo de CPU caro).
+    \item \textbf{JOIN en la Aplicación}: Tu programa (Python/Java) hace una consulta a la Tabla A, obtiene un ID, y luego hace otra consulta a la Tabla B. (Solo para datos que cambian poco).
+    \item \textbf{Tablas Complementarias}: Crear una tabla específica para esa \enquote{vista} concreta que necesitas.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{¿Hay Foreign Keys (FK) en Cassandra?}\label{hay-foreign-keys-fk-en-cassandra}
+
+\textbf{NO.} No existe la integridad referencial.
+
+\begin{itemize}
+    \item \textbf{¿Por qué?}: En un sistema distribuido, comprobar si un ID existe en otro nodo antes de insertar un dato sería extremadamente lento.
+    \item \textbf{Consecuencia}: Puedes insertar una búsqueda para un \texttt{usuario\_id} que no existe.
+    \item \textbf{Responsabilidad}: La integridad de los datos recae ahora en el \textbf{programador} (la lógica de la aplicación), no en la base de datos.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Ejemplos de consultas que NO puedes hacer (y por qué)}\label{ejemplos-de-consultas-que-no-puedes-hacer-y-por-quuxe9}
+
+\subsubsection{Error 1: Filtrar por algo que no es Clave de Partición}
+
+\begin{lstlisting}[language=CQL]
+-- ESTO DARA ERROR
+SELECT * FROM busquedas_por_usuario WHERE destino = 'Madrid';
+\end{lstlisting}
+
+\begin{itemize}
+    \item \textbf{Por qué}: Cassandra no sabe en qué nodo está \enquote{Madrid}. Tendría que escanear todo el cluster.
+    \item \textbf{Solución}: Crear la tabla \texttt{busquedas\_por\_destino}.
+\end{itemize}
+
+\subsubsection{Error 2: Usar el Operador \enquote{OR}}
+
+\begin{lstlisting}[language=CQL]
+-- ESTO NO EXISTE EN CASSANDRA
+SELECT * FROM busquedas_por_usuario WHERE usuario_id = 'u1' OR usuario_id = 'u2';
+\end{lstlisting}
+
+\begin{itemize}
+    \item \textbf{Por qué}: Cada usuario puede estar en un servidor distinto. Las consultas deben ser precisas.
+    \item \textbf{Solución}: Usar el operador \texttt{IN} o hacer dos consultas separadas.
+\end{itemize}
+
+\subsubsection{Error 3: El \enquote{SELECT COUNT(*)}}
+
+\begin{lstlisting}[language=CQL]
+-- ESTO ES MUY LENTO
+SELECT COUNT(*) FROM busquedas_por_usuario;
+\end{lstlisting}
+
+\begin{itemize}
+    \item \textbf{Por qué}: Cassandra tiene que recorrer todos los nodos.
+    \item \textbf{Alternativa (Contadores)}: Crear una tabla específica de tipo \texttt{counter}.
+\end{itemize}
+
+\begin{lstlisting}[language=CQL]
+CREATE TABLE estadisticas_destino (
+    destino text PRIMARY KEY,
+    total counter
+);
+
+-- Actualizar el contador (no se usa INSERT, sino UPDATE)
+UPDATE estadisticas_destino SET total = total + 1 WHERE destino = 'Paris';
+\end{lstlisting}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Consultas que SÍ puedes hacer (y cómo pensar en ellas)}\label{consultas-que-si-puedes-hacer}
+
+\begin{tcolorbox}[title=Paso previo obligatorio, colframe=red!75!black]
+Antes de lanzar cualquier consulta en la consola (\texttt{cqlsh}), debes seleccionar el Keyspace de la empresa:
+\begin{lstlisting}[language=CQL]
+USE globotour;
+\end{lstlisting}
+Si no lo haces, Cassandra te devolverá el error: \textit{\enquote{No keyspace has been specified}}.
+\end{tcolorbox}
+
+Para que una consulta funcione en Cassandra, siempre debemos empezar por la \textbf{Partition Key}. En nuestra tabla \texttt{busquedas\_por\_usuario}, la PK es \texttt{user\_id}.
+
+\subsubsection{Buscar todas las búsquedas de un usuario específico}
+Esta es la consulta para la que se diseñó la tabla. Es instantánea.
+
+\begin{lstlisting}[language=CQL]
+SELECT * FROM busquedas_por_usuario 
+WHERE user_id = 'user_1';
+\end{lstlisting}
+
+\subsubsection{Buscar en un rango de tiempo (Clustering Column)}
+Como \texttt{search\_time} es una clustering column, podemos hacer filtros de rango \textbf{siempre que hayamos fijado el usuario primero}.
+
+\begin{lstlisting}[language=CQL]
+-- Búsquedas de user_1 realizadas después del 15 de abril
+SELECT * FROM busquedas_por_usuario 
+WHERE user_id = 'user_1' 
+  AND search_time > '2026-04-15 00:00:00';
+\end{lstlisting}
+
+\subsubsection{Limitar resultados (Top N)}
+Gracias al orden físico (\texttt{CLUSTERING ORDER BY search\_time DESC}), obtener las últimas búsquedas es muy eficiente.
+
+\begin{lstlisting}[language=CQL]
+-- Las 3 últimas búsquedas de user_7
+SELECT * FROM busquedas_por_usuario 
+WHERE user_id = 'user_7' 
+LIMIT 3;
+\end{lstlisting}
+
+\subsubsection{El truco del ALLOW FILTERING (Uso con precaución)}
+Si realmente necesitas buscar por algo que no es clave (como el destino), Cassandra te permite forzarlo, pero te advierte que será lento en un entorno real.
+
+\begin{lstlisting}[language=CQL]
+-- Buscar búsquedas a Madrid de CUALQUIER usuario
+SELECT * FROM busquedas_por_usuario 
+WHERE destino = 'Madrid' 
+ALLOW FILTERING;
+\end{lstlisting}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Visualización Profesional con CloudBeaver}\label{visualizacion}
+Para ver cómo se organizan los datos realmente en el clúster:
+\begin{enumerate}
+    \item Abre \url{http://localhost:8978}.
+    \item Selecciona la conexión \textbf{GloboTour}.
+    \item Explora la tabla \texttt{busquedas\_por\_usuario}. Verás que los datos están agrupados por partición, lo cual es la clave del rendimiento de Cassandra.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Desafíos de Aprendizaje (Para practicar en clase)}\label{desafuxedos-de-aprendizaje-para-practicar-en-clase}
+
+\begin{enumerate}
+    \item \textbf{La Consulta Prohibida}: Intenta buscar una búsqueda filtrando solo por \texttt{destino} en la tabla \texttt{busquedas\_por\_usuario}. ¿Qué error te da Cassandra? ¿Cómo lo solucionarías profesionalmente?
+    \item \textbf{Orden Físico}: Inserta tres búsquedas para el mismo usuario pero con fechas muy distintas. Haz un \texttt{SELECT}. ¿En qué orden aparecen? ¿Por qué?
+    \item \textbf{Integridad entre Tablas}: Si duplicamos los datos en dos tablas (\texttt{busquedas\_por\_usuario} y \texttt{busquedas\_por\_destino}), ¿cómo asegura Cassandra que si borro un registro en una se borre en la otra?
+    \item \textbf{Ampliación Avanzada}: Una vez dominados estos conceptos básicos, dirígete al \textbf{02-Laboratorio\_QueryFirst.tex} para aprender patrones industriales como Series Temporales y TTL.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Solucionario de Desafíos}\label{solucionario-desafios}
+
+\begin{tcolorbox}[title=Solución Desafío 1: El Filtro Imposible]
+Si ejecutas \texttt{SELECT * FROM busquedas\_por\_usuario WHERE destino = 'Madrid';}, obtendrás un error indicando que Cassandra no puede realizar el escaneo (\textit{Cannot execute this query as it might involve data filtering and thus may have unpredictable performance}).
+
+\textbf{Solución Profesional:} Crear una tabla específica para esa pregunta:
+\begin{lstlisting}[language=CQL]
+CREATE TABLE busquedas_por_destino (
+    destino text,
+    search_time timestamp,
+    user_id text,
+    PRIMARY KEY (destino, search_time)
+);
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Solución Desafío 2: El Orden de los Datos]
+Al hacer el \texttt{SELECT}, las búsquedas aparecerán ordenadas de \textbf{más reciente a más antigua}.
+
+\textbf{Por qué:} En la definición de la tabla incluimos la cláusula \texttt{WITH CLUSTERING ORDER BY (search\_time DESC)}. Cassandra guarda los datos físicamente en ese orden dentro del disco de cada nodo, lo que hace que recuperar el historial reciente sea extremadamente rápido.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Solución Desafío 3: Coherencia y ACID]
+\textbf{Respuesta Corta:} No lo hace. Cassandra no tiene claves ajenas (FK) ni transacciones ACID entre tablas.
+
+\textbf{Explicación:} Si borras un dato en una tabla, la otra seguirá teniéndolo a menos que tu aplicación haga los dos borrados. Para asegurar que ambos cambios ocurren \enquote{a la vez} o no ocurre ninguno, Cassandra ofrece los \textbf{BATCHES} (lotes), aunque su uso excesivo puede bajar el rendimiento. En el mundo NoSQL, se suele aceptar la \enquote{Consistencia Eventual}. ¿Recuerdas lo que es?
+\end{tcolorbox}
+
+\end{document}

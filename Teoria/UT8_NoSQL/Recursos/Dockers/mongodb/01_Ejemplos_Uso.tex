@@ -1,0 +1,159 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\usepackage{longtable}
+\usepackage{calc}
+
+% Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\title{\textbf{MongoDB en GloboTour: El Catálogo Flexible}}
+\author{Departamento de Informática}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{MongoDB en GloboTour: El Catálogo Flexible}
+
+En \textbf{GloboTour}, el catálogo de experiencias crece cada día.
+Tenemos desde cursos de cocina hasta alquiler de yates. Usamos MongoDB
+porque nos permite guardar cada experiencia con sus propios campos sin
+complicaciones.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Conceptos Clave (Teoría)}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule
+Concepto SQL & Concepto MongoDB & Descripción \\
+\midrule
+\endhead
+\textbf{Tabla} & \textbf{Colección} & Agrupación de documentos (no requiere esquema fijo). \\
+\textbf{Fila} & \textbf{Documento} & Registro individual en formato \textbf{BSON} (JSON binario). \\
+\textbf{Columna} & \textbf{Campo} & Par Clave-Valor dentro de un documento. \\
+\bottomrule
+\end{longtable}
+
+\subsubsection{El dilema del Modelado: ¿Embeber o Referenciar?}
+
+A diferencia de SQL (donde normalizamos), en MongoDB tenemos dos opciones:
+\begin{enumerate}
+    \item \textbf{Embeber (Denormalizar)}: Metemos los datos dentro del documento (ej: los detalles técnicos dentro de la experiencia). Es más rápido para leer.
+    \item \textbf{Referenciar (Normalizar)}: Guardamos un ID de otro documento. Se usa si los datos crecen mucho (ej: miles de comentarios en un post).
+\end{enumerate}
+
+\textbf{¡Ojo con los Tipos de Datos!}: En MongoDB, \texttt{String} y \texttt{Number} \textbf{no son lo mismo}. Si guardas el precio como texto, las consultas de \enquote{mayor que} (\texttt{\$gt}) no funcionarán como esperas.
+
+\textbf{Tip de Depuración}: Si tu consulta no devuelve nada:
+\begin{enumerate}
+    \item Asegúrate de estar en la base de datos correcta: \texttt{globotour}.
+    \item Comprueba el tipo de dato real con: \texttt{typeof}.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Visualización con Mongo Express (GUI)}
+
+\begin{enumerate}
+    \item Abre tu navegador en \url{http://localhost:8081}.
+    \item \textbf{Login}: Usuario: \texttt{admin} / Password: \texttt{pass}.
+    \item \textbf{Navegación}: Haz clic en la base de datos \texttt{globotour} y luego en la colección \texttt{experiencias} para explorar los documentos JSON.
+    \item \textbf{Editor Visual}: Puedes editar el JSON directamente desde la web para probar cambios rápidos sin escribir comandos.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Operaciones Básicas (CRUD)}\label{mql}
+
+
+
+\subsubsection{Inserción de Documentos (Create)}
+\begin{lstlisting}[language=JavaScript]
+// Insertar una nueva experiencia individual
+db.experiencias.insertOne({
+  nombre: "Cena a ciegas",
+  tipo: "Gastronomia",
+  precio: 65,
+  tags: ["romantico", "sensorial"]
+})
+\end{lstlisting}
+
+\subsubsection{Consultas de Lectura (Read)}
+\begin{lstlisting}[language=JavaScript]
+// Sacar todas las experiencias
+db.experiencias.find()
+
+// Buscar por coincidencia exacta y operadores
+db.experiencias.find({ precio: { $in: [25, 45, 80] } })
+
+// Buscar documentos que TIENEN un campo concreto
+db.experiencias.find({ detalles: { $exists: true } })
+\end{lstlisting}
+
+\subsubsection{Actualización de Datos (Update)}
+\begin{lstlisting}[language=JavaScript]
+// Modificar un campo específico ($set)
+db.experiencias.updateOne(
+  { nombre: "Cena a ciegas" },
+  { $set: { precio: 70, dificultad: "Baja" } }
+)
+
+// Añadir un elemento a un array ($push)
+db.experiencias.updateOne(
+  { nombre: "Cena a ciegas" },
+  { $push: { tags: "popular" } }
+)
+\end{lstlisting}
+
+\subsubsection{Borrado de Datos (Delete)}
+\begin{lstlisting}[language=JavaScript]
+// Borrar un documento concreto
+db.experiencias.deleteOne({ nombre: "Cena a ciegas" })
+\end{lstlisting}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Desafíos de Aprendizaje}\label{desafios}
+
+\begin{enumerate}
+    \item \textbf{Esquema Flexible}: Inserta una nueva experiencia con campos únicos (por ejemplo, un \texttt{"curso de surf"} con un instructor (\texttt{"Nacho"}) y materiales incluidos (\texttt{material\_incluido: ["tabla","neopreno"]}). Comprueba que MongoDB la acepta sin necesidad de alterar ninguna tabla.
+    \item \textbf{Proyecciones}: Modifica una consulta \texttt{find} para que solo devuelva el nombre del producto, ocultando el \texttt{\_id}.
+    \item \textbf{Ampliación Avanzada}: Una vez comprendida la base, dirígete al \textbf{02-Laboratorio\_Agregaciones.tex} para dominar el Pipeline de Agregación y el análisis complejo de datos.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Solucionario de Desafíos}\label{solucionario-mongodb}
+
+\begin{tcolorbox}[title=Solución Desafío 1: Esquema Flexible]
+Podemos añadir campos que no existen en otros documentos, como \texttt{instructor} o \texttt{material\_incluido}:
+\begin{lstlisting}[language=JavaScript]
+db.experiencias.insertOne({
+  nombre: "Curso de Surf",
+  instructor: "Nacho",
+  material_incluido: ["tabla", "neopreno"],
+  precio: 40
+})
+\end{lstlisting}
+Si haces un \texttt{db.experiencias.find()}, verás que este documento convive perfectamente con los demás.
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Solución Desafío 2: Proyecciones]
+El segundo parámetro de \texttt{find()} permite elegir qué campos mostrar (\texttt{1}) u ocultar (\texttt{0}). El \texttt{\_id} es el único que se muestra siempre a menos que se oculte explícitamente:
+\begin{lstlisting}[language=JavaScript]
+// Mostrar solo nombre (1) y ocultar id (0)
+db.experiencias.find({}, { nombre: 1, _id: 0 })
+\end{lstlisting}
+\end{tcolorbox}
+
+\end{document}

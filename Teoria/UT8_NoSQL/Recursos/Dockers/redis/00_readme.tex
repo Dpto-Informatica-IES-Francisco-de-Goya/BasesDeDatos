@@ -1,0 +1,119 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\usepackage{longtable}
+\usepackage{calc}
+
+% Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\title{\textbf{Redis en Docker - UT8 NoSQL}}
+\author{Departamento de Informática}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\hypertarget{redis-en-docker---ut8-nosql}{%
+\section{Redis en Docker - UT8
+NoSQL}\label{redis-en-docker---ut8-nosql}}
+
+Este entorno permite trabajar con \textbf{Redis}, una base de datos NoSQL de tipo \textbf{Clave-Valor}.
+
+\hypertarget{contenidos}{%
+\subsection{Contenidos}\label{contenidos}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Redis Server}: El motor de base de datos en el puerto
+  \texttt{6379}.
+\item
+  \textbf{RedisInsight}: Interfaz gráfica para visualizar los datos en
+  el puerto \texttt{5540}.
+\item
+  \textbf{Directorio \texttt{src}}: Contiene
+  \texttt{datos\_iniciales.redis} con +1000 registros
+  para prácticas de carga masiva.
+\end{enumerate}
+
+\hypertarget{instrucciones-de-uso}{%
+\subsection{Instrucciones de uso}\label{instrucciones-de-uso}}
+
+\subsubsection{Configuración del Entorno (Docker Compose)}\label{configuracion-del-entorno}
+
+Este archivo define los servicios necesarios para la práctica:
+
+\begin{lstlisting}[language=YAML]
+services:
+  redis:
+    image: redis:latest
+    container_name: redis-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./src:/src
+    restart: always
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
+    restart: always
+
+volumes:
+  redis_data:
+\end{lstlisting}
+
+\subsubsection{Puesta en marcha}\label{puesta-en-marcha}
+
+Para arrancar el servicio:
+
+\begin{lstlisting}[language=bash]
+docker compose up -d
+\end{lstlisting}
+
+Para realizar la carga masiva del catálogo inicial (que necesitarás para
+la práctica):
+
+\begin{lstlisting}[language=bash]
+docker exec -i redis-server redis-cli < src/datos_iniciales.redis
+\end{lstlisting}
+
+Para acceder a la consola de Redis (CLI):
+
+\begin{lstlisting}[language=bash]
+docker exec -it redis-server redis-cli
+\end{lstlisting}
+
+Para acceder a la interfaz gráfica: Abre tu navegador en
+\texttt{http://localhost:5540}.
+
+\hypertarget{comandos-buxe1sicos-para-practicar}{%
+\subsection{Comandos Básicos para
+practicar}\label{comandos-buxe1sicos-para-practicar}}
+
+\begin{lstlisting}
+SET user:105:nombre "Víctor"
+GET user:105:nombre
+INCR metricas:visitas:inicio
+LPUSH busquedas:recientes "Paris"
+LPUSH busquedas:recientes "Roma"
+LRANGE busquedas:recientes 0 -1
+\end{lstlisting}
+
+\section{Ejemplos de uso}
+
+Consulta los ejemplos de uso de la empresa Globotour en \texttt{01\_Ejemplos\_Uso.pdf}.
+
+\end{document}
