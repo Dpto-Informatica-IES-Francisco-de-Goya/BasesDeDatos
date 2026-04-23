@@ -17,7 +17,7 @@ def clean_name(name):
     return name.capitalize()
 
 def generate_pdf_list(root_dir):
-    pdf_files = []
+    tree = {}
     for root, dirs, files in os.walk(root_dir):
         # Ignore hidden directories
         dirs[:] = [d for d in dirs if not d.startswith('.')]
@@ -25,27 +25,36 @@ def generate_pdf_list(root_dir):
             if file.lower().endswith('.pdf'):
                 full_path = os.path.join(root, file)
                 rel_path = os.path.relpath(full_path, root_dir)
-                pdf_files.append(rel_path)
-    
-    pdf_files.sort()
-    
-    lines = []
-    current_dir = ""
-    for pdf in pdf_files:
-        dirname = os.path.dirname(pdf)
-        filename = os.path.basename(pdf)
+                parts = rel_path.split(os.sep)
+                
+                curr = tree
+                for part in parts[:-1]:
+                    if 'sub' not in curr: curr['sub'] = {}
+                    if part not in curr['sub']:
+                        curr['sub'][part] = {}
+                    curr = curr['sub'][part]
+                
+                if 'files' not in curr: curr['files'] = []
+                curr['files'].append((parts[-1], rel_path))
+
+    def render_tree(node, depth=0):
+        lines = []
+        indent = "  " * depth
         
-        if dirname != current_dir:
-            if dirname:
-                lines.append(f"\n### {dirname}\n")
-            current_dir = dirname
+        if 'sub' in node:
+            for dirname in sorted(node['sub'].keys()):
+                lines.append(f"{indent}- **{dirname}**")
+                lines.extend(render_tree(node['sub'][dirname], depth + 1))
         
-        display_name = clean_name(filename)
-        # URL encode the path for the link
-        encoded_pdf = urllib.parse.quote(pdf)
-        lines.append(f"- [{display_name}]({encoded_pdf})")
-    
-    return "\n".join(lines)
+        if 'files' in node:
+            for filename, rel_path in sorted(node['files']):
+                display_name = clean_name(filename)
+                encoded_path = urllib.parse.quote(rel_path)
+                lines.append(f"{indent}- [{display_name}]({encoded_path})")
+        
+        return lines
+
+    return "\n".join(render_tree(tree))
 
 def update_readme(readme_path, pdf_list_content):
     with open(readme_path, 'r', encoding='utf-8') as f:
