@@ -11,45 +11,45 @@ Repositorio de las asignaturas de Bases de Datos de 1º de DAM, DAW y ASIR (Gest
 
 ### Prácticas (antes Ejercicios)/00_Selects/04 - Tipos de JOIN/Guia
 
-- [Guia tipos join](Prácticas (antes Ejercicios)/00_Selects/04 - Tipos de JOIN/Guia/guia_tipos_join.pdf)
+- [Guia tipos join](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/00_Selects/04%20-%20Tipos%20de%20JOIN/Guia/guia_tipos_join.pdf)
 
 ### Prácticas (antes Ejercicios)/00_Selects/05 - Subconsultas
 
-- [Guia sub consultas](Prácticas (antes Ejercicios)/00_Selects/05 - Subconsultas/guia_sub_consultas.pdf)
+- [Guia sub consultas](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/00_Selects/05%20-%20Subconsultas/guia_sub_consultas.pdf)
 
 ### Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3
 
-- [Enunciado general](Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3/Enunciado_general.pdf)
+- [Enunciado general](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/01_Creaci%C3%B3nBBDD/Sistemas/P3/Enunciado_general.pdf)
 
 ### Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3/assets/pdf
 
-- [Contrato marco cliente](Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3/assets/pdf/contrato_marco_cliente.pdf)
-- [Informe peritaje accidente](Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3/assets/pdf/informe_peritaje_accidente.pdf)
-- [Manifiesto carga 01](Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3/assets/pdf/manifiesto_carga_01.pdf)
-- [Poliza seguro maritimo](Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3/assets/pdf/poliza_seguro_maritimo.pdf)
+- [Contrato marco cliente](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/01_Creaci%C3%B3nBBDD/Sistemas/P3/assets/pdf/contrato_marco_cliente.pdf)
+- [Informe peritaje accidente](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/01_Creaci%C3%B3nBBDD/Sistemas/P3/assets/pdf/informe_peritaje_accidente.pdf)
+- [Manifiesto carga 01](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/01_Creaci%C3%B3nBBDD/Sistemas/P3/assets/pdf/manifiesto_carga_01.pdf)
+- [Poliza seguro maritimo](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/01_Creaci%C3%B3nBBDD/Sistemas/P3/assets/pdf/poliza_seguro_maritimo.pdf)
 
 ### Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3/src
 
-- [Orbita comercial](Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3/src/orbita_comercial.pdf)
-- [Orbita documental](Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3/src/orbita_documental.pdf)
-- [Orbita flota](Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3/src/orbita_flota.pdf)
-- [Orbita telemetria](Prácticas (antes Ejercicios)/01_CreaciónBBDD/Sistemas/P3/src/orbita_telemetria.pdf)
+- [Orbita comercial](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/01_Creaci%C3%B3nBBDD/Sistemas/P3/src/orbita_comercial.pdf)
+- [Orbita documental](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/01_Creaci%C3%B3nBBDD/Sistemas/P3/src/orbita_documental.pdf)
+- [Orbita flota](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/01_Creaci%C3%B3nBBDD/Sistemas/P3/src/orbita_flota.pdf)
+- [Orbita telemetria](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/01_Creaci%C3%B3nBBDD/Sistemas/P3/src/orbita_telemetria.pdf)
 
 ### Prácticas (antes Ejercicios)/02_Modificacion/P1
 
-- [Practica Avanzada GHA](Prácticas (antes Ejercicios)/02_Modificacion/P1/Practica_Avanzada_GHA.pdf)
+- [Practica Avanzada GHA](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/02_Modificacion/P1/Practica_Avanzada_GHA.pdf)
 
 ### Prácticas (antes Ejercicios)/02_Modificacion/P2
 
-- [Practica BigData Saneamiento](Prácticas (antes Ejercicios)/02_Modificacion/P2/Practica_BigData_Saneamiento.pdf)
+- [Practica BigData Saneamiento](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/02_Modificacion/P2/Practica_BigData_Saneamiento.pdf)
 
 ### Prácticas (antes Ejercicios)/08_NoSQL
 
-- [03 Practica Evaluacion NoSQL](Prácticas (antes Ejercicios)/08_NoSQL/03_Practica_Evaluacion_NoSQL.pdf)
+- [03 Practica Evaluacion NoSQL](Pr%C3%A1cticas%20%28antes%20Ejercicios%29/08_NoSQL/03_Practica_Evaluacion_NoSQL.pdf)
 
 ### Teoria/UT0/00_Introducción
 
-- [00 intro](Teoria/UT0/00_Introducción/00_intro.pdf)
+- [00 intro](Teoria/UT0/00_Introducci%C3%B3n/00_intro.pdf)
 
 ### Teoria/UT1/01_IntroER_Multitabla
 
@@ -81,7 +81,7 @@ Repositorio de las asignaturas de Bases de Datos de 1º de DAM, DAW y ASIR (Gest
 
 ### Teoria/UT6_SGBD
 
-- [UT 1. Sistemas de gestores de bases de datos](Teoria/UT6_SGBD/UT 1. Sistemas de gestores de bases de datos.pdf)
+- [UT 1. Sistemas de gestores de bases de datos](Teoria/UT6_SGBD/UT%201.%20Sistemas%20de%20gestores%20de%20bases%20de%20datos.pdf)
 
 ### Teoria/UT7_ASIR
 
@@ -129,9 +129,9 @@ Repositorio de las asignaturas de Bases de Datos de 1º de DAM, DAW y ASIR (Gest
 ### Teoria/UT8_NoSQL/src
 
 - [LearnCasandra](Teoria/UT8_NoSQL/src/LearnCasandra.pdf)
-- [NoSQL Distilled](Teoria/UT8_NoSQL/src/NoSQL Distilled.pdf)
-- [Pratical Cassandra](Teoria/UT8_NoSQL/src/Pratical Cassandra.pdf)
-- [Redis Cookbook   Macedo, Oliverira   O'Reilly (2011)](Teoria/UT8_NoSQL/src/Redis Cookbook - Macedo, Oliverira - O'Reilly (2011).pdf)
+- [NoSQL Distilled](Teoria/UT8_NoSQL/src/NoSQL%20Distilled.pdf)
+- [Pratical Cassandra](Teoria/UT8_NoSQL/src/Pratical%20Cassandra.pdf)
+- [Redis Cookbook   Macedo, Oliverira   O'Reilly (2011)](Teoria/UT8_NoSQL/src/Redis%20Cookbook%20-%20Macedo%2C%20Oliverira%20-%20O%27Reilly%20%282011%29.pdf)
 - [Redis For Dummies FINAL](Teoria/UT8_NoSQL/src/Redis-For-Dummies_FINAL.pdf)
 
 ### Teoria

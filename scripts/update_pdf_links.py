@@ -1,5 +1,6 @@
 import os
 import re
+import urllib.parse
 
 def clean_name(name):
     # Remove extension
@@ -8,6 +9,9 @@ def clean_name(name):
     name = name.replace('_', ' ').replace('-', ' ')
     # If the name is already somewhat formatted (has uppercase), keep it
     if any(c.isupper() for c in name):
+        # But if it's all uppercase and long, maybe it's just a shouty filename
+        if name.isupper() and len(name) > 5:
+            return name.capitalize()
         return name
     # Otherwise capitalize it
     return name.capitalize()
@@ -37,7 +41,9 @@ def generate_pdf_list(root_dir):
             current_dir = dirname
         
         display_name = clean_name(filename)
-        lines.append(f"- [{display_name}]({pdf})")
+        # URL encode the path for the link
+        encoded_pdf = urllib.parse.quote(pdf)
+        lines.append(f"- [{display_name}]({encoded_pdf})")
     
     return "\n".join(lines)
 
