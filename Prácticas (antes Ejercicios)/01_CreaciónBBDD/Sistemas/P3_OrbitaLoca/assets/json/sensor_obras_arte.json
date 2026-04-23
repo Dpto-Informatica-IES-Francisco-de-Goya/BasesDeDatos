@@ -1,0 +1,12 @@
+{
+  "sensor_id": "ART-004-VIP",
+  "metadata": { "firmware": "v3.0.0", "encryption": "AES-256" },
+  "readings": {
+    "temperature": 21.0,
+    "humidity": 50.0,
+    "vibration_level": 0.02,
+    "light_exposure": 0,
+    "tilt_angle": 0.1
+  },
+  "alerts": ["low_battery_warning"]
+}
