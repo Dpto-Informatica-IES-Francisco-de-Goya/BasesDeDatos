@@ -1,0 +1,192 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+% xcolor ya lo carga goyabase, no lo declaramos de nuevo para evitar Option clash
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{csquotes}
+
+% Definicion de colores que podrian faltar
+\definecolor{grisclaro}{gray}{0.9}
+
+% Configuracion de listings para comandos SQL y Bash
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!10},
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!40!black},
+    stringstyle=\color{orange},
+    showstringspaces=false,
+    inputencoding=utf8,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {¿}{{\textquestiondown}}1 {¡}{{\textexclamdown}}1
+}
+
+\begin{document}
+
+\section{Memoria técnica}
+
+\subsection{Comandos a utilizar:}
+
+\subsubsection{Crear copia de seguridad completa}
+\begin{lstlisting}[language=bash]
+mysqldump -u admin -p1234 logistica_global > 00_copia_inicial.sql
+\end{lstlisting}
+
+\subsubsection{Cargar la copia de seguridad completa}
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global < 00_copia_inicial.sql
+\end{lstlisting}
+
+\subsubsection{Crear una copia de seguridad incremental}
+Rotamos los logs con:
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 -e "FLUSH LOGS;" 
+\end{lstlisting}
+
+Generamos la copia de seguridad:
+\begin{lstlisting}[language=bash]
+mysqlbinlog --read-from-remote-server -u admin -p1234 -h localhost binlog.??????
+\end{lstlisting}
+
+\subsection{Proceso de creación:}
+
+\subsubsection{1.1 Copia de seguridad completa}
+\begin{lstlisting}[language=bash]
+mysqldump -u admin -p1234 logistica_global > 00_copia_inicial.sql
+\end{lstlisting}
+
+\subsubsection{Rotación de logs}
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 -e "FLUSH LOGS;" 
+\end{lstlisting}
+
+\subsubsection{Resuelvo el ejercicio 1}
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global < limpieza/p1_asir.sql
+\end{lstlisting}
+
+\subsubsection{Rotación de logs}
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 -e "FLUSH LOGS;" 
+\end{lstlisting}
+para garantizar que no hay más ejecuciones sql en la copia de seguridad.
+
+\subsubsection{¿Qué log me interesa?}
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 -e "SHOW MASTER STATUS;" 
+\end{lstlisting}
+Respuesta: binlog.000948 (en este entorno).
+
+Por tanto en el binlog.000948 tengo la copia incremental del ejercicio 1.
+
+\subsubsection{1.2.a Creo la primera incremental}
+\begin{lstlisting}[language=bash]
+mysqlbinlog --read-from-remote-server -u admin -p1234 -h localhost binlog.000948 > 01_incremental_ejercicio1.sql
+\end{lstlisting}
+
+\subsubsection{Resuelvo el ejercicio 2}
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global < limpieza/p2_asir.sql 
+\end{lstlisting}
+
+\subsubsection{Rotación de logs}
+Cerramos el log 949 antes de hacer la copia.
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 -e "FLUSH LOGS;" 
+\end{lstlisting}
+
+\subsubsection{1.2.b Creo la incremental}
+\begin{lstlisting}[language=bash]
+mysqlbinlog --read-from-remote-server -u admin -p1234 -h localhost binlog.000949 > 02_incremental_ejercicio2.sql
+\end{lstlisting}
+
+\subsubsection{1.3 Creo la diferencial}
+\begin{lstlisting}[language=bash]
+mysqlbinlog --read-from-remote-server -u admin -p1234 -h localhost binlog.000948 binlog.000949 > 03_diferencial_ejers_1_y_2.sql
+\end{lstlisting}
+
+\subsubsection{Resuelvo el ejercicio 3}
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global < limpieza/p3_asir.sql 
+\end{lstlisting}
+
+\subsubsection{Rotación de logs}
+Cierro el log 950.
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 -e "FLUSH LOGS;" 
+\end{lstlisting}
+
+\subsubsection{1.4 Creo la incremental:}
+\begin{lstlisting}[language=bash]
+mysqlbinlog --read-from-remote-server -u admin -p1234 -h localhost binlog.000950 > 03_incremental_ejercicio3.sql
+\end{lstlisting}
+
+\subsection{1.5 Resumen de copias de seguridad}
+\begin{itemize}
+    \item \textbf{00\_copia\_inicial.sql}: copia de seguridad completa antes de resolver la limpieza.
+    \item \textbf{01\_incremental\_ejercicio1.sql}: copia de seguridad incremental desde la bbdd original que incluye la resolución del ejercicio 1.
+    \item \textbf{02\_incremental\_ejercicio2.sql}: copia de seguridad incremental desde la bbdd original que incluye la resolución del ejercicio 2.
+    \item \textbf{03\_diferencial\_ejers\_1\_y\_2.sql}: copia de seguridad diferencial que combina las incrementales de los ejercicios 1 y 2.
+    \item \textbf{03\_incremental\_ejercicio3.sql}: copia de seguridad incremental desde la bbdd original que incluye la resolución del ejercicio 3.
+\end{itemize}
+
+\subsection{Restaurar las copias de seguridad}
+Situado desde la carpeta donde están los backups:
+
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global < 00_copia_inicial.sql
+\end{lstlisting}
+
+Comprobamos que no hay la columna de coste:
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global -e "select coste_eur from mantenimientos_flota"
+\end{lstlisting}
+
+Restauramos la primera incremental:
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global < 01_incremental_ejercicio1.sql
+\end{lstlisting}
+
+Comprobamos que sí hay "coste\_eur":
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global -e "select coste_eur from mantenimientos_flota limit 1;"
+\end{lstlisting}
+
+Comprobamos que hay almacenes duplicados:
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global -e "select cod_almacen,count(id) from almacenes group by cod_almacen having count(id) > 1 limit 2;"
+\end{lstlisting}
+
+Restauramos la incremental del ejercicio 2:
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global < 02_incremental_ejercicio2.sql
+\end{lstlisting}
+
+Comprobamos que NO hay almacenes duplicados:
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global -e "select cod_almacen,count(id) from almacenes group by cod_almacen having count(id) > 1 limit 2;"
+\end{lstlisting}
+
+Para probar la diferencial, restauramos la base de datos inicial:
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global < 00_copia_inicial.sql
+mysql -u admin -p1234 logistica_global < 03_diferencial_ejers_1_y_2.sql 
+\end{lstlisting}
+
+Finalmente, restauramos la integridad del ejercicio 3:
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global < 03_incremental_ejercicio3.sql 
+\end{lstlisting}
+
+Comprobamos que no hay clientes inválidos:
+\begin{lstlisting}[language=bash]
+mysql -u admin -p1234 logistica_global -e "select count(*) from envios where cliente_id not in (select id from clientes);"
+\end{lstlisting}
+
+\end{document}

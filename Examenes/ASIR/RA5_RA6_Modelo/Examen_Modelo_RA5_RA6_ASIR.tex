@@ -1,0 +1,180 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyaexamen}
+
+\usepackage{graphicx}
+
+% Colores corporativos del examen
+
+% Ruta de imágenes
+\graphicspath{{../PlantillaExamenLaTeX/img/}}
+
+% Estilo de secciones
+
+% Configuración de listings
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+% -----------------------------------------------------------------------------
+% CABECERA OFICIAL
+% -----------------------------------------------------------------------------
+\noindent
+\begin{tabularx}{\textwidth}{|p{8.075cm}|X|X|p{5cm}|}
+    \hline
+    \textbf{IES FRANCISCO DE GOYA -- LA ELIPA} \par
+    DEPARTAMENTO DE INFORMÁTICA
+    & 
+    \begin{minipage}[c]{1.6cm}
+        \centering
+        \vspace{0.75cm}
+        \includegraphics[width=1.5cm, height=1.5cm, keepaspectratio]{logoUE.jpg}
+        \vspace{0.1cm}
+    \end{minipage}
+    & 
+    \begin{minipage}[c]{1.6cm}
+        \centering
+        \vspace{0.75cm}
+        \includegraphics[width=1.5cm, height=1.5cm, keepaspectratio]{logoBilingue.png}
+        \vspace{0.1cm}
+    \end{minipage}
+    & 
+    \begin{minipage}[c]{6.8cm}
+        \raisebox{-0.2\height}{\includegraphics[width=4.75cm, keepaspectratio]{logoCAM.png}}
+        \vspace{0.1cm}
+    \end{minipage}
+    \\ 
+\end{tabularx}
+
+% -----------------------------------------------------------------------------
+% TABLA DE DATOS
+% -----------------------------------------------------------------------------
+\noindent
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.2cm}|X|}
+    \hline
+    \textbf{Titulación:} & ASIR & \textbf{Curso:} & 1ºASIR - 2025/2026 \\ \hline
+    \textbf{Módulo:} & Gestión de Bases de Datos & \textbf{Fecha:} & Marzo 2026 \\ \hline
+    \textbf{Examen:} & RA5 y RA6 - Modificación y Backups & \textbf{Duración:} & 90 min \\ \hline
+    \cellcolor{grisclaro}\textbf{Calificación RA5:}& \cellcolor{grisclaro}& \cellcolor{grisclaro} \textbf{Calificación RA6:} & \cellcolor{grisclaro} \\ \hline
+    \textbf{Apellidos:}& & \textbf{Nombre:} & \\ \hline
+    \textbf{Nombre :} & \multicolumn{3}{l|}{} \\ \hline
+    \textbf{RAs:} & \multicolumn{3}{l|}{RA5 - Modifica información / RA6 - Aseguramiento de la información} \\ \hline
+\end{tabularx}
+
+\vspace{0.5cm}
+
+% -----------------------------------------------------------------------------
+% NORMAS E INSTRUCCIONES
+% -----------------------------------------------------------------------------
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+    \hline
+    \textbf{\underline{NORMAS E INSTRUCCIONES. LEER ATENTAMENTE, POR FAVOR}} \\
+    \begin{itemize}[label=$\blacksquare$, leftmargin=1cm, nosep, after=\vspace{0.2cm}]
+        \item \textbf{IMPORTANTE (DDL):} Recuerda que en MySQL, las sentencias \texttt{ALTER TABLE} o \texttt{CREATE TABLE} provocan un \texttt{COMMIT} implícito.
+        \item Uso obligatorio de \texttt{START TRANSACTION} y \texttt{COMMIT} para las operaciones de datos (\texttt{UPDATE/DELETE/INSERT}).
+        \item \textbf{DOBLE CALIFICACIÓN:} Este examen evalúa dos RAs diferentes de forma relativamente independiente. Por ese motivo, se calificarán los 2 RAs. Se indica en cada pregunta qué RA evalúa.
+
+        \item \textbf{Entregables:}
+        \begin{itemize}
+        \item Un único archivo .zip con lo siguiente:
+        \item Una memoria técnica con los comandos ejecutados y las capturas de pantalla de la terminal donde se evidencia la ejecución correcta de cada comando.
+        \item Una carpeta \texttt{backups} con los archivos de copias de seguridad para que pueda restaurarlo.
+        \item Una carpeta \texttt{limpieza} con los scrips de limpieza de la BBDD.
+        \end{itemize}
+
+    \end{itemize} \\ \hline
+\end{tabularx}
+
+\vspace{0.5cm}
+
+\section{RA6 - Copias de seguridad (10 puntos)}
+
+Los ejercicios de esa sección deben estar documentados en una memoria técnica que se entregará en PDF.
+
+
+\subsection{Tarea Previa: Copia de Seguridad Inicial \textcolor{RA6}{(RA6 - 1.5 ptos)}}
+\textbf{Archivo:} \texttt{backup\_completo\_inicial.sql} \\
+Antes de realizar cualquier modificación, realiza una \textbf{copia de seguridad completa} de la base de datos en su estado original. 
+
+\subsection{Crear copias incrementales \textcolor{RA6}{(RA6 - 2 puntos)}}
+Crea 2 copias de seguridad incrementales de 2 ejercicios de saneamiento diferentes e incluye en la memoria los comandos necesarios que has utilizado, así como capturas de pantalla de la terminal donde se evidencia la ejecución 
+
+\subsection{Crear copia diferencial \textcolor{RA6}{(RA6 - 1.5 puntos)}}
+Crea una copia de seguridad diferencial desde el backup completo inicial que incluya la resolución de tus dos ejercicios de saneamiento.
+
+\subsection{Crea una copia incremental \textcolor{RA6}{(RA6 - 1 puntos)}}
+Crea una copia de seguridad incremental de, al menos, un tercer ejercicio de saneamiento e incluye en la memoria los comandos necesarios que has utilizado, así como capturas de pantalla de la terminal donde se evidencia la ejecución.
+
+
+\subsection{Resumen de copias de seguridad creadas \textcolor{RA6}{(RA6 - 1 puntos)}}
+Incluye en la memoria una tabla resumen de las copias de seguridad creada, la fecha y hora de creación, el tipo de copia de seguridad y una breve descripción de los cambios que incluye.
+
+\subsection{Restauración de las copias de seguridad \textcolor{RA6}{(RA6 - 4.5 puntos)}}
+Realiza los siguientes pasos, documentando en la memoria el proceso:
+\begin{enumerate}
+    \item Restaura la base de datos original desde tu primera copia de seguridad completa.
+    \item Ejecuta consultas de \texttt{select} que evidencien que la restauración ha sido exitosa.
+    \item Restaura la base de datos a su último estado utilizando la copia de seguridad diferencial y la incremental.
+    \item Ejecuta consultas de \texttt{select} que evidencien que la restauración ha sido exitosa.
+\end{enumerate}
+
+
+
+
+\section{RA 5 - Saneamiento y blindaje (10 puntos + 1 pto bonus)}
+
+
+\subsection{Ejercicio 1: Gestión de Costes de Flota \textcolor{RA5}{(RA5 - 2 ptos)}}
+\textbf{Archivo:} \texttt{p1\_asir.sql} y \texttt{inc1.sql} \\
+La tabla \texttt{mantenimientos\_flota} tiene el campo \texttt{coste\_reparacion} como texto (ej: \textit{450 Euros}).
+\begin{enumerate}
+    \item Añade una columna \texttt{coste\_eur} de tipo \texttt{DECIMAL(10,2)}.
+    \item Extrae el valor numérico y aplícale un incremento del 21\% de IVA.
+    \item Utilizando \texttt{ROLLBACK} y un \texttt{SAVEPOINT}, deshaz el cambio anterior y, sin cerrar la transacción, aplica el incremento del 10\%.
+    \item Confirma los cambios de forma definitiva.ejercicio.
+\end{enumerate}
+
+
+
+\subsection{Ejercicio 2: Saneamiento de Infraestructura \textcolor{RA5}{(RA5 - 2 puntos)}}
+\textbf{Archivo:} \texttt{p2\_asir.sql} \\
+Elimina los almacenes duplicados basándote en el campo \texttt{cod\_almacen}. Debes conservar aquel cuya capacidad (\texttt{capacidad\_m3}) sea la más alta. En caso de empate, conserva el registro con el \texttt{id} más bajo.
+
+\textit{Nota: Puedes utilizar \texttt{SUBSTRING\_INDEX('Hola, mira que bonito el almendro.',' ',1)} devuelve 'Hola' porque es la subcadena previa al primer espacio.}
+
+\textit{Nota 2: Puedes eliminar los almacenes que tengan un campo capacidad que no sea numérico para que la actualización anterior funcione.}
+
+\subsection{Ejercicio 3: Integridad de Proveedores \textcolor{RA5}{(RA5 - 2 puntos)}}
+\textbf{Archivo:} \texttt{p3\_asir.sql} \\
+Existen envíos con \texttt{cliente\_id} que no figuran en la tabla de clientes.
+\begin{enumerate}
+    \item Reasigna todos esos envíos al cliente genérico con \texttt{id=1}.
+    \item Define la \texttt{FOREIGN KEY} para proteger la integridad.
+\end{enumerate}
+
+\subsection{Ejercicio 4: Indicadores de Velocidad  \textcolor{RA5}{(RA5 - 2 puntos)}}
+\textbf{Archivo:} \texttt{p4\_asir.sql} \\
+Queremos detectar envíos con velocidades medias anómalas. Usaremos \texttt{f\_salida}, \texttt{f\_entrega\_real} y \texttt{ruta\_distancia\_km} de la tabla \texttt{envios}.
+
+\textit{Recuerda: TIMESTAMPDIFF(HOUR, f\_salida, f\_entrega\_real) para obtener las horas de diferencia de dos columnas de tipo timestamp. Esta función realiza un cast implícito.}
+
+\subsection{Ejercicio 5: Normalización de Gestión \textcolor{RA5}{(RA5 - 2 puntos)}}
+\textbf{Archivo:} \texttt{p5\_asir.sql} y \texttt{inc5.sql} \\
+\begin{enumerate}
+    \item Crea la tabla ciudades (ID autoincremental, nombre en mayúsculas).
+    \item Traslada los valores únicos de las ciudades de la tabla envíos (evitando duplicados por mayúsculas/espacios).
+    \item Vincula los envíos con la nueva tabla mediante \texttt{ciudad \_origen\_id} y \texttt{ciudad \_destino\_id}.
+\end{enumerate}
+
+\subsection{Ejercicio 6: Normalización de Gestión \textcolor{RA5}{(Extra - 1 puntos)}}
+\textbf{Archivo:} \texttt{p4\_dam.sql} \\
+El departamento de Logística quiere penalizar los retrasos. La tabla \texttt{envios} tiene las fechas \texttt{f\_llegada\_prevista} (estimada) y \texttt{f\_entrega\_real} como texto en múltiples formatos.
+
+Para este ejercicio, solamente deberás trabajar con los envíos que tengan el año con cuatro dígitos y, por tanto, su interpretación sea unívoca. Es decir, que solo acepten una única intepretación. 
+
+Por ejemplo, la fecha \texttt{01/02/03} podría corresponder al 1 de febrero de 2003 o al 3 de febrero de 2001 o al 2 de enero de 2003... Sin embargo, la fecha, \texttt{23/03/2025}, sin nigún tipo de duda, representa el 23 de marzo de 2025.
+
+
+
+\end{document}
