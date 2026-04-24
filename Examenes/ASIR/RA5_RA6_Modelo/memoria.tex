@@ -3,7 +3,6 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish, es-noshorthands, es-tabla]{babel}
-% xcolor ya lo carga goyabase, no lo declaramos de nuevo para evitar Option clash
 \usepackage{tabularx}
 \usepackage{enumitem}
 \usepackage{listings}
@@ -153,7 +152,7 @@ Restauramos la primera incremental:
 mysql -u admin -p1234 logistica_global < 01_incremental_ejercicio1.sql
 \end{lstlisting}
 
-Comprobamos que sí hay "coste\_eur":
+Comprobamos que sí hay \texttt{coste\_eur}:
 \begin{lstlisting}[language=bash]
 mysql -u admin -p1234 logistica_global -e "select coste_eur from mantenimientos_flota limit 1;"
 \end{lstlisting}
