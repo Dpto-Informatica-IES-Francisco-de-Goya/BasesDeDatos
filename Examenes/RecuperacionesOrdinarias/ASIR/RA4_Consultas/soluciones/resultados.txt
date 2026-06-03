@@ -1,0 +1,32 @@
+
+Actores con más de 35 películas.
+actor_id	total_peliculas
+107	42
+102	41
+198	40
+181	39
+23	37
+
+Clientes con dirección, ciudad y país.
+first_name	last_name	address	city	country
+VERA	MCCOY	1168 Najafabad Parkway	Kabul	Afghanistan
+MARIO	CHEATHAM	1924 Shimonoseki Drive	Batna	Algeria
+JUDY	GRAY	1031 Daugavpils Parkway	Béchar	Algeria
+JUNE	CARROLL	757 Rustenburg Avenue	Skikda	Algeria
+ANTHONY	SCHWAB	1892 Nabereznyje Tšelny Lane	Tafuna	American Samoa
+
+Todas las categorías y sus películas (incluyendo categorías vacías).
+categoria	title
+Action	AMADEUS HOLY
+Action	AMERICAN CIRCUS
+Action	ANTITRUST TOMATOES
+Action	ARK RIDGEMONT
+Action	BAREFOOT MANCHURIAN
+
+Películas con duración superior a la media global.
+title	length
+AFFAIR PREJUDICE	117
+AFRICAN EGG	130
+AGENT TRUMAN	169
+ALAMO VIDEOTAPE	126
+ALASKA PHANTOM	136

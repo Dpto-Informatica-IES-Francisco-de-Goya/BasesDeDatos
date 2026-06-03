@@ -1,0 +1,54 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{goyaexamen}
+\graphicspath{{../../../PlantillaExamenLaTeX/img/}}
+
+\begin{document}
+\begin{Form}
+
+% --- CABECERA ---
+\noindent
+\begin{tabularx}{\textwidth}{|p{8.075cm}|X|X|p{5cm}|}
+    \hline
+    \textbf{IES FRANCISCO DE GOYA -- LA ELIPA} \par DEPARTAMENTO DE INFORMÁTICA &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoUE.jpg} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoBilingue.png} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{6.8cm} \raisebox{-0.2\height}{\includegraphics[width=4.75cm]{logoCAM.png}} \vspace{0.1cm} \end{minipage} \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.2cm}|X|}
+    \hline
+    \textbf{Titulación:} & DAM/DAW & \textbf{Curso:} & 2025/2026 \\ \hline
+    \textbf{Módulo:} & Bases de Datos & \textbf{Fecha:} & \\ \hline
+    \textbf{Examen:} & Recuperación Ordinaria RA3: Consultas SQL & \textbf{Duración:} & 45 min \\ \hline
+    \textbf{Nombre:} & \TextField[name=Nombre, width=\hsize]{} & \cellcolor{gray!20} \textbf{Calificación:} & \cellcolor{gray!20} \\ \hline
+    \textbf{Apellidos:} & \multicolumn{3}{l|}{\TextField[name=Apellidos, width=14cm]{}} \\ \hline
+    \textbf{RAs:} & \multicolumn{3}{l|}{RA3: Consulta la información almacenada en una BBDD} \\ \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section*{Instrucciones}
+\begin{itemize}
+    \input{../../instruccionesComunes.tex}
+\end{itemize}
+Utiliza la base de datos \textbf{Sakila}. Entrega un script SQL único con las 4 consultas numeradas. Se valorará el uso de alias significativos y la elegancia de las soluciones.
+
+\section{Ejercicios de Consultas (DAM/DAW)}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Consulta \arabic*:}]
+    \item \textbf{(2,5 puntos)} % CE.e (Consultas resumen) - Peso 10% + redistribución -> 2.5 pts
+    Obtén el id de los clientes que han realizado más de 40 alquileres (\texttt{rental}) en total. Ordena el resultado de mayor a menor número de alquileres.
+
+    \item \textbf{(2,5 puntos)} % CE.c 
+    Muestra un listado con el título de la película, su idioma (\texttt{language}) y el nombre de su categoría (\texttt{category}). 
+
+    \item \textbf{(2,5 puntos)} % CE.d (Composiciones externas) - Peso 10% + redistribución -> 2.5 pts
+    Para cada idioma registrado en la tabla \texttt{language}, muestra su nombre y el número de categorías (\texttt{category}) distintas que tienen las películas disponibles en ese idioma. \textbf{IMPORTANTE:} Deben aparecer \emph{todos} los idiomas, incluso aquellos en los que no haya ninguna película (mostrando \texttt{0} en ese caso).
+
+    \item \textbf{(2,5 puntos)} % CE.f (Subconsultas) - Peso 20% + redistribución -> 2.5 pts
+    Mostrar el ID de pago y el importe (\texttt{amount}) de aquellos pagos cuyo importe sea estrictamente superior a la media de todos los pagos registrados.
+\end{enumerate}
+
+\end{Form}
+\end{document}

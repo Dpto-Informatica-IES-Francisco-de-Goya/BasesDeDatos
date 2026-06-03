@@ -1,0 +1,106 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{goyaexamen}
+\graphicspath{{../../../PlantillaExamenLaTeX/img/}}
+
+\begin{document}
+\begin{Form}
+
+% --- CABECERA ---
+\noindent
+\begin{tabularx}{\textwidth}{|p{8.075cm}|X|X|p{5cm}|}
+    \hline
+    \textbf{IES FRANCISCO DE GOYA -- LA ELIPA} \par DEPARTAMENTO DE INFORMÁTICA &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoUE.jpg} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoBilingue.png} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{6.8cm} \raisebox{-0.2\height}{\includegraphics[width=4.75cm]{logoCAM.png}} \vspace{0.1cm} \end{minipage} \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.2cm}|X|}
+    \hline
+    \textbf{Titulación:} & DAM/DAW & \textbf{Curso:} & 2025/2026 \\ \hline
+    \textbf{Módulo:} & Bases de Datos & \textbf{Fecha:} & \\ \hline
+    \textbf{Examen:} & Recuperación Ordinaria RA2: Creación de BBDD & \textbf{Duración:} & 50 min \\ \hline
+    \textbf{Nombre:} & \TextField[name=Nombre, width=\hsize]{} & \cellcolor{gray!20} \textbf{Calificación:} & \cellcolor{gray!20} \\ \hline
+    \textbf{Apellidos:} & \multicolumn{3}{l|}{\TextField[name=Apellidos, width=14cm]{}} \\ \hline
+    \textbf{RAs:} & \multicolumn{3}{l|}{RA2: Crea bases de datos según el modelo relacional} \\ \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section*{Instrucciones}
+\begin{itemize}
+    \input{../../instruccionesComunes.tex}
+\end{itemize}
+Crea un script SQL llamado \texttt{recu\_creacion.sql} que implemente el esquema descrito a continuación sobre una base de datos llamada \texttt{clinica\_vet}. El script debe ejecutarse de principio a fin sin errores.
+%
+En caso de no poder ejecutarse de principio a fin sin errores, podrá ser calificado con un 0.
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=\textbf{REQUISITOS TÉCNICOS}]
+\begin{itemize}
+    \item Uso de \texttt{CONSTRAINT} con nombre en \textbf{todas} las restricciones.
+    \item \textbf{Optimización de tipos:} Elige el tipo de dato entero más pequeño que admita el volumen de datos estimado (ver sección \enquote{Estimación de Volumen}).
+    \item Implementación de una vista (\texttt{VIEW}).
+    \item Gestión de usuarios y privilegios mediante \texttt{DCL}.
+\end{itemize}
+\end{tcolorbox}
+
+\section{Diseño Físico: Clínica Veterinaria (7 puntos)}
+
+
+\subsection*{1. Tabla: \texttt{veterinarios}}
+\begin{itemize}
+    \item \texttt{id\_veterinario}: Numérico, clave primaria, autoincremental.
+    \item \texttt{nombre}: Texto (100 caracteres), obligatorio.
+    \item \texttt{num\_colegiado}: Texto (10 caracteres), obligatorio y único. Debe seguir el patrón de 2 letras seguidas de guión y 5 dígitos (ej: \lstinline{'CV-12345'}).
+    \item \texttt{especialidad}: debe permitir almacenar una o más de las siguientes opciones: 'GENERAL', 'CIRUGIA', 'DERMATOLOGIA', 'ODONTOLOGIA', sin permitir valores vacíos. Por defecto 'GENERAL'.
+    \item \texttt{responsable}: Numérico. Clave foránea del jefe. Opcional.
+\end{itemize}
+
+\subsection*{2. Tabla: \texttt{mascotas}}
+\begin{itemize}
+    \item \texttt{id\_mascota}: Numérico, clave primaria, autoincremental.
+    \item \texttt{nombre}: Texto (50 caracteres), obligatorio.
+    \item \texttt{especie}: debe permitir almacenar una única opción de las siguientes opciones:'PERRO', 'GATO', 'CONEJO', 'AVE'. Obligatorio.
+    \item \texttt{fecha\_nacimiento}: Fecha. Opcional.
+    \item \texttt{id\_propietario}: Clave foránea a \texttt{propietarios}. Obligatorio. 
+\end{itemize}
+
+\subsection*{3. Tabla: \texttt{propietarios}}
+\begin{itemize}
+    \item \texttt{id\_propietario}: Numérico, clave primaria, autoincremental.
+    \item \texttt{nombre}: Texto (100 caracteres), obligatorio.
+    \item \texttt{telefono}: Texto (15 caracteres), obligatorio y único.
+    \item \texttt{email}: Texto (100 caracteres), opcional.
+\end{itemize}
+
+
+\subsection*{4. Tabla: \texttt{consultas}}
+\textit{Registra cada consulta de una mascota con un veterinario. \textbf{Una mascota puede ser atendida por varios veterinarios y un veterinario atiende a varias mascotas} (relación N:M).}
+\begin{itemize}
+    \item \texttt{id\_mascota}: Clave primaria y clave foránea a \texttt{mascotas} (ON DELETE CASCADE). 
+    \item \texttt{id\_veterinario}: Clave primaria y clave foránea a \texttt{veterinarios} (ON DELETE CASCADE). 
+    \item \texttt{fecha\_consulta}: Clave primaria, tipo fecha.
+    \item \texttt{motivo}: Texto (255 caracteres), obligatorio.
+    \item \texttt{precio}: Decimal(6,2). Debe ser mayor o igual a 0. 
+\end{itemize}
+
+
+\subsection*{Estimación de Volumen de Datos}
+Para la elección de los tipos de datos numéricos (\texttt{TINYINT}, \texttt{SMALLINT}, \texttt{MEDIUMINT}, \texttt{INT}), considera que la clínica prevé los siguientes crecimientos máximos:
+\begin{itemize}
+    \item \textbf{Propietarios:} 50.000 registros.
+    \item \textbf{Mascotas:} 150.000 registros.
+    \item \textbf{Veterinarios:} 100 registros.
+    \item \textbf{Consultas:} 10.000.000 registros.
+\end{itemize}
+
+\section{Tareas de Administración (3 puntos)}
+
+\begin{enumerate}
+    \item \textbf{Vista (1,5 pts):} Crea una vista llamada \texttt{v\_historial} que muestre el nombre del propietario, el nombre de la mascota, el nombre del veterinario, la fecha de la consulta y el precio.
+    \item \textbf{Usuario (1,5 pts):} Crea el usuario \lstinline{'recepcion'@'localhost'} con contraseña \lstinline{'Clinica2026'}. Concédele permisos de lectura (\texttt{SELECT}) sobre la vista \texttt{v\_historial} y permisos de inserción (\texttt{INSERT}) sobre la tabla \texttt{consultas}.
+\end{enumerate}
+
+\end{Form}
+\end{document}

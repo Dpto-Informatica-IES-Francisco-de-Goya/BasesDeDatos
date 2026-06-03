@@ -1,0 +1,84 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{goyaexamen}
+\graphicspath{{../../../PlantillaExamenLaTeX/img/}}
+
+\begin{document}
+\begin{Form}
+
+% --- CABECERA ---
+\noindent
+\begin{tabularx}{\textwidth}{|p{8.075cm}|X|X|p{5cm}|}
+    \hline
+    \textbf{IES FRANCISCO DE GOYA -- LA ELIPA} \par DEPARTAMENTO DE INFORMÁTICA &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoUE.jpg} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoBilingue.png} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{6.8cm} \raisebox{-0.2\height}{\includegraphics[width=4.75cm]{logoCAM.png}} \vspace{0.1cm} \end{minipage} \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.2cm}|X|}
+    \hline
+    \textbf{Titulación:} & DAM/DAW & \textbf{Curso:} & 2025/2026 \\ \hline
+    \textbf{Módulo:} & Bases de Datos & \textbf{Fecha:} & \\ \hline
+    \textbf{Examen:} & Recu. Ordinaria RA5: Programación de BBDD & \textbf{Duración:} & 45 min \\ \hline
+    \textbf{Nombre:} & \TextField[name=Nombre, width=\hsize]{} & \cellcolor{gray!20} \textbf{Calificación:} & \cellcolor{gray!20} \\ \hline
+    \textbf{Apellidos:} & \multicolumn{3}{l|}{\TextField[name=Apellidos, width=14cm]{}} \\ \hline
+    \textbf{RAs:} & \multicolumn{3}{l|}{RA5: Procedimientos almacenados y sentencias del lenguaje incorporado en el SGBD} \\ \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\begin{tcolorbox}[colframe=green, title=Instrucciones]
+\begin{itemize}[nosep]
+    \item Los ejercicios deben resolverse con sintaxis estándar de \textbf{MySQL}.
+    \item Se valorará la limpieza del código, el uso correcto de \texttt{DELIMITER} y la definición precisa de tipos.
+    \item La base de datos de referencia para todos los ejercicios es \textbf{Sakila}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+
+% --- EJERCICIO 1 ---
+\begin{tcolorbox}[title={Ejercicio 1 (3.25 + 0.75 puntos) - Procedimiento con bucle}]
+El departamento de cobros necesita fraccionar deudas de clientes en varios pagos iguales. Por ejemplo, si el pago era tenía un \texttt{amount} de \texttt{10} y se quiere fraccionar en 5 pagos, se generarán nuevos pagos con un valor de \texttt{2} en el campo \texttt{amount}.
+
+Crea un procedimiento almacenado llamado \texttt{p\_register\_payment\_plan} que registre automáticamente esta división de pagos. El procedimiento debe cumplir los siguientes requisitos:
+
+\begin{itemize}
+    \item Recibirá tres parámetros: \texttt{p\_payment\_id INT}, \texttt{p\_parts INT} (todos de entrada) y \texttt{p\_amount\_inserted INT} (salida).
+    \item Debe incluir una estructura \textbf{IF} que valide que \texttt{p\_parts} sea mayor que 0. Si la condición falla, el procedimiento no insertará nada y fallará silenciosamente.
+    \item Utilizará un bucle \textbf{WHILE} para insertar exactamente \texttt{p\_parts} filas en la tabla \texttt{payment}, con los mismos campos que hay en el registro \texttt{p\_payment\_id} salvo \texttt{amount} que es la cantidad a fraccionar. En cada inserción, se utilizará \texttt{amount} / \texttt{p\_parts}. 
+    %
+    Esa cantidad deberá devolverse en el parámetro \texttt{p\_amount\_inserted INT}.
+    \item Deberá eliminarse el pago \texttt{payment\_id}.
+\end{itemize}
+
+\textbf{Incluye en tu solución un ejemplo de uso del procedimiento (0.75 puntos)} (aunque el procedimiento no funcione, puedes indicar cómo debería ejecutarse).
+
+\textit{Pista: para guardar los campos del \texttt{payment\_id} puedes declarar varias variables.}
+
+
+\end{tcolorbox}
+\vspace{0.4cm}
+
+% --- EJERCICIO 2 ---
+\begin{tcolorbox}[title={Ejercicio 2 (3 puntos) - Trigger de validación}]
+Implementa un trigger llamado \texttt{tr\_prevent\_free\_rental} sobre la tabla \texttt{film} que impida insertar películas sin coste de alquiler:
+
+\begin{itemize}
+    \item Debe ejecutarse \textbf{antes de insertar} un nuevo registro.
+    \item Si el campo \texttt{rental\_rate} es igual a \textbf{0.00}, el trigger debe cancelar la operación y lanzar un error con el mensaje: \texttt{Error: No se pueden insertar peliculas sin coste de alquiler}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+
+% --- EJERCICIO 3 ---
+\begin{tcolorbox}[title={Ejercicio 3 (3 puntos) - Función de consulta}]
+El departamento de facturación necesita conocer el importe total pagado por un cliente a lo largo de toda su relación con el videoclub.
+
+Desarrolla una función llamada \texttt{f\_customer\_total\_spent} que reciba el identificador de un cliente (\texttt{p\_customer\_id INT}) y devuelva un valor \texttt{DECIMAL(10,2)} con la suma de todos sus pagos en la tabla \texttt{payment}. Si el cliente no tiene pagos registrados, debe tratarse explícitamente con \texttt{COALESCE} o con \texttt{IFNULL} y la función devolverá \textbf{0.00}.
+\end{tcolorbox}
+
+\end{Form}
+\end{document}

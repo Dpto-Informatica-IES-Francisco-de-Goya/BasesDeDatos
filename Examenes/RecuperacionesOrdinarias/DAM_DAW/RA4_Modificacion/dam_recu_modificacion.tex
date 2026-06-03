@@ -1,0 +1,92 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{goyaexamen}
+\graphicspath{{../../../PlantillaExamenLaTeX/img/}}
+\begin{document}
+\begin{Form}
+
+% --- CABECERA ---
+\noindent
+\begin{tabularx}{\textwidth}{|p{8.075cm}|X|X|p{5cm}|}
+    \hline
+    \textbf{IES FRANCISCO DE GOYA -- LA ELIPA} \par DEPARTAMENTO DE INFORMÁTICA &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoUE.jpg} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoBilingue.png} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{6.8cm} \raisebox{-0.2\height}{\includegraphics[width=4.75cm]{logoCAM.png}} \vspace{0.1cm} \end{minipage} \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.2cm}|X|}
+    \hline
+    \textbf{Titulación:} & DAM/DAW & \textbf{Curso:} & 2025/2026 \\ \hline
+    \textbf{Módulo:} & Bases de Datos & \textbf{Fecha:} & \\ \hline
+    \textbf{Examen:} & Recu. Ordinaria RA4: Tratamiento de Datos & \textbf{Duración:} & 45 min \\ \hline
+    \textbf{Nombre:} & \TextField[name=Nombre, width=\hsize]{} & \cellcolor{gray!20} \textbf{Calificación:} & \cellcolor{gray!20} \\ \hline
+    \textbf{Apellidos:} & \multicolumn{3}{l|}{\TextField[name=Apellidos, width=14cm]{}} \\ \hline
+    \textbf{RAs:} & \multicolumn{3}{l|}{RA4: Modifica la información almacenada en la base de datos} \\ \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section*{Instrucciones}
+\begin{itemize}
+    \input{../../instruccionesComunes.tex}
+\end{itemize}
+
+\begin{tcolorbox}[colframe=alert, title=INSTRUCCIONES CRÍTICAS]
+\textbf{INDEPENDENCIA ABSOLUTA:} Cada script SQL se ejecutará sobre una copia limpia de la base de datos \texttt{logistica\_global} (generada con \texttt{00\_setup\_logistica\_global.sql}). No puedes usar cambios de la Pregunta 1 en la Pregunta 2.
+\par\medskip
+\textbf{TRANSACCIONALIDAD:} Es obligatorio el uso de \texttt{START TRANSACTION} y \texttt{COMMIT} o \texttt{ROLLBACK} en todas las operaciones de datos.
+\par\medskip
+\textbf{CARGA LA BASE DE DATOS:} Ejecuta el script de carga \texttt{00\_setup\_logistica\_global.sql} ahora mismo y, después, sigue leyendo el enunciado.
+\end{tcolorbox}
+
+\section{Ejercicios de Tratamiento de Datos (DAM/DAW)}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Pregunta \arabic*:}]
+
+
+
+    \item \textbf{(2,5 pts) Saneamiento de integridad referencial.}
+   Existen envíos vinculados a vehículos que no existen.
+    \begin{enumerate}
+        \item Reasigna todos esos envíos al vehículo con \texttt{id=1} (Vehículo de sustitución).
+        \item Define la \texttt{FOREIGN KEY} para evitar que vuelva a ocurrir.
+        \item Realiza un \texttt{COMMIT} o indica porqué no sería necesario.
+    \end{enumerate}
+
+    \textit{Nota: los envíos que no tienen vehículo asignado no deben modificarse.}
+
+
+    \item \textbf{(2,5 pts) Eliminación de Duplicados}
+    La tabla \texttt{envios} contiene registros con el mismo \texttt{tracking\_number} (albaranes duplicados). Elimina todos los duplicados conservando únicamente el registro con el \texttt{id} más bajo para cada \texttt{tracking\_number}. Ignora los registros cuyo \texttt{tracking\_number} sea \texttt{NULL}.
+    %
+    \medskip
+
+    \textbf{Pista:} un \emph{self-join} sobre 100.000 registros es una operación muy costosa y puede provocar \emph{timeout}. Utiliza en su lugar una subconsulta/tabla temporal/CTE que contenga los IDs que deben conservarse y elimina los demás.
+    %
+    \medskip
+    Al finalizar, deshaz los cambios con \texttt{ROLLBACK}: este ejercicio no debe alterar los datos que necesitan los demás.
+
+    \item \textbf{(2,5 pts) Migración y Normalización de Datos}
+    La tabla \texttt{envios} almacena distancias y fechas como texto. Crea una nueva tabla llamada \texttt{envios\_normalizados} con los campos siguientes:
+    \begin{itemize}
+        \item \texttt{id\_envio INT PRIMARY KEY}: clave ajena a \texttt{envios.id}.
+        \item \texttt{distancia\_km DECIMAL(8,2)}: valor numérico extraído de \texttt{ruta\_distancia\_km} (texto como \lstinline{'350 km'}).
+        \item \texttt{f\_salida DATE}: normalizada desde el campo texto homónimo.
+        \item \texttt{f\_entrega\_real DATE}: normalizada desde el campo texto homónimo.
+        \item \texttt{dias\_transito INT}: diferencia en días entre \texttt{f\_entrega\_real} y \texttt{f\_salida}, calculada con \texttt{DATEDIFF}.
+    \end{itemize}
+    Inserta únicamente los envíos cuyas fechas tengan el año con cuatro dígitos (interpretación unívoca). Acepta los formatos \texttt{DD/MM/YYYY} e \texttt{YYYY-MM-DD}.
+    %
+    \medskip
+    Al finalizar, elimina la tabla \texttt{envios\_normalizados} con \texttt{DROP TABLE} para no bloquear el Ejercicio~4. 
+
+    \textbf{Nota:} \texttt{CREATE TABLE} Y  \texttt{DROP TABLE} son instrucciones DDL, no DML. Cuidado con el \texttt{ROLLBACK}.
+
+    \item \textbf{(2,5 pts) Transacciones y Puntos de Guardado}
+    El campo \texttt{importe\_envio} de la tabla \texttt{envios} almacena valores con el símbolo \texttt{€} incrustado, lo que impide operar directamente sobre él. Dentro de una única transacción: sanea la columna, aplica un incremento del 5\% al importe resultante, crea un \texttt{SAVEPOINT} llamado \texttt{antes\_borrado}, borra todos los envíos cuyo importe (ya incrementado, y que sea un valor numérico válido) supere 500, deshaz únicamente ese borrado con \texttt{ROLLBACK TO} y confirma el saneamiento y el incremento con \texttt{COMMIT}.
+
+\end{enumerate}
+
+\end{Form}
+\end{document}

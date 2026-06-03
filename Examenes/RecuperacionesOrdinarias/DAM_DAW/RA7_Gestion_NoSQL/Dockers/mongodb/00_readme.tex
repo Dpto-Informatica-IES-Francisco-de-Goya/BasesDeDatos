@@ -1,0 +1,126 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\usepackage{longtable}
+\usepackage{calc}
+
+% Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\title{\textbf{MongoDB en Docker - UT8 NoSQL}}
+\author{Departamento de Informática}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{MongoDB en Docker - UT8 NoSQL}\label{mongodb-en-docker---ut8-nosql}
+
+Este entorno permite trabajar con \textbf{MongoDB}, una base de datos NoSQL \textbf{Documental} diseñada para ofrecer máxima flexibilidad y escalabilidad.
+
+\subsection{El Ecosistema de Datos de GloboTour: El Catálogo Polimórfico}\label{ecosistema}
+En GloboTour, usamos MongoDB para gestionar nuestro activo más dinámico: el \textbf{Catálogo de Experiencias}. A diferencia de SQL, aquí cada producto puede tener sus propios atributos sin necesidad de crear cientos de columnas nulas.
+
+\begin{enumerate}
+    \item \textbf{Experiencias de Aventura}: 
+    \begin{itemize}
+        \item \textit{Dato Real:} El \enquote{Salto en Paracaídas} incluye campos únicos como \texttt{altura\_salto: 4000} y \texttt{equipo\_incluido: true}.
+    \end{itemize}
+    \item \textbf{Experiencias Gastronómicas}: 
+    \begin{itemize}
+        \item \textit{Dato Real:} La \enquote{Cata de Vinos en La Rioja} incluye un array de \texttt{alergenos: ["sulfitos", "alcohol"]} y el campo \texttt{bodega: "Marqués de Riscal"}.
+    \end{itemize}
+    \item \textbf{Sistema de Reseñas Incrustadas}:
+    \begin{itemize}
+        \item \textit{Dato Real:} Las opiniones de los usuarios no están en otra tabla; viven dentro de cada experiencia en un array \texttt{reviews: [{user: "paco", score: 5, comment: "Increíble"}]}.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Componentes}\label{componentes}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{MongoDB Server}: Motor de base de datos en el puerto
+  \texttt{27017}.
+\item
+  \textbf{Mongo Express}: Interfaz web en el puerto
+  \texttt{8081}.
+\end{enumerate}
+
+\hypertarget{instrucciones-de-uso}{%
+\subsection{Instrucciones de uso}\label{instrucciones-de-uso}}
+
+\subsubsection{Configuración del Entorno (Docker Compose)}\label{configuracion-del-entorno}
+
+Este archivo define los servicios necesarios para la práctica:
+
+\begin{lstlisting}[language=YAML]
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-server
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./src:/src
+    restart: always
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=pass
+    depends_on:
+      - mongodb
+    restart: always
+
+volumes:
+  mongo_data:
+\end{lstlisting}
+
+\subsubsection{Puesta en marcha}\label{puesta-en-marcha}
+
+Para arrancar el servicio:
+
+\begin{lstlisting}[language=bash]
+docker compose up -d
+\end{lstlisting}
+
+Para importar los datos de ejemplo:
+
+\begin{lstlisting}[language=bash]
+docker exec -i mongodb-server mongoimport --db globotour --collection experiencias --file /src/experiencias.json --jsonArray
+\end{lstlisting}
+
+Para acceder a la consola (Mongo Shell):
+
+\begin{lstlisting}[language=bash]
+docker exec -it mongodb-server mongosh
+\end{lstlisting}
+
+Una vez dentro de Mongo Shell, puedes indicar la base de datos a
+utilizar
+
+\begin{lstlisting}[language=bash]
+test> use globotour
+globotour> 
+\end{lstlisting}
+
+Para acceder a la interfaz gráfica: - URL:
+\texttt{http://localhost:8081} - Usuario:
+\texttt{admin} - Contraseña:
+\texttt{pass}
+
+\end{document}

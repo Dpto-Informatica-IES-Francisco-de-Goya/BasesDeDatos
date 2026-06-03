@@ -1,0 +1,118 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\usepackage{longtable}
+\usepackage{calc}
+
+% Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\title{\textbf{Neo4j en Docker - UT8 NoSQL}}
+\author{Departamento de Informática}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{Neo4j en Docker - UT8 NoSQL}\label{neo4j-en-docker---ut8-nosql}
+
+Este entorno permite trabajar con \textbf{Neo4j}, una base de datos de \textbf{Grafos} diseñada para gestionar relaciones complejas con un rendimiento inigualable.
+
+\subsection{El Ecosistema de Datos de GloboTour: \enquote{SocialTour}}\label{ecosistema}
+En GloboTour, usamos Neo4j para alimentar nuestra red social de viajeros, \textbf{SocialTour}. Aquí el valor no está en los datos aislados, sino en las conexiones entre ellos.
+
+\begin{enumerate}
+    \item \textbf{Nodos de Usuarios y Guías}: 
+    \begin{itemize}
+        \item \textit{Dato Real:} El nodo \texttt{(u:Usuario {nombre: 'Víctor', ciudad: 'Madrid'})} representa a un viajero.
+    \end{itemize}
+    \item \textbf{Relaciones Semánticas}: 
+    \begin{itemize}
+        \item \textit{Dato Real:} La relación \texttt{-[:SIGUE]->} conecta a dos usuarios.
+        \item La relación \texttt{-[:VALORO {estrellas: 5}]->} conecta a un usuario con un guía turístico.
+    \end{itemize}
+    \item \textbf{El Poder del Grafo}:
+    \begin{itemize}
+        \item \textit{Dato Real:} Podemos responder en milisegundos a: \enquote{¿Qué guías han puntuado mis amigos que yo aún no conozco?}.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Componentes}\label{componentes}
+
+\begin{enumerate}
+    \item \textbf{Neo4j Server}: Motor de grafos en el puerto \texttt{7687} (Bolt) y \texttt{7474} (HTTP).
+    \item \textbf{Neo4j Browser}: Interfaz visual en el puerto \texttt{7474}.
+\end{enumerate}
+
+\subsection{Instrucciones de uso}\label{instrucciones-de-uso}
+
+\subsubsection{Configuración del Entorno (Docker Compose)}\label{configuracion-del-entorno}
+
+Este archivo define los servicios necesarios para la práctica:
+
+\begin{lstlisting}[language=YAML]
+services:
+  neo4j:
+    image: neo4j:latest
+    container_name: neo4j-server
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - ./src:/var/lib/neo4j/import
+    environment:
+      - NEO4J_AUTH=neo4j/password123
+    restart: always
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+\end{lstlisting}
+
+\subsubsection{Puesta en marcha}\label{puesta-en-marcha}
+
+Para arrancar el servicio:
+
+\begin{lstlisting}[language=bash]
+docker compose up -d
+\end{lstlisting}
+
+\subsubsection{Cargar escenario por terminal (Recomendado)}\label{cargar-escenario-por-terminal-recomendado}
+
+Para cargar el escenario de GloboTour directamente sin usar la web:
+
+\begin{lstlisting}[language=bash]
+cat src/setup_grafo.cypher | docker exec -i neo4j-server cypher-shell -u neo4j -p password123 --format plain 2>/dev/null
+\end{lstlisting}
+
+\subsubsection{Acceso a la Consola Interactiva (CLI)}\label{acceso-consola}
+
+Si prefieres ejecutar comandos Cypher uno a uno directamente en la terminal (similar a MySQL):
+
+\begin{lstlisting}[language=bash]
+docker exec -it neo4j-server cypher-shell -u neo4j -p password123
+\end{lstlisting}
+
+\subsubsection{Cargar escenario por la Web}\label{cargar-escenario-por-la-web}
+
+\begin{enumerate}
+    \item Abre \url{http://localhost:7474}.
+    \item Login: \texttt{neo4j} / \texttt{password123}.
+    \item Copia el contenido de \texttt{src/setup\_grafo.cypher} en la barra superior y ejecuta.
+\end{enumerate}
+
+\subsection{Comandos sugeridos para probar}\label{comandos-sugeridos-para-probar}
+
+\begin{itemize}
+    \item \texttt{MATCH (n) RETURN n} (Ver todo el grafo).
+    \item \texttt{MATCH (u:Usuario)-[r:AMIGO\_DE]->(f:Usuario) RETURN u,r,f} (Ver solo la red social).
+\end{itemize}
+
+\end{document}

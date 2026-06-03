@@ -1,0 +1,69 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{goyaexamen}
+\graphicspath{{../../../PlantillaExamenLaTeX/img/}}
+
+\begin{document}
+\begin{Form}
+
+% --- CABECERA ---
+\noindent
+\begin{tabularx}{\textwidth}{|p{8.075cm}|X|X|p{5cm}|}
+    \hline
+    \textbf{IES FRANCISCO DE GOYA -- LA ELIPA} \par DEPARTAMENTO DE INFORMÁTICA &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoUE.jpg} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoBilingue.png} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{6.8cm} \raisebox{-0.2\height}{\includegraphics[width=4.75cm]{logoCAM.png}} \vspace{0.1cm} \end{minipage} \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.2cm}|X|}
+    \hline
+    \textbf{Titulación:} & ASIR & \textbf{Curso:} & 2025/2026 \\ \hline
+    \textbf{Módulo:} & Gestión de Bases de Datos & \textbf{Fecha:} & \\ \hline
+    \textbf{Examen:} & Recu. Ordinaria RA5: Modificación de Datos & \textbf{Duración:} & 45 min \\ \hline
+    \textbf{Nombre:} & \TextField[name=Nombre, width=\hsize]{} & \cellcolor{gray!20} \textbf{Calificación:} & \cellcolor{gray!20} \\ \hline
+    \textbf{Apellidos:} & \multicolumn{3}{l|}{\TextField[name=Apellidos, width=14cm]{}} \\ \hline
+    \textbf{RAs:} & \multicolumn{3}{l|}{RA5: Modifica la información almacenada en una base de datos} \\ \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section*{Instrucciones}
+\begin{itemize}
+    \input{../../instruccionesComunes.tex}
+\end{itemize}
+
+\begin{tcolorbox}[colframe=alert, title=INSTRUCCIONES CRÍTICAS]
+\textbf{INDEPENDENCIA TOTAL:} Cada pregunta debe entregarse en un archivo \texttt{.sql} independiente. Cada script se ejecutará sobre una copia limpia de la base de datos \texttt{logistica\_global} (generada con \texttt{00\_setup\_logistica\_global.sql}).
+\par\medskip
+\textbf{TRANSACCIONALIDAD:} Es obligatorio el uso de \texttt{START TRANSACTION} y \texttt{COMMIT} (o \texttt{ROLLBACK} si se solicita).
+\end{tcolorbox}
+
+\section{Ejercicios de Modificación (ASIR)}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Pregunta \arabic*:}]
+
+    \item \textbf{(2,5 pts) Eliminación de Duplicados}
+    Identifica registros duplicados en la tabla \texttt{rutas}: dos rutas son duplicadas si tienen el mismo \texttt{origen} y el mismo \texttt{destino}. Elimina el duplicado que tenga el \texttt{id} más alto, conservando únicamente el registro más antiguo (ID más bajo).
+
+    \item \textbf{(2,5 pts) Integridad y FKs}
+    Asegura la integridad de la tabla \texttt{envios}. Actualiza todos los \texttt{almacen\_destino\_id} que \textbf{no existan} en la tabla \texttt{almacenes} asignándoles el valor \texttt{1}. Una vez saneados los datos, añade formalmente la clave ajena (\texttt{FOREIGN KEY}) que vincula ambas tablas.
+
+    \item \textbf{(2,5 pts) Migración y Normalización de Datos}
+    La tabla \texttt{envios} almacena distancias y fechas como texto. Crea una nueva tabla llamada \texttt{envios\_normalizados} con los campos siguientes:
+    \begin{itemize}
+        \item \texttt{id\_envio INT PRIMARY KEY}: clave ajena a \texttt{envios.id}.
+        \item \texttt{distancia\_km DECIMAL(8,2)}: valor numérico extraído de \texttt{ruta\_distancia\_km} (texto como \lstinline{'350 km'}).
+        \item \texttt{f\_salida DATE}: normalizada desde el campo texto homónimo.
+        \item \texttt{f\_entrega\_real DATE}: normalizada desde el campo texto homónimo.
+        \item \texttt{dias\_transito INT}: diferencia en días entre \texttt{f\_entrega\_real} y \texttt{f\_salida}, calculada con \texttt{DATEDIFF}.
+    \end{itemize}
+    Inserta únicamente los envíos cuyas fechas tengan el año con cuatro dígitos (interpretación unívoca).
+
+    \item \textbf{(2,5 pts) Transacciones y Puntos de Guardado}
+    Dentro de una única transacción: incrementa un 10\% el precio de todos los envíos, crea un \texttt{SAVEPOINT} llamado \texttt{antes\_del\_error}, borra todos los envíos cuyo \texttt{almacen\_destino\_id} sea 1, deshaz únicamente ese borrado utilizando el \texttt{SAVEPOINT} y confirma el incremento de precio.
+
+\end{enumerate}
+
+\end{Form}
+\end{document}

@@ -1,0 +1,114 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\usepackage{longtable}
+\usepackage{calc}
+
+% Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\title{\textbf{Más ejemplos Redis - GloboTour}}
+\author{Víctor de Juan}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\hypertarget{solucionario-tarea-1-redis---globotour}{%
+\section{Solucionario Tarea 1: Redis -
+GloboTour}\label{solucionario-tarea-1-redis---globotour}}
+
+Este documento contiene los comandos necesarios para resolver la Tarea 1
+de la práctica NoSQL.
+
+\hypertarget{gestiuxf3n-de-sesiones-strings}{%
+\subsection{Gestión de Sesiones
+(Strings)}\label{gestiuxf3n-de-sesiones-strings}}
+
+\textbf{Comando:} Crear un token con expiración de 30 minutos (1800
+segundos).
+
+\begin{lstlisting}
+SET sesion:token:9988 "user_id:105" EX 1800
+\end{lstlisting}
+
+\emph{Para verificar el tiempo restante:}
+\texttt{TTL sesion:token:9988}
+
+\hypertarget{muxe9tricas-en-vivo-counters}{%
+\subsection{Métricas en Vivo
+(Counters)}\label{muxe9tricas-en-vivo-counters}}
+
+\textbf{Comando:} Inicializar e incrementar visitas.
+
+\begin{lstlisting}
+# Incrementamos en 3 directamente o 3 veces con INCR
+INCRBY metricas:visitas:oferta:paris 3
+\end{lstlisting}
+
+\hypertarget{ranking-de-popularidad-sorted-sets}{%
+\subsection{Ranking de Popularidad (Sorted
+Sets)}\label{ranking-de-popularidad-sorted-sets}}
+
+\textbf{Comando:} Crear el top de ventas y recuperar los 2 mejores.
+
+\begin{lstlisting}
+ZADD experiencias:top_ventas 150 "Vuelo en Globo Segovia" 320 "Cata de Vinos Ribera" 95 "Buceo Cabo de Gata" 210 "Escape Room Medieval"
+
+# Recuperar Top 2 (descendente) con puntuación
+ZREVRANGE experiencias:top_ventas 0 1 WITHSCORES
+\end{lstlisting}
+
+\hypertarget{categorizaciuxf3n-sets}{%
+\subsection{Categorización (Sets)}\label{categorizaciuxf3n-sets}}
+
+\textbf{Comando:} Crear conjuntos de etiquetas y buscar la común.
+
+\begin{lstlisting}
+SADD user:105:intereses "aventura" "aire_libre" "fotografia"
+SADD user:202:intereses "gastronomia" "vinos" "relax" "aventura"
+
+# Intersección para ver qué tienen en común
+SINTER user:105:intereses user:202:intereses
+\end{lstlisting}
+
+\hypertarget{carga-y-anuxe1lisis-del-catuxe1logo-hashes}{%
+\subsection{Carga y Análisis del Catálogo
+(Hashes)}\label{carga-y-anuxe1lisis-del-catuxe1logo-hashes}}
+
+\textbf{Recordando: comando de carga (desde la terminal de Linux):}
+
+\begin{lstlisting}[language=bash]
+# Estando en la carpeta redis/
+docker exec -i redis-server redis-cli < src/datos_iniciales.redis
+\end{lstlisting}
+\textbf{Consultar la experiencia 500:}
+
+\begin{lstlisting}
+HGETALL exp:500
+\end{lstlisting}
+
+\textbf{Crear Ranking ``Premium'' basado en precios:} Para este paso, primero consultamos los precios reales de las experiencias en el sistema:
+
+\begin{lstlisting}
+HGET exp:500 precio  -- Devuelve 150
+HGET exp:501 precio  -- Devuelve 45
+HGET exp:502 precio  -- Devuelve 80
+HGET exp:503 precio  -- Devuelve 25
+\end{lstlisting}
+
+Una vez conocidos los precios, creamos el Sorted Set ordenado por dicho valor:
+
+\begin{lstlisting}
+ZADD catalogo:premium 150 "exp:500" 45 "exp:501" 80 "exp:502" 25 "exp:503"
+
+# Visualizar de más caro a más barato
+ZREVRANGE catalogo:premium 0 -1 WITHSCORES
+\end{lstlisting}
+
+\end{document}

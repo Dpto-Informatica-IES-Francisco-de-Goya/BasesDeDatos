@@ -1,0 +1,22 @@
+FLUSHALL
+SET sesion:token:9988 "user_id:105"
+SET sesion:token:1122 "user_id:202"
+SET sesion:token:5544 "user_id:303"
+SET metricas:visitas:inicio 1540
+SET metricas:reservas:hoy 42
+INCRBY metricas:visitas:oferta:paris 850
+HSET exp:500 nombre "Vuelo en Globo Segovia" precio 150 tipo "Aventura" stock 5
+HSET exp:501 nombre "Cata de Vinos Ribera" precio 45 tipo "Gastronomia" stock 20
+HSET exp:502 nombre "Buceo Cabo de Gata" precio 80 tipo "Aventura" stock 8
+HSET exp:503 nombre "Escape Room Medieval" precio 25 tipo "Ocio" stock 12
+ZADD experiencias:top_ventas 150 "Vuelo en Globo Segovia"
+ZADD experiencias:top_ventas 320 "Cata de Vinos Ribera"
+ZADD experiencias:top_ventas 95 "Buceo Cabo de Gata"
+ZADD experiencias:top_ventas 210 "Escape Room Medieval"
+SADD user:105:intereses "aventura" "aire_libre" "fotografia"
+SADD user:202:intereses "gastronomia" "vinos" "relax"
+SADD etiquetas:globales "agua" "aire" "motor" "familiar" "parejas"
+LPUSH busquedas:recientes "Paris"
+LPUSH busquedas:recientes "Roma"
+LPUSH busquedas:recientes "Tokio"
+LPUSH busquedas:recientes "Madrid"

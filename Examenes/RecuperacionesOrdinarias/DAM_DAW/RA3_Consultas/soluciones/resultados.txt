@@ -1,0 +1,53 @@
+
+Clientes con más de 40 alquileres.
+first_name	last_name	num_alquileres
++-------------+----------------+
+| customer_id | num_alquileres |
++-------------+----------------+
+|         148 |             46 |
+|         526 |             45 |
+|         144 |             42 |
+|         236 |             42 |
+|          75 |             41 |
++-------------+----------------+
+5 rows in set (0,01 sec)
+
+
+Película, idioma y categoría (4 tablas).
++---------------------+---------+-----------+
+| title               | idioma  | categoria |
++---------------------+---------+-----------+
+| WORKING MICROCOSMOS | English | Travel    |
+| WORKER TARZAN       | English | Travel    |
+| WOLVES DESIRE       | English | Travel    |
+| WINDOW SIDE         | English | Travel    |
+| VALENTINE VANISHING | English | Travel    |
++---------------------+---------+-----------+
+5 rows in set (0,00 sec)
+
+
+Número de categorías distintas por idioma (incluyendo idiomas sin películas).
++----------+----------------+
+| idioma   | num_categorias |
++----------+----------------+
+| English  |             16 |
+| French   |              0 |
+| German   |              0 |
+| Italian  |              0 |
+| Japanese |              0 |
+| Mandarin |              0 |
++----------+----------------+
+6 rows in set (0,00 sec)
+
+
+Clientes que han alquilado alguna película de la categoría 'Horror' (subconsulta).
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| PENNY      | NEAL      |
+| BRANDON    | HUEY      |
+| LUCILLE    | HOLMES    |
+| KATHRYN    | COLEMAN   |
+| AMBER      | DIXON     |
++------------+-----------+
+5 rows in set (0,00 sec)

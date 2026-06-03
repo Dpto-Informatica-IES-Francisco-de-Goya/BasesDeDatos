@@ -1,0 +1,85 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\title{\textbf{Laboratorio de Algoritmos y Patrones: Neo4j}}
+\author{Departamento de Informática}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{Introducción al Laboratorio}\label{intro}
+En este laboratorio exploraremos por qué Neo4j es la base de datos preferida para sistemas de recomendación y análisis de redes. Aprenderemos a pensar en \textbf{patrones} y \textbf{recorridos} en lugar de tablas.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Patrón 1: Recomendación por \enquote{Sabiduría de la Red}}\label{reco}
+\textbf{Escenario:} Queremos recomendar a Víctor guías que sus amigos directos han valorado muy positivamente (5 estrellas), pero que él todavía no conoce.
+
+\begin{tcolorbox}[title=Consulta de Recomendación]
+\begin{lstlisting}
+MATCH (yo:Usuario {nombre: 'Víctor'})-[:SIGUE]->(amigo)-[v:VALORO]->(g:Guia)
+WHERE v.estrellas = 5
+  AND NOT (yo)-[:VALORO]->(g)
+RETURN g.nombre AS Guia_Sugerido, 
+       amigo.nombre AS Recomendado_por, 
+       g.especialidad AS Especialidad
+ORDER BY g.nombre;
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Análisis Pedagógico:} Fíjate cómo el lenguaje Cypher permite expresar la negación (\texttt{AND NOT}) de una relación de forma natural. En SQL, esto requeriría una subconsulta con \texttt{NOT EXISTS} muy ineficiente.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Patrón 2: Caminos Cortos (Grados de Separación)}\label{shortest}
+\textbf{Escenario:} ¿Cómo de lejos está Víctor de Elena en la red social? ¿Quién es el \enquote{puente} entre ellos?
+
+\begin{tcolorbox}[title=Algoritmo de Camino Más Corto]
+\begin{lstlisting}
+MATCH p=shortestPath(
+  (v:Usuario {nombre: 'Víctor'})-[:SIGUE*..10]->(e:Usuario {nombre: 'Elena'})
+)
+RETURN p;
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Reflexión:} La función \texttt{shortestPath} es un algoritmo interno de Neo4j optimizado para recorrer millones de nodos en milisegundos. El parámetro \texttt{*..10} indica que busque hasta un máximo de 10 saltos de distancia.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Patrón 3: Análisis de Influencia (Centralidad Básica)}\label{influence}
+\textbf{Escenario:} Queremos saber quién es el usuario más influyente (el que tiene más seguidores) y quién es el guía mejor valorado de media.
+
+\begin{tcolorbox}[title=Agregación en Grafos]
+\begin{lstlisting}
+// Top Influencers
+MATCH (u:Usuario)<-[:SIGUE]-(seguidor)
+RETURN u.nombre, count(seguidor) AS num_seguidores
+ORDER BY num_seguidores DESC;
+
+// Top Guías por puntuación media
+MATCH (g:Guia)<-[v:VALORO]-()
+RETURN g.nombre, avg(v.estrellas) AS media_estrellas
+ORDER BY media_estrellas DESC;
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Laboratorio de Depuración: Errores de Grafo}\label{debug}
+
+\begin{tcolorbox}[title=Peligro: El Producto Cartesiano, colframe=red!75!black]
+Si haces un \texttt{MATCH} de dos nodos sin una relación que los una, Neo4j intentará emparejar CADA nodo A con CADA nodo B.
+\begin{lstlisting}
+MATCH (u:Usuario), (g:Guia) 
+RETURN u, g; // ¡PELIGRO! Si tienes 1000 usuarios y 1000 guías, esto devuelve 1.000.000 de resultados.
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Solución:} Asegúrate siempre de que tus patrones de \texttt{MATCH} estén conectados por flechas a menos que busques explícitamente una comparativa global.
+
+\end{document}

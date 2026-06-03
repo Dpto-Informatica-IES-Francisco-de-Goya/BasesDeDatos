@@ -1,0 +1,142 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{goyaexamen}
+\graphicspath{{../../../PlantillaExamenLaTeX/img/}}
+\begin{document}
+\begin{Form}
+
+% --- CABECERA ---
+\noindent
+\begin{tabularx}{\textwidth}{|p{8.075cm}|X|X|p{5cm}|}
+    \hline
+    \textbf{IES FRANCISCO DE GOYA -- LA ELIPA} \par DEPARTAMENTO DE INFORMÁTICA &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoUE.jpg} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoBilingue.png} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{6.8cm} \raisebox{-0.2\height}{\includegraphics[width=4.75cm]{logoCAM.png}} \vspace{0.1cm} \end{minipage} \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.2cm}|X|}
+    \hline
+    \textbf{Titulación:} & DAM/DAW & \textbf{Curso:} & 2025/2026 \\ \hline
+    \textbf{Módulo:} & Bases de Datos & \textbf{Fecha:} & \\ \hline
+    \textbf{Examen:} & Recu. Ordinaria RA4: Tratamiento de Datos & \textbf{Duración:} & 45 min \\ \hline
+    \textbf{Nombre:} & \TextField[name=Nombre, width=\hsize]{} & \cellcolor{gray!20} \textbf{Calificación:} & \cellcolor{gray!20} \\ \hline
+    \textbf{Apellidos:} & \multicolumn{3}{l|}{\TextField[name=Apellidos, width=14cm]{}} \\ \hline
+    \textbf{RAs:} & \multicolumn{3}{l|}{RA3: Consulta. RA4: Modifica. } \\ \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section*{Instrucciones}
+\begin{itemize}
+    \input{../../instruccionesComunes.tex}
+\end{itemize}
+
+\begin{tcolorbox}[colframe=alert, title=INSTRUCCIONES CRÍTICAS]
+\textbf{INDEPENDENCIA ABSOLUTA:} Cada script SQL se ejecutará sobre una copia limpia de la base de datos \texttt{logistica\_global} (generada con \texttt{00\_setup\_logistica\_global.sql}). No puedes usar cambios de la Pregunta 1 en la Pregunta 2.
+\par\medskip
+\textbf{TRANSACCIONALIDAD:} Es obligatorio el uso de \texttt{START TRANSACTION} y \texttt{COMMIT} o \texttt{ROLLBACK} en todas las operaciones de datos.
+\par\medskip
+\textbf{CARGA LA BASE DE DATOS:} Ejecuta el script de carga \texttt{00\_setup\_logistica\_global.sql} ahora mismo y, después, sigue leyendo el enunciado.
+\end{tcolorbox}
+
+\section{Ejercicios de Tratamiento de Datos (DAM/DAW)}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Pregunta \arabic*:}]
+
+
+
+    \item \textbf{Saneamiento de integridad referencial.}
+
+    
+
+   Existen envíos vinculados a vehículos que no existen (\texttt{vehiculo\_id} erróneos).
+
+   \begin{itemize}
+    \item (2.5 puntos del RA3) Consulta: Obtén el listado de ids de envíos con vehículo asignado inexistente.
+    \item (2.5 puntos del RA4) Modifica: 
+    \begin{enumerate}
+        \item Reasigna todos esos envíos al vehículo con \texttt{id=1} (Vehículo de sustitución).
+        \item Define la \texttt{FOREIGN KEY} para evitar que vuelva a ocurrir.
+    \end{enumerate}
+
+\end{itemize}
+
+    
+    \item \textbf{(2,5 pts) Eliminación de Duplicados}
+    \begin{itemize}
+        \item (2.5 puntos del RA3) Consulta: Identifica \texttt{tracking\_number} duplicados en la tabla \texttt{envios}: muestra el \texttt{tracking\_number}, cuántas veces aparece y el \texttt{id} más bajo de cada grupo. Ignora los registros con \texttt{tracking\_number} \texttt{NULL}.
+        \item (2.5 puntos del RA4) Modifica: Elimina los duplicados conservando únicamente el registro con el \texttt{id} más bajo para cada \texttt{tracking\_number}. Ignora los registros con \texttt{tracking\_number} \texttt{NULL}.
+        \par\medskip
+        \textbf{Pista:} un \emph{self-join} sobre 100.000 registros es una operación muy costosa y puede provocar \emph{timeout}. Utiliza en su lugar una subconsulta que contenga los IDs que deben conservarse y elimina los demás.
+        \par
+        Al finalizar, deshaz los cambios con \texttt{ROLLBACK}: este ejercicio no debe alterar los datos que necesitan los demás.
+    \end{itemize}
+    
+
+    \item \textbf{(2,5 pts) Migración y Normalización de Datos}
+
+    Para este apartado, trabaja únicamente los envíos cuyas fechas tengan el año con cuatro dígitos (interpretación unívoca). Acepta los formatos \texttt{DD/MM/YYYY} e \texttt{YYYY-MM-DD}.
+
+    La tabla \texttt{envios} almacena distancias y fechas como texto. Crea una nueva tabla llamada \texttt{envios\_normalizados} con los campos siguientes:
+    \begin{itemize}
+        \item \texttt{id\_envio INT PRIMARY KEY}: clave ajena a \texttt{envios.id}.
+        \item \texttt{distancia\_km DECIMAL(8,2)}: valor numérico extraído de \texttt{ruta\_distancia\_km} (texto como \lstinline{'350 km'}).
+        \item \texttt{f\_salida DATE}: normalizada desde el campo texto homónimo.
+        \item \texttt{f\_entrega\_real DATE}: normalizada desde el campo texto homónimo.
+        \item \texttt{dias\_transito INT}: diferencia en días entre \texttt{f\_entrega\_real} y \texttt{f\_salida}, calculada con \texttt{DATEDIFF}.
+    \end{itemize}
+
+    Resuelve las siguientes cuestiones:
+    \begin{itemize}
+        \item (2.5 puntos del RA3) Consulta: Obtén el listado de envíos con datos normalizados que habrá que insertar en la tabla \texttt{envios\_normalizados}.
+        \item (2.5 puntos del RA4) Modifica: Crea la tabla \texttt{envios\_normalizados} e inserta los envíos obtenidos en la consulta anterior. Al finalizar, elimina la tabla con \texttt{DROP TABLE} para no bloquear el Ejercicio~5. 
+
+        \textbf{Nota:} \texttt{CREATE TABLE} Y  \texttt{DROP TABLE} son instrucciones DDL y provoca un \emph{commit} implícito; no puede deshacerse con \texttt{ROLLBACK}.
+    \end{itemize}
+
+    
+    \item \textbf{(2,5 pts del RA3 Consulta) Integridad referencial de envíos:}
+    Obtén el listado de envíos que tienen un \texttt{cliente\_id} inexistente en la tabla \texttt{clientes} \emph{o} un \texttt{vehiculo\_id} inexistente en la tabla \texttt{vehiculos}.
+    Para cada envío muestra: \texttt{id}, \texttt{tracking\_number}, \texttt{cliente\_id}, la \texttt{razon\_social} del cliente (\texttt{NULL} si no existe) y la \texttt{matricula} del vehículo (\texttt{NULL} si no existe).
+
+    Estos son 20 de los resultados que debes obtener (hay más):
+
+    \medskip
+    \begin{tabular}{|r|l|r|l|r|l|}
+        \hline
+        \textbf{id} & \textbf{tracking\_number} & \textbf{cliente\_id} & \textbf{razon\_social} & \textbf{vehiculo\_id} & \textbf{matricula} \\
+        \hline
+        130  & TRK-4043462  & -1  & NULL             & 168 & 9599 ABC  \\
+        131  & TRK-44177553 & -1  & NULL             &  39 & 3319-DEF  \\
+        132  & TRK-64179458 & -1  & NULL             & 134 & 9143-DEF  \\
+        133  & TRK-11402987 & -1  & NULL             &  34 & 5531-DEF  \\
+        134  & TRK-55647875 & -1  & NULL             & 179 & 3575GHI   \\
+        135  & TRK-36015097 & -1  & NULL             &  91 & 1900-DEF  \\
+        136  & TRK-99381809 & -1  & NULL             &  86 & 3846-DEF  \\
+        137  & TRK-3539521  & -1  & NULL             & 187 & 4347GHI   \\
+        138  & TRK-61075984 & -1  & NULL             & 157 & 1736GHI   \\
+        139  & TRK-58694053 & -1  & NULL             &  22 & 4257-DEF  \\
+        140  & TRK-57708353 & -1  & NULL             &  67 & 6081-DEF  \\
+        5000 & TRK-93877673 & 175 & Empresa 174 S.L. &   0 & NULL      \\
+        5001 & TRK-7262817  & 256 & Empresa 255 S.L. &   0 & NULL      \\
+        5002 & TRK-60866861 &  89 & Empresa 88 S.L.  &   0 & NULL      \\
+        5003 & TRK-29212770 & 284 & Empresa 283 S.L. &   0 & NULL      \\
+        5004 & TRK-15289397 &  85 & Empresa 84 S.L.  &   0 & NULL      \\
+        5005 & TRK-86123186 &   8 & Empresa 7 S.L.   &   0 & NULL      \\
+        5006 & TRK-86309977 & 359 & Empresa 358 S.L. &   0 & NULL      \\
+        5007 & TRK-19436475 & 238 & Empresa 237 S.L. &   0 & NULL      \\
+        5008 & TRK-24576352 & 209 & Empresa 208 S.L. &   0 & NULL      \\
+        \hline
+    \end{tabular}
+    \medskip
+
+
+
+    \item \textbf{(2,5 pts del RA4 Modifica) Transacciones y Puntos de Guardado}
+    El campo \texttt{importe\_envio} almacena valores con el símbolo \texttt{€} incrustado. Dentro de una única transacción: sanea la columna eliminando el símbolo \texttt{€}, aplica un incremento del 5\% al importe resultante, crea un \texttt{SAVEPOINT} llamado \texttt{antes\_borrado}, borra todos los envíos cuyo importe (ya incrementado, y que sea un valor numérico válido) supere 500, deshaz únicamente ese borrado con \texttt{ROLLBACK TO} y confirma el saneamiento y el incremento con \texttt{COMMIT}.
+
+\end{enumerate}
+
+\end{Form}
+\end{document}

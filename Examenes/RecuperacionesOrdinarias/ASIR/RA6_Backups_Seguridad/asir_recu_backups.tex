@@ -1,0 +1,134 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{goyaexamen}
+\graphicspath{{../../../PlantillaExamenLaTeX/img/}}
+
+
+\begin{document}
+\begin{Form}
+
+% --- CABECERA ---
+\noindent
+\begin{tabularx}{\textwidth}{|p{8.075cm}|X|X|p{5cm}|}
+    \hline
+    \textbf{IES FRANCISCO DE GOYA -- LA ELIPA} \par DEPARTAMENTO DE INFORMÁTICA &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoUE.jpg} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoBilingue.png} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{6.8cm} \raisebox{-0.2\height}{\includegraphics[width=4.75cm]{logoCAM.png}} \vspace{0.1cm} \end{minipage} \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.2cm}|X|}
+    \hline
+    \textbf{Titulación:} & ASIR & \textbf{Curso:} & 2025/2026 \\ \hline
+    \textbf{Módulo:} & Gestión de Bases de Datos & \textbf{Fecha:} & \\ \hline
+    \textbf{Examen:} & Recu. Ordinaria RA6: Copias de Seguridad & \textbf{Duración:} & 45 min \\ \hline
+    \textbf{Nombre:} & \TextField[name=Nombre, width=\hsize]{} & \cellcolor{gray!20} \textbf{Calificación:} & \cellcolor{gray!20} \\ \hline
+    \textbf{Apellidos:} & \multicolumn{3}{l|}{\TextField[name=Apellidos, width=14cm]{}} \\ \hline
+    \textbf{RAs:} & \multicolumn{3}{l|}{RA6: Adopta medidas de aseguramiento de la información almacenada en el SGBD} \\ \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\begin{tcolorbox}[colframe=alert, title=INSTRUCCIONES Y ENTREGABLES]
+\begin{itemize}[nosep]
+    \item \textbf{Documenta cada paso} en una \textbf{memoria técnica} (PDF): incluye el comando ejecutado y una captura de pantalla de la terminal que evidencie su ejecución correcta.
+    \item \textbf{Entrega un único archivo .zip} con:
+        \begin{itemize}[nosep]
+            \item La memoria técnica en PDF.
+            \item Una carpeta \texttt{backups/} con todos los archivos de copia de seguridad generados.
+        \end{itemize}
+    \item La base de datos de referencia es \textbf{logistica\_global} (usuario: \texttt{admin}, contraseña: \texttt{1234}). Recuerda cargarla ejecutando el script \texttt{00\_setup\_logistica\_global.sql} antes de comenzar el examen.
+    \item Los tres \texttt{INSERT} del enunciado \textbf{están listos para copiar y pegar}: ejecútalos exactamente como se muestran, en el orden indicado y en el momento indicado.
+    \item Si, en lugar de estos 3 inserts, quieres ejecutar sentencias del examen de saneamiento (porque te examinas de los 2 RAs), puedes hacerlo \textbf{indicándolo claramente en la memoria y entregando esos códigos en una carpeta \texttt{limpieza/}}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+
+\begin{tcolorbox}[title=Contexto del escenario]
+Eres el administrador de base de datos de \textit{Logística Global S.L.}\ La empresa abre tres nuevas delegaciones durante tres días consecutivos. Tu tarea es gestionar el ciclo completo de copias de seguridad mientras se van registrando esas altas en la base de datos.
+\end{tcolorbox}
+
+\vspace{0.4cm}
+
+% ---------------------------------------------------------------
+\section{Tarea 0 — Copia de seguridad completa inicial \textnormal{(1 pts)}}
+
+Antes de introducir ningún cambio, realiza una \textbf{copia de seguridad completa} de la base de datos y guárdala en el archivo \texttt{backups/00\_copia\_inicial.sql}.
+
+% ---------------------------------------------------------------
+\section{Día 1 — Primera incremental \textnormal{(1 pts)}}
+
+Ejecuta el siguiente \texttt{INSERT} para registrar la apertura de la delegación de Barcelona:
+
+\begin{lstlisting}[language=SQL]
+INSERT INTO almacenes (cod_almacen, nombre_sucursal,
+                       ciudad_ubicacion, tipo_gestion)
+VALUES ('ALM-BCN-01', 'Delegacion Barcelona Norte',
+        'Barcelona', 'Directo');
+\end{lstlisting}
+
+A continuación, genera una copia incremental: \texttt{backups/01\_incremental\_dia1.sql}.
+
+% ---------------------------------------------------------------
+\section{Día 2 — Segunda incremental \textnormal{(1,5 pts)}}
+
+Ejecuta el siguiente \texttt{INSERT} para registrar la apertura de la delegación de Valencia:
+
+\begin{lstlisting}[language=SQL]
+INSERT INTO almacenes (cod_almacen, nombre_sucursal,
+                       ciudad_ubicacion, tipo_gestion)
+VALUES ('ALM-VAL-01', 'Delegacion Valencia Este',
+        'Valencia', 'Externo');
+\end{lstlisting}
+
+A continuación, genera una copia incremental: \texttt{backups/02\_incremental\_dia2.sql}.
+
+
+% ---------------------------------------------------------------
+\section{Copia diferencial (días 1 y 2) \textnormal{(1 pts)}}
+
+Combina las dos copias incrementales anteriores en un único archivo diferencial que, aplicado sobre la copia completa inicial, restaure el estado tras los dos primeros días:
+
+Guarda el archivo resultante en \texttt{backups/03\_diferencial\_dias\_1\_y\_2.sql}.
+
+% ---------------------------------------------------------------
+\section{Día 3 — Tercera incremental \textnormal{(0,5 pt)}}
+
+Ejecuta el siguiente \texttt{INSERT} para registrar la apertura de la delegación de Bilbao:
+
+\begin{lstlisting}[language=SQL]
+INSERT INTO almacenes (cod_almacen, nombre_sucursal,
+                       ciudad_ubicacion, tipo_gestion)
+VALUES ('ALM-BIL-01', 'Delegacion Bilbao Puerto',
+        'Bilbao', 'Externo');
+\end{lstlisting}
+
+A continuación, genera una copia incremental en \texttt{backups/04\_incremental\_dia3.sql}.
+
+% ---------------------------------------------------------------
+\section{Resumen de copias \textnormal{(1,5 pts)}}
+
+Incluye en la memoria una \textbf{tabla resumen} con al menos las columnas siguientes:
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Archivo} & \textbf{Tipo} & \textbf{Fecha/Hora} & \textbf{Contenido} \\ \hline
+\end{tabular}
+\end{center}
+
+% ---------------------------------------------------------------
+\section{Restauración \textnormal{(3,5 pts)}}
+
+Documenta en la memoria el proceso completo de restauración siguiendo estos pasos:
+
+\begin{enumerate}
+    \item \textbf{(1 pt)} Restaura la base de datos a su \textbf{estado inicial} desde \texttt{00\_copia\_inicial.sql}. Verifica con una consulta \texttt{SELECT} que los tres nuevos almacenes \textbf{no están} presentes.
+    \item \textbf{(1 pt)} Aplica la copia \textbf{diferencial} \texttt{03\_diferencial\_dias\_1\_y\_2.sql}. Verifica con \texttt{SELECT} que los almacenes de Barcelona y Valencia \textbf{sí aparecen} y el de Bilbao \textbf{no}.
+    \item \textbf{(1 pt)} Aplica la incremental \texttt{04\_incremental\_dia3.sql}. Verifica que los \textbf{tres almacenes} aparecen ya en la base de datos.
+    \item \textbf{(0,5 pts)} Explica brevemente en la memoria por qué la copia diferencial es equivalente a aplicar las dos incrementales de forma separada, y cuándo puede resultar más conveniente una u otra estrategia.
+\end{enumerate}
+
+\end{Form}
+\end{document}

@@ -1,0 +1,123 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\usepackage{longtable}
+\usepackage{calc}
+
+% Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\title{\textbf{Laboratorio de Patrones y Agregación: MongoDB}}
+\author{Departamento de Informática}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{Introducción al Laboratorio}\label{intro}
+En MongoDB, la potencia no reside en guardar documentos, sino en cómo podemos transformarlos y analizarlos en tiempo real. Este laboratorio se centra en el \textbf{Aggregation Framework}, la herramienta más potente de MongoDB para el análisis de datos masivos.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Patrón 1: Consultas Polimórficas}\label{polimorfismo}
+\textbf{Escenario:} Queremos encontrar solo aquellas experiencias que tienen requerimientos técnicos específicos (como la profundidad en buceo o menús en gastronomía).
+
+\begin{tcolorbox}[title=Filtrado por existencia de campos]
+\begin{lstlisting}
+// Buscar experiencias de Aventura que tengan el campo 'profundidad'
+db.experiencias.find({
+  tipo: "Aventura",
+  "detalles.profundidad": { $exists: true }
+})
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Reflexión Pedagógica:} Fíjate en el uso del \enquote{Dot Notation} (\texttt{detalles.profundidad}) para acceder a campos dentro de objetos anidados. En SQL, esto requeriría un JOIN o una tabla de atributos muy compleja.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Patrón 2: El Pipeline de Agregación (La Tubería)}\label{pipelines}
+\textbf{Escenario:} El departamento de Marketing quiere un informe de las categorías de experiencias más rentables (precio medio > 50€).
+
+Prueba a ejecutar este pipeline por etapas para ir entendiendo qué hace cada cosa.
+
+\begin{tcolorbox}[title=Pipeline Complejo]
+\begin{lstlisting}
+db.experiencias.aggregate([
+  // Etapa 1: Filtrar documentos iniciales
+  { $match: { precio: { $gt: 0 } } },
+  
+  // Etapa 2: Agrupar por tipo y calcular métricas
+  { $group: { 
+      _id: "$tipo", 
+      precio_medio: { $avg: "$precio" },
+      cantidad: { $sum: 1 }
+  } },
+  
+  // Etapa 3: Filtrar los resultados del grupo (el 'HAVING' de SQL)
+  { $match: { precio_medio: { $gt: 50 } } },
+  
+  // Etapa 4: Ordenar y proyectar campos limpios
+  { $sort: { precio_medio: -1 } },
+  { $project: { _id: 0, categoria: "$_id", precio_medio: 1, cantidad: 1 } }
+])
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Patrón 3: Análisis de Arrays con \texttt{\$unwind}}\label{unwind}
+\textbf{Escenario:} Queremos saber cuál es el \texttt{tag} (etiqueta) más popular en todo nuestro catálogo.
+
+\begin{tcolorbox}[title=Contar elementos dentro de arrays]
+\begin{lstlisting}
+db.experiencias.aggregate([
+  { $unwind: "$tags" }, // "Rompe" el array en documentos individuales
+  { $group: { 
+      _id: "$tags", 
+      total: { $sum: 1 } 
+  } },
+  { $sort: { total: -1 } },
+  { $limit: 5 } // Ver el Top 5
+])
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Analítica:} Si una experiencia tiene 3 tags, \texttt{\$unwind} genera 3 copias temporales del documento. \textbf{¡Ojo!}: Por defecto, si un documento no tiene el campo \texttt{tags} o está vacío, \textbf{desaparecerá del pipeline}. Para evitarlo, se usa el parámetro \texttt{preserveNullAndEmptyArrays: true}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Laboratorio de Depuración: Tipos de Datos}\label{debug}
+
+MongoDB es flexible, pero no mágico. El número \texttt{100} y el texto \texttt{"100"} son tipos distintos y las comparaciones numéricas fallarán.
+
+\begin{tcolorbox}[title=Peligro: Comparación de Tipos, colframe=red!75!black]
+\begin{lstlisting}[language=JavaScript]
+// 1. Insertamos un dato con precio como TEXTO (error comun)
+db.experiencias.insertOne({ 
+  nombre: "Error de Tipo", 
+  precio: "300" // Notese las comillas
+})
+
+// 2. Intentamos buscar experiencias de mas de 100
+db.experiencias.find({ precio: { $gt: 240 } })
+// RESULTADO: El documento "Error de Tipo" NO aparecera.
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection{Detección con \texttt{\$type}}
+Para limpiar tu base de datos, puedes buscar qué documentos tienen un campo con un tipo erróneo. El tipo \enquote{string} en MongoDB es el número \texttt{2}.
+
+\begin{lstlisting}[language=JavaScript]
+// Buscar documentos donde 'precio' sea un String (tipo 2)
+db.experiencias.find({ precio: { $type: 2 } })
+
+// Solucion: Borrar o convertir los datos erroneos
+\end{lstlisting}
+
+\end{document}

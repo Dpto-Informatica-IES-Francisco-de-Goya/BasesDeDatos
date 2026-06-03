@@ -1,0 +1,115 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\usepackage{longtable}
+\usepackage{calc}
+
+% Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\title{\textbf{Cassandra en Docker - UT8 NoSQL}}
+\author{Departamento de Informática}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\section{Cassandra en Docker - UT8 NoSQL}\label{cassandra-en-docker---ut8-nosql}
+
+Este entorno permite trabajar con \textbf{Apache Cassandra}, una base de datos \textbf{Orientada a Columnas} diseñada para gestionar volúmenes masivos de datos con escrituras ultra-rápidas.
+
+\subsection{El Ecosistema de Datos de GloboTour}\label{ecosistema}
+Para este laboratorio, simularemos tres áreas críticas de la plataforma GloboTour que requieren la potencia de Cassandra. A continuación se muestran ejemplos reales de la información almacenada:
+
+\begin{enumerate}
+    \item \textbf{Módulo de Inteligencia de Mercado (\texttt{busquedas\_por\_usuario})}:
+    \begin{itemize}
+        \item \textit{Dato Real:} El usuario \texttt{user\_7} buscó el destino \enquote{Londres} el \texttt{2026-04-15} desde la IP \texttt{192.168.1.54}.
+    \end{itemize}
+    \item \textbf{Módulo de Telemetría IoT (\texttt{sensor\_readings})}: 
+    \begin{itemize}
+        \item \textit{Dato Real:} El sensor \texttt{SENSOR-SALA-A} del hotel \texttt{H-MAD-01} registró una temperatura de \texttt{22.5 ºC} a las \texttt{10:00 AM}.
+    \end{itemize}
+    \item \textbf{Módulo de Marketing Dinámico (\texttt{offer\_stats} y \texttt{flash\_offers})}: 
+    \begin{itemize}
+        \item \textit{Dato Real:} La oferta \texttt{OFERTA-PARIS-2024} ha recibido \texttt{120} visualizaciones. Existe una promoción flash \texttt{FLASH-01} con un \texttt{25\%} de descuento que caducará automáticamente tras el tiempo definido por su TTL.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Componentes}\label{componentes}
+
+\begin{enumerate}
+    \item \textbf{Cassandra Server}: Motor de base de datos en el puerto \texttt{9042}.
+    \item \textbf{CloudBeaver}: Interfaz web profesional para gestión de BBDD en el puerto \texttt{8978}.
+\end{enumerate}
+
+\subsection{Instrucciones de uso}\label{instrucciones-de-uso}
+
+\subsubsection{Configuración del Entorno (Docker Compose)}\label{configuracion-del-entorno}
+
+Este archivo define los servicios necesarios para la práctica:
+
+\begin{lstlisting}[language=YAML]
+services:
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra-server
+    ports:
+      - "9042:9042"
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+      - ./src:/src
+    restart: always
+
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:latest
+    container_name: cloudbeaver
+    ports:
+      - "8978:8978"
+    volumes:
+      - cloudbeaver_data:/opt/cloudbeaver/workspace
+    depends_on:
+      - cassandra
+    restart: always
+
+volumes:
+  cassandra_data:
+  cloudbeaver_data:
+\end{lstlisting}
+
+\subsubsection{Puesta en marcha}\label{puesta-en-marcha}
+
+Para arrancar el servicio:
+
+\begin{lstlisting}[language=bash]
+docker compose up -d
+\end{lstlisting}
+
+\emph{Nota: Cassandra puede tardar hasta 60 segundos en responder.}
+
+Para importar los datos y el esquema inicial:
+
+\begin{lstlisting}[language=bash]
+docker exec -i cassandra-server cqlsh < src/datos_iniciales.cql
+\end{lstlisting}
+
+Para acceder a la interfaz gráfica:
+\begin{itemize}
+    \item URL: \url{http://localhost:8978}
+    \item \textbf{Configuración inicial}: Sigue el asistente y crea un usuario admin.
+    \item \textbf{Conexión}: Host: \texttt{cassandra-server} | Puerto: \texttt{9042} | Keyspace: \texttt{globotour}.
+\end{itemize}
+
+
+Para abrir la consola:
+
+\begin{lstlisting}[language=bash]
+docker exec -it cassandra-server cqlsh
+\end{lstlisting}
+
+\end{document}

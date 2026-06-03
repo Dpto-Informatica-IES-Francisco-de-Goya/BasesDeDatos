@@ -1,0 +1,263 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{goyabase}
+
+\usepackage{longtable}
+\usepackage{calc}
+
+% Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\title{\textbf{Redis en GloboTour: Velocidad y Tiempo Real}}
+\author{Departamento de Informática}
+\date{\today}
+
+\usepackage[spanish, es-noshorthands, es-tabla]{babel}
+\usepackage[autostyle]{csquotes}
+\begin{document}
+
+\maketitle
+
+\hypertarget{redis-en-globotour-velocidad-y-tiempo-real}{%
+\section{Redis en GloboTour: Velocidad y Tiempo
+Real}\label{redis-en-globotour-velocidad-y-tiempo-real}}
+
+En \textbf{GloboTour}, usamos Redis para gestionar las partes de la
+aplicación que no pueden esperar a que un disco duro gire. Es nuestra
+capa de aceleración.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{nomenclatura-y-jerarquuxeda-el-uso-de-los}{%
+\subsection{\texorpdfstring{Nomenclatura y Jerarquía (El uso de los
+\texttt{:})}{1. Nomenclatura y Jerarquía (El uso de los :)}}\label{nomenclatura-y-jerarquuxeda-el-uso-de-los}}
+
+Redis es una base de datos \textbf{plana} (Key-Value), lo que significa
+que no tiene tablas ni carpetas reales. Sin embargo, usamos los dos
+puntos \texttt{:} por convención para organizar
+nuestras llaves.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{¿Qué son los \texttt{:}?}: Son un simple
+  separador de texto. Para Redis, la llave
+  \texttt{session:user:101} es solo una cadena de
+  texto larga.
+\item
+  \textbf{Simulación de Carpetas}: Herramientas como
+  \textbf{RedisInsight} interpretan los \texttt{:} para
+  agrupar llaves visualmente en carpetas, facilitando la administración.
+\item
+  \textbf{Buenas prácticas}: Se recomienda seguir un patrón
+  \texttt{entidad:id:atributo}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Ejemplo: \texttt{exp:500:nombre} o
+    \texttt{user:101:session\_token}.
+  \end{itemize}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{visualizaciuxf3n-con-redisinsight-gui}{%
+\subsection{Visualización con RedisInsight
+(GUI)}\label{visualizaciuxf3n-con-redisinsight-gui}}
+
+Para gestionar la base de datos de forma visual, sigue estos pasos:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Abre tu navegador en \url{http://localhost:5540}.
+\item
+  Si es la primera vez, haz clic en \textbf{``Add Redis Database''}.
+\item
+  \textbf{Configuración CRÍTICA}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Host}: \texttt{redis-server} (esto permite que el
+    contenedor de la web hable con el del servidor). \textbf{NO} uses
+    \texttt{localhost} ni
+    \texttt{127.0.0.1} aquí.
+  \item
+    \textbf{Port}: \texttt{6379}
+  \item
+    \textbf{Database Alias}: ``BBDD\_Clase''
+  \item
+    \textbf{User/Password}: Déjalos \textbf{vacíos}.
+  \end{itemize}
+\item
+  Una vez añadida, entra en la sección \textbf{``Browser''} del menú
+  izquierdo.
+\item
+  \textbf{Verás las ``Carpetas''}: Gracias a los
+  \texttt{puntos (:)}, verás los datos organizados por
+  \texttt{session}, \texttt{exp},
+  \texttt{user}, etc. Puedes hacer clic en ellas para
+  expandirlas y ver las llaves.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{compendio-de-tipos-de-datos-buxe1sicos}{%
+\subsection{Compendio de Tipos de Datos
+Básicos}\label{compendio-de-tipos-de-datos-buxe1sicos}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Tipo de Dato
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Caso de Uso Típico
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Strings} & El más simple. Texto, números o binarios (hasta
+512MB). & Sesiones, contadores, caché HTML. \\
+\textbf{Hashes} & Mapas de campos-valores (objetos). & Perfiles de
+usuario, productos. \\
+\textbf{Lists} & Listas de strings ordenadas por inserción. & Colas de
+tareas (LIFO/FIFO). \\
+\textbf{Sets} & Colecciones de elementos únicos (sin orden). &
+Etiquetas, amigos en común, votaciones. \\
+\textbf{Sorted Sets} & Elementos únicos donde cada uno tiene una
+puntuación (\emph{score}). & Rankings, tablas de clasificación. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{ejemplos-pruxe1cticos-por-tipo-de-dato}{%
+\subsection{Ejemplos Prácticos por Tipo de
+Dato}\label{ejemplos-pruxe1cticos-por-tipo-de-dato}}
+
+\hypertarget{a.-gestiuxf3n-de-sesiones-strings-con-ttl}{%
+\subsubsection{Gestión de Sesiones (Strings con
+TTL)}\label{a.-gestiuxf3n-de-sesiones-strings-con-ttl}}
+
+\textbf{Comandos:} \texttt{SET} (crear),
+\texttt{GET} (leer), \texttt{EXPIRE}
+(expiración).
+
+\begin{lstlisting}
+# Crear sesion que dura 30 segundos
+SET sesion:token:9988 "user_id:105" EX 30
+
+# Consultar valor
+GET sesion:token:9988
+\end{lstlisting}
+
+\hypertarget{b.-contadores-atuxf3micos-strings}{%
+\subsubsection{Contadores Atómicos
+(Strings)}\label{b.-contadores-atuxf3micos-strings}}
+
+\textbf{Comandos:} \texttt{INCR} (sumar 1),
+\texttt{INCRBY} (sumar N).
+
+\begin{lstlisting}
+# Incrementar visitas de una pagina
+INCR metricas:visitas:inicio
+INCRBY metricas:visitas:oferta:paris 10
+\end{lstlisting}
+
+\hypertarget{c.-perfiles-de-usuario-hashes}{%
+\subsubsection{Experiencias del Catálogo
+(Hashes)}\label{c.-perfiles-de-usuario-hashes}}
+
+\textbf{Comandos:} \texttt{HSET} (asignar campos),
+\texttt{HGET} (leer uno),
+\texttt{HGETALL} (leer todo).
+
+\begin{lstlisting}
+# Guardar o modificar una experiencia (ya existe la 500)
+HSET exp:500 nombre "Vuelo en Globo Segovia" precio 150 stock 5
+
+# Obtener solo el precio
+HGET exp:500 precio
+
+# Consultar toda la informacion de la experiencia
+HGETALL exp:500
+
+# Incrementar el stock (vuelven a tener plazas)
+HINCRBY exp:500 stock 2
+\end{lstlisting}
+
+\hypertarget{d.-colas-de-trabajo-lists}{%
+\subsubsection{Historial de Búsquedas
+(Lists)}\label{d.-colas-de-trabajo-lists}}
+
+\textbf{Comandos:} \texttt{LPUSH} (insertar al inicio),
+\texttt{RPOP} (extraer del final),
+\texttt{LRANGE} (ver rango).
+
+\begin{lstlisting}
+# Añadir busquedas recientes
+LPUSH busquedas:recientes "Paris"
+LPUSH busquedas:recientes "Roma"
+
+# Ver las 3 ultimas busquedas
+LRANGE busquedas:recientes 0 2
+
+# Extraer la busqueda mas antigua para limpieza
+RPOP busquedas:recientes
+\end{lstlisting}
+
+\hypertarget{e.-rankings-y-leaderboards-sorted-sets}{%
+\subsubsection{Ranking de Ventas (Sorted
+Sets)}\label{e.-rankings-y-leaderboards-sorted-sets}}
+
+\textbf{Comandos:} \texttt{ZADD} (añadir con puntos),
+\texttt{ZREVRANGE} (ver top),
+\texttt{ZRANK} (ver posición).
+
+\begin{lstlisting}
+# Añadir o actualizar ventas (ya existen en datos_iniciales)
+ZADD experiencias:top_ventas 150 "Vuelo en Globo Segovia"
+ZADD experiencias:top_ventas 320 "Cata de Vinos Ribera"
+
+# Obtener las 2 mas vendidas (con sus ventas/score)
+ZREVRANGE experiencias:top_ventas 0 1 WITHSCORES
+\end{lstlisting}
+
+\hypertarget{f.-etiquetas-y-conjuntos-sets}{%
+\subsubsection{Intereses de Usuarios
+(Sets)}\label{f.-etiquetas-y-conjuntos-sets}}
+
+\textbf{Comandos:} \texttt{SADD} (añadir único),
+\texttt{SINTER} (intersección),
+\texttt{SUNION} (unión).
+
+\begin{lstlisting}
+# Asignar intereses a usuarios
+SADD user:105:intereses "aventura" "aire_libre" "fotografia"
+SADD user:202:intereses "gastronomia" "relax" "aventura"
+
+# ¿Que intereses tienen en comun para una oferta conjunta?
+SINTER user:105:intereses user:202:intereses
+\end{lstlisting}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Desafíos de Aprendizaje (Para practicar en clase)}
+
+\begin{enumerate}
+    \item \textbf{El Tesoro Efímero}: Crea una llave llamada \texttt{secreto} con el valor \texttt{oro} que dure solo 15 segundos. Intenta leerla a los 5 segundos y a los 20. ¿Qué ocurre? (Uso de \texttt{TTL}).
+    \item \textbf{Historial de Navegación}: Usa la lista \texttt{busquedas:recientes} para añadir dos nuevas ciudades. Asegúrate de que solo se vean las 3 más recientes usando \texttt{LRANGE}.
+    \item \textbf{El Ranking Dinámico}: En el Sorted Set de \texttt{experiencias:top\_ventas}, incrementa las ventas de \enquote{Cata de Vinos Ribera} en 100 usando \texttt{ZINCRBY}. ¿Se ha movido de posición automáticamente en RedisInsight?
+\end{enumerate}
+
+
+\end{document}

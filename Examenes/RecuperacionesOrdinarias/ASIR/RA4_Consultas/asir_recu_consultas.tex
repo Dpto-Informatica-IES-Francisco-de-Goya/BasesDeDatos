@@ -1,0 +1,55 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{goyaexamen}
+\graphicspath{{../../../PlantillaExamenLaTeX/img/}}
+
+
+\begin{document}
+\begin{Form}
+
+% --- CABECERA ---
+\noindent
+\begin{tabularx}{\textwidth}{|p{8.075cm}|X|X|p{5cm}|}
+    \hline
+    \textbf{IES FRANCISCO DE GOYA -- LA ELIPA} \par DEPARTAMENTO DE INFORMÁTICA &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoUE.jpg} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoBilingue.png} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{6.8cm} \raisebox{-0.2\height}{\includegraphics[width=4.75cm]{logoCAM.png}} \vspace{0.1cm} \end{minipage} \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.2cm}|X|}
+    \hline
+    \textbf{Titulación:} & ASIR & \textbf{Curso:} & 2025/2026 \\ \hline
+    \textbf{Módulo:} & Gestión de Bases de Datos & \textbf{Fecha:} & \\ \hline
+    \textbf{Examen:} & Recuperación Ordinaria RA4: Consultas SQL & \textbf{Duración:} & 45 min \\ \hline
+    \textbf{Nombre:} & \TextField[name=Nombre, width=\hsize]{} & \cellcolor{gray!20} \textbf{Calificación:} & \cellcolor{gray!20} \\ \hline
+    \textbf{Apellidos:} & \multicolumn{3}{l|}{\TextField[name=Apellidos, width=14cm]{}} \\ \hline
+    \textbf{RAs:} & \multicolumn{3}{l|}{RA4: Consulta la información almacenada manejando DML} \\ \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section*{Instrucciones}
+\begin{itemize}
+    \input{../../instruccionesComunes.tex}
+\end{itemize}
+Utiliza la base de datos \textbf{Sakila}. Entrega un script SQL único con las 4 consultas numeradas. Se valorará el uso de alias significativos y la elegancia de las soluciones.
+
+\section{Ejercicios de Consultas}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Consulta \arabic*:}]
+    \item \textbf{(2,5 puntos)} % CE.c (Consultas resumen) - Peso 20% + redistribución -> 2.5 pts
+    Muestra el ID del actor y el número de películas en las que ha participado, pero solo para aquellos actores que han rodado más de 35 películas. Ordena el resultado de mayor a menor número de películas.
+
+    \item \textbf{(2,5 puntos)} % CE.d (Composiciones internas) - Peso 15% + redistribución -> 2.5 pts
+    Listar el nombre y apellidos de los clientes (\texttt{customer}), junto con la dirección (\texttt{address}), la ciudad (\texttt{city}) y el país (\texttt{country}) donde residen. Ordena por país y luego por ciudad.
+
+    \item \textbf{(2,5 puntos)} % CE.e (Composiciones externas) - Peso 15% + redistribución -> 2.5 pts
+    Genera un listado de todas las categorías (\texttt{category}) de películas y el título de las películas que pertenecen a ellas. \textbf{IMPORTANTE:} Deben aparecer todas las categorías, incluso aquellas que no tengan ninguna película asignada (si las hubiera).
+
+    \item \textbf{(2,5 puntos)} % CE.f (Subconsultas) - Peso 25% -> 2.5 pts
+    Muestra el título de las películas cuya duración (\texttt{length}) sea superior a la media de duración de todas las películas de la base de datos. Utiliza una subconsulta.
+\end{enumerate}
+
+\end{Form}
+\end{document}

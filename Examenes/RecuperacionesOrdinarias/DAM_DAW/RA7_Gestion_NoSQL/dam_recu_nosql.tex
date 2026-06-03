@@ -1,0 +1,79 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{goyaexamen}
+\graphicspath{{../../../PlantillaExamenLaTeX/img/}}
+
+\begin{document}
+\begin{Form}
+
+% --- CABECERA ---
+\noindent
+\begin{tabularx}{\textwidth}{|p{8.075cm}|X|X|p{5cm}|}
+    \hline
+    \textbf{IES FRANCISCO DE GOYA -- LA ELIPA} \par DEPARTAMENTO DE INFORMÁTICA &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoUE.jpg} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{1.6cm} \centering \vspace{0.75cm} \includegraphics[width=1.5cm]{logoBilingue.png} \vspace{0.1cm} \end{minipage} &
+    \begin{minipage}[c]{6.8cm} \raisebox{-0.2\height}{\includegraphics[width=4.75cm]{logoCAM.png}} \vspace{0.1cm} \end{minipage} \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{2.2cm}|X|p{3.2cm}|X|}
+    \hline
+    \textbf{Titulación:} & DAM/DAW & \textbf{Curso:} & 2025/2026 \\ \hline
+    \textbf{Módulo:} & Bases de Datos & \textbf{Fecha:} & \\ \hline
+    \textbf{Examen:} & Recu. Ordinaria RA7: BBDD NoSQL & \textbf{Duración:} & 45 min \\ \hline
+    \textbf{Nombre:} & \TextField[name=Nombre, width=\hsize]{} & \cellcolor{gray!20} \textbf{Calificación:} & \cellcolor{gray!20} \\ \hline
+    \textbf{Apellidos:} & \multicolumn{3}{l|}{\TextField[name=Apellidos, width=14cm]{}} \\ \hline
+    \textbf{RAs:} & \multicolumn{3}{l|}{RA7: Gestiona BBDD no relacionales (NoSQL)} \\ \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section*{Instrucciones}
+\begin{itemize}
+    \input{../../instruccionesComunes.tex}
+\end{itemize}
+
+\section{Bloque Teórico (2 pts)}
+\begin{enumerate}[leftmargin=*, label=\textbf{T.\arabic*:}]
+    \item \textbf{(2 pts)} Una empresa almacena fichas de clientes. Algunos clientes son particulares y tienen DNI; otros son empresas y tienen CIF, nombre fiscal y número de empleados. En un modelo relacional tradicional, habría que usar columnas \texttt{NULL} o tablas separadas. Explica cómo resuelve este problema una base de datos como MongoDB y qué ventaja aporta frente al enfoque relacional.
+    %
+    ¿Cómo se llama en Mongo a las "tablas"? ¿Y a las "filas"?¿Qué tipo de base de datos es MongoDB?
+\end{enumerate}
+
+\section{Bloque Práctico: Operativa NoSQL (8 pts)}
+
+\begin{tcolorbox}[colframe=alert, title=RECOMENDACIÓN]
+\textbf{CARGA DE LAS BASES DE DATOS:} Tienes los scripts de carga de la base de datos en las mismas carpetas que como las tenías en clase. 
+%
+Tienes también las guías de carga. No obstante, no es imprescindible cargarlas. 
+%
+Puedes resolver los ejercicios solicitados sin necesidad de cargar las bases de datos (aunque se recomienda para poder ver si se ha resuelto la consulta correctamente).
+\end{tcolorbox}
+
+\subsection*{A. REDIS: Control de Sesiones y Contadores}
+\begin{enumerate}[leftmargin=*, label=\textbf{P.R\arabic*:}]
+    \item \textbf{(2,5 pts)} Implementa el siguiente flujo de inicio de sesión en Redis:
+    \begin{itemize}
+        \item Almacena el token de sesión con clave \texttt{sesion:token:XYZ}, valor \texttt{user\_id:101}, que expire automáticamente en \textbf{30 minutos}.
+        \item Incrementa de forma atómica el contador global de sesiones iniciadas (clave: \texttt{stats:sesiones}).
+        \item Indica qué comando usarías para consultar cuántos segundos le quedan al token antes de expirar.
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{B. MONGODB: Operaciones CRUD}
+\begin{enumerate}[leftmargin=*, label=\textbf{P.M\arabic*:}, resume]
+    \item \textbf{(3 pts)} Trabaja sobre la colección \texttt{experiencias} de la base de datos \texttt{globotour} (la misma usada en clase). Escribe los comandos necesarios para realizar las tres operaciones siguientes:
+    \begin{enumerate}
+        \item \textbf{(1 pt)} Inserta una nueva experiencia con los datos: nombre \lstinline{'Cata de vinos'}, tipo \lstinline{'Gastronomia'}, precio \texttt{45} y tags \lstinline{['romantico', 'adultos']}.
+        \item \textbf{(1 pt)} Filtra todas las experiencias que tengan el campo \texttt{detalles} definido. Muestra únicamente el nombre y el precio de cada resultado, ocultando el \texttt{\_id}.
+        \item \textbf{(1 pt)} Añade el tag \lstinline{'maridaje'} al array de tags de la experiencia \lstinline{'Cata de vinos'} sin sobreescribir los tags existentes.
+    \end{enumerate}
+\end{enumerate}
+
+\subsection*{C. NEO4J: Consulta de Grafo}
+\begin{enumerate}[leftmargin=*, label=\textbf{P.N\arabic*:}, resume]
+    \item \textbf{(2,5 pts)} En la base de datos de \textbf{GloboTour} (usada en clase) con nodos \texttt{(:Usuario \{nombre\})} y \texttt{(:Guia \{nombre\})} y relaciones \texttt{[:SIGUE]} y \texttt{[:VALORO \{estrellas\}]}, escribe una consulta Cypher que devuelva los nombres de los guías que han sido valorados con \textbf{4 estrellas} por usuarios a los que \lstinline{'Víctor'} sigue, pero que el propio \texttt{Víctor} \textbf{aún no ha valorado}.
+\end{enumerate}
+
+\end{Form}
+\end{document}
